@@ -1,0 +1,211 @@
+/*
+  September 2026 premium reference layer.
+  Huts informs the composed home hero; 111 W 57 informs Urban Kaza's
+  cinematic pacing; 250 Broadway and Hutstuf inform the photography-first
+  chapter rhythm. Hill Bottom and Urban Kaza brand systems remain authoritative.
+*/
+
+:root{
+  --premium-ease:cubic-bezier(.16,1,.3,1);
+  --premium-section:clamp(96px,11vw,176px);
+  --premium-rule:color-mix(in srgb,currentColor 15%,transparent);
+}
+
+.header-sentinel{position:absolute;inset:0 auto auto 0;width:1px;height:1px;pointer-events:none}
+.wrap{max-width:1480px}
+.pad{padding-block:var(--premium-section)}
+.pad-s{padding-block:clamp(72px,8vw,120px)}
+.body,.lede,.head__side,.story__d{font-size:clamp(1rem,.35vw + .92rem,1.125rem);line-height:1.68}
+.d1,.d2,.d3,.proj__name{font-optical-sizing:auto;text-wrap:balance}
+.d2{font-size:clamp(2.75rem,4.8vw,4.9rem);line-height:1.01;letter-spacing:-.045em}
+.head__side,.body,.lede{max-width:65ch}
+
+/* Quiet, translucent chrome. It remains Hill Bottom everywhere. */
+.hdr{top:clamp(10px,1.2vw,18px)}
+.hdr__in{
+  height:64px;padding-inline:18px 10px;border-radius:18px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(8,18,33,.44);
+  -webkit-backdrop-filter:blur(24px) saturate(150%);
+  backdrop-filter:blur(24px) saturate(150%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 18px 50px rgba(4,9,18,.1);
+  transition:background 240ms var(--premium-ease),border-color 240ms var(--premium-ease),transform 240ms var(--premium-ease);
+}
+.hdr.is-stuck .hdr__in{background:rgba(8,18,33,.86);border-color:rgba(255,255,255,.12)}
+.nav{gap:clamp(12px,1.2vw,22px)}
+.nav a{font-size:.66rem;letter-spacing:.115em;opacity:.78}
+.hdr__cta .btn{min-height:44px;padding:12px 20px}
+
+/* Tactile actions. Reflection follows the pointer in hb.js. */
+.btn{border-radius:999px;min-height:48px;padding:14px 24px;transition:background 180ms var(--premium-ease),color 180ms var(--premium-ease),transform 140ms var(--premium-ease),border-color 180ms var(--premium-ease),box-shadow 220ms var(--premium-ease)}
+.btn:active,button:active{transform:scale(.97)}
+.cta-orbit{width:50px;height:50px;border:1px solid rgba(246,248,251,.34);background:rgba(246,248,251,.08);-webkit-backdrop-filter:blur(18px) saturate(145%);backdrop-filter:blur(18px) saturate(145%);transition:background 180ms var(--premium-ease),transform 160ms var(--premium-ease)}
+.cta-orbit:active{transform:scale(.96)}
+
+/* Home hero: Huts-like manifesto composition over authentic project photography. */
+.home-editorial .hero{min-height:100dvh;justify-content:center}
+.home-editorial .hero__media{inset:0;transform:none}
+.home-editorial .hero__media img{filter:saturate(.78) contrast(1.04);transform:scale(1.035);transition:transform 1800ms var(--premium-ease),filter 600ms ease}
+.home-editorial .hero.lit .hero__media img{transform:scale(1)}
+.home-editorial .hero__veil{background:linear-gradient(180deg,rgba(5,12,23,.26) 0%,rgba(5,12,23,.16) 30%,rgba(5,12,23,.52) 72%,rgba(5,12,23,.88) 100%),linear-gradient(90deg,rgba(5,12,23,.28),transparent 32%,transparent 68%,rgba(5,12,23,.22))}
+.home-editorial .hero__in{display:grid;place-items:center;padding-top:128px;padding-bottom:132px;text-align:center}
+.home-editorial .hero__stage{display:grid;justify-items:center;max-width:980px}
+.home-editorial .hero .d1{max-width:9.2ch;font-size:clamp(4.4rem,9vw,8.3rem);font-weight:300;line-height:.9;letter-spacing:-.055em;text-shadow:0 2px 28px rgba(3,8,16,.2)}
+.home-editorial .hero__sub{max-width:34ch;margin-top:30px;font-size:clamp(1rem,1.2vw,1.18rem);line-height:1.5;color:rgba(246,248,251,.9)}
+.home-editorial .hero .btn-row{justify-content:center;align-items:center;margin-top:34px!important}
+.herocards{position:absolute;z-index:3;left:var(--gut);right:var(--gut);bottom:24px;display:flex;justify-content:space-between;gap:16px;pointer-events:none}
+.herocard{display:grid;gap:4px;min-width:min(260px,24vw);padding:12px 0;color:#F6F8FB;border-top:1px solid rgba(246,248,251,.32);pointer-events:auto;text-align:left;transition:border-color 180ms ease,transform 220ms var(--premium-ease)}
+.herocard b{font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;color:#E8DBB8}
+.herocard span{font-size:.92rem;color:rgba(246,248,251,.84)}
+.herocard:hover{border-color:#E8DBB8;transform:translateY(-2px)}
+
+/* Project-status rail becomes a calm architectural datum below the image. */
+.portfolio-index{padding-block:32px;border-bottom:1px solid rgba(13,27,48,.12)}
+.portfolio-index::after{height:1px}
+.portfolio-index .facts{grid-template-columns:repeat(4,minmax(0,1fr))}
+.portfolio-index .fact{min-height:86px;display:grid;align-content:center}
+
+/* Spacious, photography-first chapter rhythm. */
+.home-proof .grid{border-block:1px solid rgba(13,27,48,.14);gap:0}
+.proofcard{padding:clamp(26px,3vw,44px);border-right:1px solid rgba(13,27,48,.14);background:transparent;box-shadow:none;border-radius:0;transition:background 220ms ease,color 220ms ease}
+.proofcard:last-child{border-right:0}
+.proofcard:hover{background:#fff}
+.home-intro .head{max-width:1080px}
+.home-intro .grid{max-width:1040px;gap:clamp(34px,6vw,96px)}
+.home-projects{overflow:hidden}
+.home-projects .head{max-width:900px}
+.project-collection{grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(64px,8vw,124px) clamp(24px,3vw,48px)}
+.project-collection .proj{grid-column:span 6}
+.project-collection .proj:nth-child(2){padding-top:clamp(72px,9vw,144px)}
+.project-collection .proj:nth-child(3){grid-column:1/-1;display:grid;grid-template-columns:minmax(0,7fr) minmax(280px,4fr);align-items:center;gap:clamp(36px,6vw,96px)}
+.project-collection .proj:nth-child(3) .plate{aspect-ratio:16/10}
+.project-collection .proj__name{font-size:clamp(2.5rem,4.3vw,4.6rem);line-height:.96;letter-spacing:-.05em}
+.project-collection .plate{aspect-ratio:4/5;border-radius:0}
+.project-collection .proj__media a{display:block}
+.project-collection .proj__body{gap:22px}
+.project-collection .alt__label{border-block-color:rgba(246,248,251,.18)}
+.home-delivered .grid{gap:clamp(16px,2vw,28px)}
+.home-delivered .grid .plate:first-child{aspect-ratio:4/5}
+.home-delivered .grid .plate:last-child{aspect-ratio:5/4;margin-top:clamp(64px,8vw,128px)}
+.band{min-height:92dvh}
+.band__media img{filter:saturate(.8)}
+.band__in{padding-bottom:clamp(64px,10vh,120px)}
+.band__in .d2{max-width:13ch!important}
+
+/* Requested single-row systems remain orderly without turning into card walls. */
+.home-values .ledger{border-block:1px solid var(--line)}
+.home-values .ledger__row{padding-block:34px}
+.home-values .ledger__row:hover{background:color-mix(in srgb,var(--fg) 3%,transparent)}
+.pillar-icon,.section-icon{width:48px;height:48px}
+.home-tours .grid{gap:clamp(24px,4vw,68px)}
+.home-tours .story:nth-child(2){padding-top:clamp(56px,7vw,112px)}
+.home-tours .plate{aspect-ratio:3/4}
+.home-residents .grid{grid-template-columns:minmax(0,1.35fr) repeat(2,minmax(0,1fr))}
+.home-residents figure{min-height:360px;align-content:space-between!important}
+.home-residents figure:first-child blockquote{font-size:clamp(1.8rem,2.7vw,2.8rem)}
+.home-stories .grid{grid-template-columns:1.35fr .9fr .9fr;align-items:start}
+.home-stories .story:nth-child(2){padding-top:clamp(56px,7vw,108px)}
+.home-stories .story:nth-child(3){padding-top:clamp(112px,14vw,216px)}
+.home-stories .plate{border-radius:0}
+.home-stories .story:first-child .plate{aspect-ratio:4/5}
+.home-stories .story:not(:first-child) .plate{aspect-ratio:4/3}
+
+/* Clean forms and footer use structure, not ornamental cards. */
+.form{border-radius:0}
+.field input,.field select,.field textarea{min-height:52px;border-radius:0;background:transparent}
+.field textarea{min-height:132px}
+.ftr__top{padding-block:clamp(74px,9vw,124px)}
+
+/* Urban Kaza: 111 W 57-inspired scale and restraint, within its own identity. */
+.urban-kaza-page .hero{min-height:100dvh}
+.urban-kaza-page .uk-hero .hero__media img{filter:saturate(.66) contrast(1.06);transform:scale(1.025);transition:transform 1800ms var(--premium-ease)}
+.urban-kaza-page .uk-hero.lit .hero__media img{transform:scale(1)}
+.urban-kaza-page .hero__veil{background:linear-gradient(90deg,rgba(38,35,32,.9) 0%,rgba(38,35,32,.6) 42%,rgba(38,35,32,.08) 76%),linear-gradient(0deg,rgba(38,35,32,.76),transparent 52%)}
+.urban-kaza-page .uk-hero .hero__in{padding-top:140px;padding-bottom:48px}
+.urban-kaza-page .uk-hero .hero__stage{max-width:660px;gap:26px}
+.uk-hero__brand{gap:10px}
+.uk-hero__brand strong{font-size:clamp(3.25rem,5vw,3.75rem);line-height:.92;letter-spacing:.1em}
+.urban-kaza-page .uk-hero .hero__sub{max-width:44ch;font-size:clamp(1rem,1.1vw,1.14rem)}
+.urban-kaza-page .uk-hero .facts{padding:28px 30px;border-radius:18px;background:rgba(48,48,48,.46);border-color:rgba(245,245,219,.28);-webkit-backdrop-filter:blur(28px) saturate(125%);backdrop-filter:blur(28px) saturate(125%);box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 28px 70px rgba(20,18,16,.18)}
+.urban-kaza-page .uk-hero .fact{padding-inline:clamp(0px,1.2vw,18px);border-left:1px solid rgba(245,245,219,.18)}
+.urban-kaza-page .uk-hero .fact:first-child{border-left:0;padding-left:0}
+.urban-kaza-page .ch{overflow:hidden}
+.urban-kaza-page .ch::after{display:none}
+.urban-kaza-page .pad{padding-block:clamp(104px,12vw,190px)}
+.urban-kaza-page .d2{font-size:clamp(3.125rem,5vw,3.75rem);line-height:.98;letter-spacing:-.035em}
+.urban-kaza-page .head{gap:clamp(36px,7vw,112px)}
+.urban-kaza-page .head__side{font-size:clamp(1rem,.4vw + .92rem,1.15rem);line-height:1.72}
+.urban-kaza-page .proj{gap:clamp(42px,7vw,112px)}
+.urban-kaza-page .plate{border-radius:0}
+.urban-kaza-page .ch--abyss .plate img{filter:saturate(.74)}
+.urban-kaza-page .specs{border-top:1px solid var(--line)}
+.urban-kaza-page .specs li{border-bottom:1px solid var(--line);padding-block:17px}
+.urban-kaza-page .floor-option{min-height:58px}
+.urban-kaza-page .floor-option[aria-current="true"]{transform:translateX(6px)}
+.urban-kaza-page .btn{border-radius:999px;min-height:48px}
+.urban-kaza-page .uk-intro__skip{border-radius:999px}
+.urban-kaza-page .tbl{border-top:1px solid var(--line)}
+
+@media(hover:hover) and (pointer:fine){
+  .project-collection .proj__media img,.home-stories .story img,.home-tours .story img{transition:transform 900ms var(--premium-ease),filter 300ms ease}
+  .project-collection .proj__media:hover img,.home-stories .story:hover img,.home-tours .story:hover img{transform:scale(1.025)}
+}
+
+@media(max-width:1139px){
+  .hdr__in{height:62px}
+  .project-collection .proj:nth-child(3){grid-template-columns:minmax(0,1fr)}
+  .project-collection .proj:nth-child(3) .plate{aspect-ratio:16/10}
+  .home-residents .grid{grid-template-columns:1fr 1fr}
+  .home-residents figure:first-child{grid-column:1/-1;min-height:280px}
+}
+
+@media(max-width:767px){
+  :root{--premium-section:clamp(76px,18vw,110px)}
+  .hdr__in{height:58px;border-radius:16px;padding-inline:14px 7px}
+  .home-editorial .hero{min-height:100dvh}
+  .home-editorial .hero__in{padding-top:116px;padding-bottom:80px;text-align:left;place-items:end start}
+  .home-editorial .hero__stage{justify-items:start}
+  .home-editorial .hero .d1{max-width:8.8ch;font-size:clamp(3.7rem,17vw,5.8rem);line-height:.9}
+  .home-editorial .hero__sub{margin-top:24px}
+  .home-editorial .hero .btn-row{justify-content:flex-start;align-items:stretch;width:100%;margin-top:28px!important}
+  .home-editorial .hero .btn-row .btn{width:100%}
+  .home-editorial .hero .cta-orbit{display:none}
+  .herocards{display:none}
+  .portfolio-index .facts{grid-template-columns:1fr 1fr}
+  .portfolio-index .fact{min-height:72px}
+  .home-proof .grid{grid-template-columns:1fr;border-bottom:0}
+  .proofcard{border-right:0;border-bottom:1px solid rgba(13,27,48,.14);padding-inline:0}
+  .project-collection{grid-template-columns:1fr;gap:76px}
+  .project-collection .proj,.project-collection .proj:nth-child(3){grid-column:auto;display:flex;grid-template-columns:none;padding-top:0}
+  .project-collection .proj:nth-child(3) .plate{aspect-ratio:4/5}
+  .home-delivered .grid .plate:last-child{margin-top:0}
+  .home-values .ledger{border-block:0}
+  .home-tours .story:nth-child(2),.home-stories .story:nth-child(2),.home-stories .story:nth-child(3){padding-top:0}
+  .home-tours .plate,.home-stories .story:first-child .plate,.home-stories .story:not(:first-child) .plate{aspect-ratio:4/3}
+  .home-residents .grid,.home-stories .grid{grid-template-columns:1fr}
+  .home-residents figure:first-child{grid-column:auto;min-height:auto}
+  .home-residents figure{min-height:auto}
+  .urban-kaza-page .uk-hero .hero__in{padding-top:126px;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+  .urban-kaza-page .uk-hero .hero__stage{gap:18px}
+  .uk-hero__brand strong{font-size:clamp(2.8rem,13vw,3.4rem)}
+  .urban-kaza-page .uk-hero .facts{grid-template-columns:1fr 1fr;padding:22px 20px;border-radius:16px}
+  .urban-kaza-page .uk-hero .fact{padding:0;border-left:0}
+  .urban-kaza-page .head{gap:28px}
+  .urban-kaza-page .d2{font-size:clamp(2.5rem,11vw,3.1rem)}
+}
+
+@media(max-width:430px){
+  .portfolio-index .facts{grid-template-columns:1fr}
+  .urban-kaza-page .uk-hero .facts{grid-template-columns:1fr 1fr;gap:18px 14px}
+}
+
+@media(max-width:339px){.urban-kaza-page .uk-hero .facts{grid-template-columns:1fr}}
+
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
+  .hdr__in,.hdr.is-stuck .hdr__in{background:#0D1B30;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .urban-kaza-page .uk-hero .facts{background:#303030;-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .home-editorial .hero__media img,.urban-kaza-page .uk-hero .hero__media img,.herocard,.project-collection .proj__media img,.home-stories .story img,.home-tours .story img{transition:none!important;transform:none!important}
+}

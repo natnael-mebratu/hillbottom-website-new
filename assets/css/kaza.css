@@ -1,0 +1,85 @@
+/* Urban Kaza — adapted from the supplied Kaza Living brand system.
+   70% Off-White / 20% Terracotta / 10% Charcoal, with Deep Forest as
+   a controlled accent. Futura PT is the single typographic voice. */
+.urban-kaza-page{
+  --uk-terra:#A6522F;--uk-charcoal:#303030;--uk-offwhite:#F5F5DB;
+  --uk-forest:#175047;--uk-orange:#DF8700;--uk-taupe:#DBCFBA;--uk-grey:#D0D0D0;
+  --display:"Futura PT","General Sans",sans-serif;--sans:"Futura PT","Noto Sans Ethiopic",sans-serif;
+  --ease-kaza:cubic-bezier(.23,1,.32,1);background:var(--uk-offwhite);font-family:var(--sans);font-weight:300
+}
+.urban-kaza-page::selection{background:var(--uk-terra);color:var(--uk-offwhite)}
+.urban-kaza-page .hdr__in{background:rgba(48,48,48,.58);border:1px solid rgba(245,245,219,.2);border-radius:18px;-webkit-backdrop-filter:blur(24px) saturate(1.45);backdrop-filter:blur(24px) saturate(1.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 18px 50px rgba(23,80,71,.16)}
+.urban-kaza-page .hdr.is-stuck .hdr__in{background:rgba(48,48,48,.82);-webkit-backdrop-filter:blur(32px) saturate(1.35);backdrop-filter:blur(32px) saturate(1.35)}
+.uk-site-lockup{display:flex;align-items:center;gap:12px;color:var(--uk-offwhite);flex:none}
+.uk-site-lockup__apex{color:var(--uk-terra);font-size:1.25rem;line-height:1;transform:translateY(-1px)}
+.uk-site-lockup>span:last-child{display:grid;line-height:1}
+.uk-site-lockup b{font-size:.86rem;font-weight:500;letter-spacing:.15em}
+.uk-site-lockup i{margin-top:5px;font-size:.47rem;font-style:normal;font-weight:400;letter-spacing:.3em;color:var(--uk-taupe)}
+.urban-kaza-page .nav a{color:var(--uk-offwhite)}
+.urban-kaza-page .nav a::after{background:var(--uk-terra)}
+.urban-kaza-page .hero{--accent:var(--uk-terra);background:var(--uk-charcoal);min-height:100svh}
+.urban-kaza-page .hero__veil{background:linear-gradient(90deg,rgba(48,48,48,.9) 0%,rgba(48,48,48,.56) 48%,rgba(23,80,71,.28) 100%)}
+.urban-kaza-page .uk-hero .hero__in{padding-bottom:clamp(42px,6vh,76px)}
+.urban-kaza-page .uk-hero .hero__stage{display:grid;gap:22px;max-width:760px}
+.urban-kaza-page .uk-hero .d1{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.uk-hero__brand{display:grid;justify-items:start;gap:9px;color:var(--uk-offwhite);width:max-content;max-width:100%}
+.uk-hero__brand>span{font-size:1.5rem;line-height:1;color:var(--uk-terra)}
+.uk-hero__brand strong{font-size:clamp(3.125rem,5.4vw,3.75rem);font-weight:500;line-height:.95;letter-spacing:.08em;text-transform:uppercase}
+.uk-hero__brand small{font-size:.69rem;font-weight:500;letter-spacing:.34em;color:var(--uk-taupe)}
+.urban-kaza-page .uk-hero .hero__sub{font-size:clamp(1.05rem,1.4vw,1.28rem);line-height:1.62;color:var(--uk-offwhite);max-width:52ch}
+.urban-kaza-page .uk-hero .facts{padding:clamp(20px,2.4vw,34px);border:1px solid rgba(245,245,219,.2);border-radius:20px;background:rgba(245,245,219,.11);-webkit-backdrop-filter:blur(26px) saturate(1.35);backdrop-filter:blur(26px) saturate(1.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 24px 60px rgba(0,0,0,.2)}
+.urban-kaza-page .uk-hero .fact .k{color:var(--uk-taupe)}
+.urban-kaza-page .uk-hero .fact .v{font-family:var(--sans);font-size:clamp(1.05rem,1.5vw,1.35rem);font-weight:500;color:var(--uk-offwhite)}
+.urban-kaza-page .uk-hero .fact .n{color:rgba(245,245,219,.76)}
+.urban-kaza-page .ch--paper,.urban-kaza-page .ch--paper-2{--fg:var(--uk-charcoal);--fg-2:#5B5B51;--bg:var(--uk-offwhite);--line:rgba(48,48,48,.16);--accent:var(--uk-terra);color:var(--fg)}
+.urban-kaza-page .ch--abyss{--fg:var(--uk-offwhite);--fg-2:var(--uk-taupe);--bg:var(--uk-charcoal);--line:rgba(245,245,219,.18);--accent:var(--uk-terra);color:var(--fg)}
+.urban-kaza-page .ch--ink{--fg:var(--uk-offwhite);--fg-2:#F0DFD4;--bg:var(--uk-terra);--line:rgba(245,245,219,.24);--accent:var(--uk-offwhite);color:var(--fg)}
+.urban-kaza-page .d1,.urban-kaza-page .d2,.urban-kaza-page .d3{font-family:var(--display);font-weight:500;letter-spacing:-.025em}
+.urban-kaza-page .d2{font-size:clamp(3.125rem,5vw,3.75rem);line-height:1.02;max-width:18ch}
+.urban-kaza-page .mark,.urban-kaza-page .fact .k{letter-spacing:.2em}
+.urban-kaza-page .head__side{font-size:1.05rem;line-height:1.72;max-width:49ch}
+.urban-kaza-page .plate{border-radius:0}
+.urban-kaza-page .specs li i{color:var(--accent)}
+.urban-kaza-page .btn{border-radius:14px;background:rgba(245,245,219,.11);border-color:rgba(245,245,219,.28);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 14px 40px rgba(48,48,48,.12)}
+.urban-kaza-page .ch--paper .btn{background:rgba(245,245,219,.58);border-color:rgba(48,48,48,.2)}
+.urban-kaza-page .btn--gold{background:linear-gradient(145deg,#C96B45 0%,var(--uk-terra) 52%,#7F3B24 100%);color:var(--uk-offwhite);border-color:rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.38),inset 0 -1px 0 rgba(68,24,12,.32),0 16px 38px rgba(92,40,23,.24)}
+.urban-kaza-page .btn--gold:hover{background:linear-gradient(145deg,#D77A51 0%,#B65C38 52%,#8B4027 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.48),0 20px 46px rgba(92,40,23,.28)}
+.floor-option{appearance:none;width:100%;min-height:52px;padding:10px 12px;border:0;border-left:2px solid transparent;background:transparent;color:inherit;cursor:pointer;display:flex;gap:16px;align-items:baseline;text-align:left;transition:color 180ms ease,border-color 180ms ease,background 180ms ease,transform 180ms var(--ease-kaza)}
+.floor-option i{font-style:normal;font-family:var(--sans);font-size:.6875rem;font-weight:500;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;min-width:110px;flex:none}
+.floor-option span{font-size:1rem}
+.floor-option[aria-current="true"]{border-left-color:var(--uk-terra);background:rgba(166,82,47,.08);color:var(--uk-terra);transform:translateX(4px)}
+.floor-option:focus-visible{outline:2px solid var(--uk-terra);outline-offset:3px}
+.urban-kaza-page .tbl thead th{color:var(--uk-terra)}
+.urban-kaza-page .ftr{background:var(--uk-charcoal)}
+.urban-kaza-page .ftr .lockup{opacity:.84}
+.urban-kaza-page .ch::after{content:"";position:absolute;right:0;top:0;width:min(20vw,300px);height:min(20vw,300px);opacity:.055;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23303030' stroke-width='2'%3E%3Cpath d='M0 60 30 30l30 30 30-30 30 30M0 90l30-30 30 30 30-30 30 30'/%3E%3C/g%3E%3C/svg%3E");clip-path:polygon(100% 0,100% 100%,0 0)}
+.urban-kaza-page .ch--abyss::after,.urban-kaza-page .ch--ink::after{filter:invert(1)}
+.uk-intro{display:none}
+.js .uk-intro{display:grid;position:fixed;inset:0;z-index:310;place-items:center;background:var(--uk-terra);transition:clip-path 620ms var(--ease-kaza),visibility 620ms;clip-path:inset(0);visibility:visible;overflow:hidden}
+body.uk-intro-active{overflow:hidden}
+.uk-intro.is-done{clip-path:inset(0 0 100% 0);visibility:hidden;pointer-events:none}
+.uk-intro__pattern{position:absolute;right:-4vw;top:-4vw;width:min(54vw,760px);aspect-ratio:1;opacity:.13;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23F5F5DB' stroke-width='2'%3E%3Cpath d='M0 60 30 30l30 30 30-30 30 30M0 90l30-30 30 30 30-30 30 30'/%3E%3C/g%3E%3C/svg%3E")}
+.uk-intro__lockup{position:relative;display:grid;justify-items:center;gap:12px;color:var(--uk-offwhite);clip-path:inset(100% 0 0);transform:translateY(28px);opacity:0}
+.uk-intro.is-live .uk-intro__lockup{animation:uk-rise 920ms var(--ease-kaza) 120ms forwards}
+.uk-intro__apex{font-size:1.75rem;line-height:1;color:var(--uk-charcoal)}
+.uk-intro__lockup strong{font-size:clamp(3.125rem,7vw,3.75rem);font-weight:500;line-height:.95;letter-spacing:.12em;text-align:center}
+.uk-intro__lockup small{font-size:.7rem;font-weight:500;letter-spacing:.38em;color:var(--uk-offwhite)}
+.uk-intro__skip{position:absolute;right:clamp(20px,4vw,54px);top:clamp(20px,4vw,44px);z-index:2;min-width:96px;min-height:44px;border:1px solid rgba(245,245,219,.5);border-radius:12px;background:rgba(245,245,219,.1);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--uk-offwhite);padding:12px 18px;text-transform:uppercase;letter-spacing:.14em;font-size:.68rem;cursor:pointer;transition:background 180ms ease,transform 140ms ease}
+.uk-intro__skip:hover{background:rgba(245,245,219,.18)}
+@keyframes uk-rise{to{clip-path:inset(0);transform:none;opacity:1}}
+@media(max-width:767px){
+  .uk-site-lockup i{letter-spacing:.2em}.urban-kaza-page .d2{font-size:clamp(2.25rem,11vw,2.8rem)}
+  .uk-hero__brand strong{font-size:clamp(2.6rem,13vw,3.35rem)}
+  .urban-kaza-page .uk-hero .facts{border-radius:16px;grid-template-columns:1fr 1fr;gap:22px 18px}
+  .urban-kaza-page .ch::after{width:42vw;height:42vw}.uk-intro__pattern{width:94vw}
+}
+@media(max-width:420px){.urban-kaza-page .uk-hero .facts{grid-template-columns:1fr}.uk-intro__lockup strong{font-size:2.4rem;letter-spacing:.08em}}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
+  .urban-kaza-page .hdr__in{background:var(--uk-charcoal);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .urban-kaza-page .uk-hero .facts{background:rgba(48,48,48,.92);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .urban-kaza-page .btn,.uk-intro__skip{-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .js .uk-intro{display:none}.uk-intro__lockup{animation:none!important}.urban-kaza-page .ch::after{display:none}
+  .floor-option[aria-current="true"]{transform:none}
+}

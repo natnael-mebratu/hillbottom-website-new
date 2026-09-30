@@ -1,0 +1,11 @@
+import fs from "fs";
+const L = "C:/Users/Ident/OneDrive/Desktop/2. Branding Projects/Property and Development/HillBottom Real Estate/Logo Accessible Files/SVG";
+const t = fs.readFileSync(L + "/Hillbottom Logo-16.svg", "utf8");
+const polys = [...t.matchAll(/<(polygon|path|rect|circle)\b[^>]*>/g)].map(m => m[0]);
+console.log("shapes:", polys.length);
+const clean = polys.map(s => s.replace(/\s*class="[^"]*"/g, "").replace(/\s*(?:id|data-name)="[^"]*"/g, ""));
+const svg = `<svg viewBox="0 0 117.6 117.6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${clean.join("")}</svg>`;
+fs.mkdirSync("assets/img", { recursive: true });
+fs.writeFileSync("assets/img/mark.svg", svg);
+console.log(svg.length, "bytes");
+console.log(svg.slice(0, 1200));

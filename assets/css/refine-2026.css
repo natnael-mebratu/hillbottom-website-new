@@ -1,0 +1,292 @@
+/* ==========================================================================
+   Refinement layer — September 2026 (loaded last)
+   1. Flat button system        3. Urban Kaza intro (native motion)
+   2. Hill Bottom intro          4. Phase 3 interiors viewer
+   5. Small UX corrections
+   ========================================================================== */
+
+/* ---------- 1. Flat buttons ------------------------------------------------
+   One quiet language everywhere: no gradients, no glass, no glow, no lift.
+   Colour does the work; the only motion is a colour change and the icon nudge. */
+.btn,
+.urban-kaza-page .btn,
+.urban-kaza-page .ch--paper .btn,
+.urban-kaza-page .uk-hero .btn{
+  --btn-fg:var(--fg);
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  min-height:50px;padding:15px 28px;border-radius:2px;
+  border:1px solid color-mix(in srgb,var(--btn-fg) 34%,transparent);
+  background:transparent;color:var(--btn-fg);
+  font-family:var(--sans);font-size:.72rem;font-weight:500;letter-spacing:.16em;line-height:1;text-transform:uppercase;
+  box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;transform:none;
+  transition:background-color 220ms cubic-bezier(.2,.7,.2,1),color 220ms cubic-bezier(.2,.7,.2,1),border-color 220ms cubic-bezier(.2,.7,.2,1);
+}
+.btn::before,.btn::after,.btn--gold::after,.btn--light::before,.home-abroad__content .btn--ghost::before{display:none!important;content:none}
+.btn:hover,.urban-kaza-page .btn:hover{
+  transform:none;box-shadow:none;
+  border-color:var(--btn-fg);background:color-mix(in srgb,var(--btn-fg) 9%,transparent);
+}
+.btn:active,.urban-kaza-page .btn:active{transform:none;background:color-mix(in srgb,var(--btn-fg) 15%,transparent)}
+.btn svg{width:15px;height:15px;transition:transform 260ms cubic-bezier(.2,.7,.2,1)}
+.btn:hover svg{transform:translateX(3px)}
+.btn:focus-visible{outline:2px solid var(--gold-lit);outline-offset:3px;border-radius:2px}
+
+/* primary: flat champagne on dark grounds, flat navy on paper */
+.btn--gold,
+.hero .btn--gold,.hdr .btn--gold,.welcome .btn--gold{
+  background:#C6B27C;border-color:#C6B27C;color:#0D1B30;box-shadow:none;
+}
+.btn--gold:hover,
+.hero .btn--gold:hover,.hdr .btn--gold:hover,.welcome .btn--gold:hover{background:#D6C597;border-color:#D6C597;color:#0D1B30}
+.ch--paper .btn--gold,.ch--paper-2 .btn--gold{background:#0D1B30;border-color:#0D1B30;color:#F6F8FB}
+.ch--paper .btn--gold:hover,.ch--paper-2 .btn--gold:hover{background:#1D3050;border-color:#1D3050;color:#fff}
+.btn--solid{background:#0D1B30;border-color:#0D1B30;color:#F6F8FB}
+.btn--solid:hover{background:#1D3050;border-color:#1D3050}
+.btn--light,.welcome .btn--light{background:#F6F8FB!important;border-color:#F6F8FB!important;color:#0D1B30!important}
+.btn--light:hover,.welcome .btn--light:hover{background:#fff!important}
+.btn--ghost{border-color:color-mix(in srgb,var(--btn-fg) 24%,transparent)}
+.home-abroad__content .btn--ghost{background:#F6F8FB!important;border-color:#F6F8FB!important;color:#0D1B30!important}
+
+/* Urban Kaza keeps its own palette, same flat grammar */
+.urban-kaza-page .btn--gold,
+.urban-kaza-page .uk-hero .btn--gold,
+.urban-kaza-page .uk-manifesto .btn--gold{background:#A6522F;border-color:#A6522F;color:#F5F5DB;box-shadow:none}
+.urban-kaza-page .btn--gold:hover,
+.urban-kaza-page .uk-hero .btn--gold:hover,
+.urban-kaza-page .uk-manifesto .btn--gold:hover{background:#B8603B;border-color:#B8603B;color:#fff}
+.urban-kaza-page .ch--paper .btn:not(.btn--gold){--btn-fg:#303030}
+
+@media(prefers-contrast:more){.btn{border-color:var(--btn-fg)}}
+
+/* ---------- 2. Hill Bottom intro ---------------------------------------- */
+@property --hbi-r{syntax:"<length>";inherits:true;initial-value:0px}
+.hbi{
+  position:fixed;inset:0;z-index:300;overflow:hidden;pointer-events:auto;cursor:default;
+  background:radial-gradient(120% 90% at 50% 38%,#12233D 0%,#0D1B30 46%,#081222 100%);
+  animation:hbi-out 1250ms cubic-bezier(.65,0,.25,1) 3.95s forwards;
+}
+.hbi-seen .hbi{display:none}
+.intro-lock body{overflow:hidden}
+.hbi svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hbi__lines path{stroke-dasharray:1;stroke-dashoffset:1;animation:hbi-draw 1150ms cubic-bezier(.45,.05,.2,1) calc(.22s + var(--i) * 38ms) forwards}
+.hbi__lines{animation:hbi-fade 700ms cubic-bezier(.4,0,.2,1) 2.35s forwards}
+/* the summit glint: a bright copy of the lines, revealed only inside an expanding ring */
+.hbi__lines--glow{
+  --hbi-r:0px;
+  filter:drop-shadow(0 0 6px rgba(246,226,168,.95)) drop-shadow(0 0 18px rgba(231,200,130,.6));
+  -webkit-mask-image:radial-gradient(circle at 50% 10.7%,transparent calc(var(--hbi-r) - 110px),#000 calc(var(--hbi-r) - 30px),#000 var(--hbi-r),transparent calc(var(--hbi-r) + 40px));
+          mask-image:radial-gradient(circle at 50% 10.7%,transparent calc(var(--hbi-r) - 110px),#000 calc(var(--hbi-r) - 30px),#000 var(--hbi-r),transparent calc(var(--hbi-r) + 40px));
+  animation:hbi-ring 1250ms cubic-bezier(.3,.1,.3,1) 1.3s forwards,hbi-fade 500ms ease 2.35s forwards;
+}
+.hbi__lines--glow path{stroke-width:2.6px!important;opacity:1!important}
+.hbi__lattice{opacity:0;animation:hbi-lattice 1100ms ease 2.4s forwards}
+.hbi__mark{position:absolute;left:50%;top:50%;width:clamp(210px,34vw,460px);translate:-50% -54%;opacity:0;filter:blur(10px) drop-shadow(0 0 0 rgba(231,210,155,0));scale:.9;animation:hbi-mark 1000ms cubic-bezier(.16,1,.3,1) 2.55s forwards}
+.hbi__mark svg{position:static;width:100%;height:auto;overflow:visible}
+.hbi__sheen{animation:hbi-sheen 1100ms cubic-bezier(.45,0,.25,1) 3.05s forwards}
+@keyframes hbi-draw{to{stroke-dashoffset:0}}
+@keyframes hbi-ring{to{--hbi-r:170vmax}}
+@keyframes hbi-fade{to{opacity:0}}
+@keyframes hbi-lattice{to{opacity:.11}}
+@keyframes hbi-mark{
+  0%{opacity:0;scale:.9;filter:blur(10px) drop-shadow(0 0 0 rgba(231,210,155,0))}
+  45%{opacity:1;filter:blur(0) drop-shadow(0 0 26px rgba(231,210,155,.55))}
+  100%{opacity:1;scale:1;filter:blur(0) drop-shadow(0 0 10px rgba(231,210,155,.18))}
+}
+@keyframes hbi-sheen{from{transform:skewX(-18deg) translateX(0)}to{transform:skewX(-18deg) translateX(190px)}}
+@keyframes hbi-out{0%{--wipe:0%}100%{--wipe:135%;visibility:hidden;pointer-events:none}}
+.hbi-seen .hbi,.hbi.is-done{pointer-events:none}
+/* the retired film loader */
+.site-loader{display:none!important}
+
+/* ---------- 3. Urban Kaza intro ----------------------------------------- */
+.uki{
+  position:fixed;inset:0;z-index:310;display:grid;place-items:center;overflow:hidden;
+  background:#A6522F;color:#F5F5DB;
+  animation:uki-out 1300ms cubic-bezier(.65,0,.25,1) 6.35s forwards;
+}
+.uki::after{ /* paper grain, as in the film */
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .2 0 0 0 0 .1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.uki-seen .uki{display:none}
+.uki.is-skipped,.hbi.is-skipped{animation-name:uki-out;animation-duration:760ms;animation-delay:0s;animation-timing-function:cubic-bezier(.65,0,.25,1);animation-fill-mode:forwards}
+.hbi.is-skipped{animation-name:hbi-out}
+.uki__cam{position:absolute;inset:0;transform:scale(var(--uki-z,2.3));transform-origin:50% 50%;animation:uki-pull 1500ms cubic-bezier(.65,0,.25,1) 1.85s forwards}
+.uki__field{width:100%;height:100%;display:block;animation:uki-dim 900ms cubic-bezier(.4,0,.2,1) 3.25s forwards}
+.uki__field polygon{stroke-width:4;stroke-dasharray:1 1;stroke-dashoffset:1;animation:uki-draw 620ms cubic-bezier(.5,0,.2,1) var(--d) forwards,uki-cut 900ms cubic-bezier(.4,0,.2,1) 3.3s forwards}
+.uki__lockup{position:relative;z-index:1;width:min(430px,62vw)}
+.uki__lockup svg{width:100%;height:auto;display:block;overflow:visible}
+.uki__k,.uki__u{opacity:0;transform-box:fill-box;transform-origin:50% 100%}
+.uki__k{transform:translateY(22%);animation:uki-rise 900ms cubic-bezier(.16,1,.3,1) calc(3.75s + var(--k) * 110ms) forwards}
+.uki__u{animation:uki-soft 800ms cubic-bezier(.16,1,.3,1) calc(4.5s + var(--k) * 60ms) forwards}
+.uki__tag{font-family:"Futura PT","Futura",var(--sans);font-size:44px;font-weight:300;letter-spacing:.5em;fill:#F5F5DB;opacity:0;animation:uki-tag 1100ms cubic-bezier(.16,1,.3,1) 4.85s forwards}
+.uki__glint{opacity:0;animation:uki-glint 900ms cubic-bezier(.45,0,.25,1) 5.4s forwards;mix-blend-mode:screen}
+.uki__skip{
+  position:absolute;right:clamp(18px,4vw,54px);top:calc(env(safe-area-inset-top,0px) + clamp(18px,4vw,40px));z-index:3;
+  min-height:44px;padding:0 20px;border:1px solid rgba(245,245,219,.42);border-radius:2px;background:transparent;color:#F5F5DB;
+  font:500 .68rem/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background-color .2s,border-color .2s
+}
+.uki__skip:hover{background:rgba(245,245,219,.12);border-color:#F5F5DB}
+@keyframes uki-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes uki-pull{to{transform:scale(1)}}
+@keyframes uki-dim{to{opacity:.2}}
+@keyframes uki-cut{from{stroke-width:4;stroke-dasharray:1 1}to{stroke-width:2.2;stroke-dasharray:.84 .16}}
+@keyframes uki-rise{to{opacity:1;transform:none}}
+@keyframes uki-soft{from{opacity:0;transform:translateY(40%)}to{opacity:1;transform:none}}
+@keyframes uki-tag{from{opacity:0;letter-spacing:.72em}to{opacity:.92;letter-spacing:.5em}}
+@keyframes uki-glint{0%{opacity:0;transform:skewX(-16deg) translateX(-40px)}30%{opacity:1}100%{opacity:0;transform:skewX(-16deg) translateX(260px)}}
+@keyframes uki-out{0%{--wipe:0%}100%{--wipe:135%;visibility:hidden;pointer-events:none}}
+/* the retired film intro */
+.uk-intro{display:none!important}
+
+@media(prefers-reduced-motion:reduce){.hbi,.uki{display:none!important}}
+
+/* ---------- 4. Phase 3 interiors ---------------------------------------- */
+.rec-inside{padding-block:clamp(88px,10vw,150px)}
+.rec-inside .head{margin-bottom:clamp(34px,4vw,56px)}
+.rec-zones__tabs{display:flex;flex-wrap:wrap;gap:4px 34px;margin-bottom:22px;border-bottom:1px solid rgba(246,248,251,.14)}
+.rec-zones__tabs [role=tab]{
+  position:relative;display:inline-flex;align-items:baseline;gap:9px;min-height:48px;padding:12px 0;background:none;border:0;cursor:pointer;
+  color:#A8B7CC;font:400 .95rem/1.2 var(--sans);letter-spacing:.01em;transition:color .2s
+}
+.rec-zones__tabs [role=tab] small{font-size:.66rem;letter-spacing:.14em;color:#6F819B;font-variant-numeric:tabular-nums}
+.rec-zones__tabs [role=tab]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:#C6B27C;transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.rec-zones__tabs [role=tab]:hover{color:#F6F8FB}
+.rec-zones__tabs [role=tab][aria-selected=true]{color:#F6F8FB}
+.rec-zones__tabs [role=tab][aria-selected=true]::after{transform:none}
+.rec-stage{
+  position:relative;display:block;width:100%;aspect-ratio:16/9;max-height:78vh;padding:0;border:0;overflow:hidden;cursor:zoom-in;background:#08111F
+}
+.rec-stage__bg{position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;filter:blur(38px) saturate(1.1) brightness(.55);transition:opacity .5s}
+.rec-stage__img{position:relative;width:100%;height:100%;object-fit:contain;transition:opacity .45s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.16,1,.3,1)}
+.rec-stage.is-swapping .rec-stage__img{opacity:0;transform:scale(1.015)}
+.rec-stage.is-swapping .rec-stage__bg{opacity:.4}
+.rec-stage__zoom{
+  position:absolute;right:16px;bottom:16px;display:inline-flex;align-items:center;gap:8px;padding:10px 14px;
+  background:rgba(8,17,31,.72);color:#F6F8FB;font:500 .64rem/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s
+}
+.rec-stage__zoom svg{width:13px;height:13px}
+.rec-stage:hover .rec-stage__zoom,.rec-stage:focus-visible .rec-stage__zoom{opacity:1;transform:none}
+.rec-stage__bar{display:flex;align-items:center;gap:20px;padding:18px 0 22px;border-bottom:1px solid rgba(246,248,251,.1)}
+.rec-stage__bar p{margin:0;flex:1;color:#F6F8FB;font-size:1rem;font-weight:300}
+.rec-stage__count{color:#8C9CB3;font-size:.72rem;letter-spacing:.16em;font-variant-numeric:tabular-nums}
+.rec-stage__nav{display:flex;gap:6px}
+.rec-stage__nav button{display:grid;place-items:center;width:46px;height:46px;border:1px solid rgba(246,248,251,.26);border-radius:2px;background:transparent;color:#F6F8FB;cursor:pointer;transition:background-color .2s,border-color .2s}
+.rec-stage__nav button:hover{border-color:#F6F8FB;background:rgba(246,248,251,.08)}
+.rec-stage__nav svg{width:17px;height:17px}
+.rec-zone{padding-top:18px}
+.rec-zone__title{display:none}
+.rec-strip{display:flex;gap:10px;margin:0;padding:0;list-style:none;overflow-x:auto;scrollbar-width:thin;scroll-snap-type:x mandatory;padding-bottom:4px}
+.rec-strip li{flex:none;scroll-snap-align:start}
+.rec-strip a{position:relative;display:block;height:clamp(74px,8vw,104px);outline-offset:2px}
+.rec-strip img{height:100%;width:auto;display:block;opacity:.5;filter:saturate(.7);transition:opacity .3s,filter .3s}
+.rec-strip a::after{content:"";position:absolute;inset:0;border:1px solid transparent;transition:border-color .3s}
+.rec-strip a:hover img{opacity:.85;filter:none}
+.rec-strip a[aria-current=true] img{opacity:1;filter:none}
+.rec-strip a[aria-current=true]::after{border-color:#C6B27C}
+/* without script: every zone is listed, each thumb opens its render */
+.rec-zones:not(.is-enhanced) .rec-stage__nav,.rec-zones:not(.is-enhanced) [role=tablist]{display:none}
+.rec-zones:not(.is-enhanced) .rec-zone__title{display:block;margin:28px 0 12px;color:#F6F8FB;font-size:1.1rem;font-weight:400}
+@media(max-width:700px){
+  .rec-zones__tabs{flex-wrap:nowrap;overflow-x:auto;gap:26px;scrollbar-width:none;margin-inline:calc(var(--gut) * -1);padding-inline:var(--gut)}
+  .rec-zones__tabs::-webkit-scrollbar{display:none}
+  .rec-zones__tabs [role=tab]{white-space:nowrap}
+  .rec-stage{aspect-ratio:4/5;margin-inline:calc(var(--gut) * -1);width:calc(100% + var(--gut) * 2)}
+  .rec-stage__img{object-fit:cover}
+  .rec-stage__bar{flex-wrap:wrap;gap:10px 14px}
+  .rec-stage__bar p{flex-basis:100%;font-size:.95rem}
+  .rec-stage__count{flex:1}
+}
+@media(hover:none){.rec-stage__zoom{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.rec-stage__img,.rec-stage__bg,.rec-zones__tabs [role=tab]::after{transition:none}}
+
+/* ---------- 5. UX corrections ------------------------------------------- */
+.cta-orbit{display:none!important}
+.welcome .btn{padding-inline:18px;white-space:nowrap}
+@media(max-width:700px){.uki__cam{--uki-z:1.55}.uki__lockup{width:min(300px,74vw)}}
+/* exterior wall: tiles fill their cells (the right column used to letterbox against the 2×2 lead) */
+.rec-gallery__wall .gal{grid-auto-rows:clamp(190px,20vw,330px)}
+.rec-gallery__wall .gal>button{height:100%}
+.rec-gallery__wall .gal>button .plate,.rec-gallery__wall .gal>button:first-child .plate{height:100%;aspect-ratio:auto}
+.rec-gallery__wall .gal>button .plate img{width:100%;height:100%;object-fit:cover}
+.gal button::after{background:linear-gradient(to top,rgba(6,11,20,.32),rgba(6,11,20,0) 55%)}
+@media(max-width:780px){.rec-gallery__wall .gal>button:first-child{grid-column:1/-1;grid-row:span 1}}
+/* status chips and rail read as the same flat family as the buttons */
+.project-status,.project-stage-chip,.construction-card__status{background:#C6B27C;border-color:#C6B27C;border-radius:2px;box-shadow:none}
+.project-status__icon{border-radius:2px}
+.rail a:hover,.rail a:focus-visible{background:#C6B27C}
+.rec-amenity-card--summary{background:#907B46}
+
+/* ---------- 6. Intro → page handoff ------------------------------------
+   The intro panel dissolves upward on a feathered edge (not a hard wipe) while
+   the page arrives underneath: the hero image pulls focus from a soft, dim,
+   close-in frame; the header drops in; then the headline and actions rise. */
+@property --wipe{syntax:"<percentage>";inherits:false;initial-value:0%}
+.hbi,.uki{
+  --wipe:0%;
+  -webkit-mask-image:linear-gradient(to top,transparent calc(var(--wipe) - 35%),#000 var(--wipe));
+          mask-image:linear-gradient(to top,transparent calc(var(--wipe) - 35%),#000 var(--wipe));
+}
+.hbi__mark,.uki__lockup{transition:transform 1.1s cubic-bezier(.65,0,.25,1),opacity .8s ease}
+/* waiting state, only while an intro is actually playing */
+.intro-lock .hero__media img{transform:scale(1.14)!important;filter:blur(14px) brightness(.5) saturate(.8)!important}
+.intro-lock .hdr{opacity:0;transform:translateY(-16px)}
+.intro-lock .hero__stage,.intro-lock .hero .btn-row,.intro-lock .herocards,.intro-lock .uk-hero__facts,.intro-lock .hero__in>*{opacity:0;transform:translateY(34px)}
+/* arrival */
+.intro-reveal .hero__media img{transition:transform 2.4s cubic-bezier(.16,1,.3,1),filter 1.7s cubic-bezier(.3,.7,.3,1)!important}
+.intro-reveal .hdr{transition:opacity .9s ease .55s,transform 1.1s cubic-bezier(.16,1,.3,1) .55s}
+.intro-reveal .hero__stage,.intro-reveal .hero__in>*{transition:opacity 1s ease .35s,transform 1.4s cubic-bezier(.16,1,.3,1) .35s}
+.intro-reveal .hero .btn-row{transition:opacity 1s ease .7s,transform 1.4s cubic-bezier(.16,1,.3,1) .7s}
+.intro-reveal .herocards,.intro-reveal .uk-hero__facts{transition:opacity 1s ease .95s,transform 1.4s cubic-bezier(.16,1,.3,1) .95s}
+@media(prefers-reduced-motion:reduce){.intro-lock .hero__media img,.intro-lock .hdr,.intro-lock .hero__in>*{transform:none!important;filter:none!important;opacity:1!important}}
+
+/* ---------- 7. Urban Kaza zoning model --------------------------------------
+   Full-bleed orthographic clay renders (Blender, _build/kaza3d). White clay,
+   terracotta for the lit zone, grey for every word. */
+.uk-floor-story{overflow-x:clip}
+.uk-floor-story .uk-floor-explorer{display:block;border:0;background:none;padding:0;grid-template-columns:none}
+.uk-zoning{--z-ink:#6E6A64;--z-ink-2:#9A958E;--z-terra:#A6522F;position:relative;width:100vw;margin-inline:calc(50% - 50vw);color:var(--z-ink)}
+.uk-zoning__stage{position:relative;aspect-ratio:16/10;width:100%;overflow:hidden;background:#EFEDE8}
+.uk-zoning__view{position:absolute;inset:0}
+.uk-zoning__view[hidden]{display:none}
+.uk-zoning__view img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.uk-zoning__layer{opacity:0;transition:opacity .55s cubic-bezier(.2,.7,.2,1)}
+.uk-zoning__layer.is-on{opacity:1}
+.uk-zoning__pin{position:absolute;left:var(--x);top:var(--y);z-index:2;display:flex;align-items:center;gap:0;pointer-events:none;opacity:0;transform:translateX(-6px);transition:opacity .35s ease,transform .5s cubic-bezier(.16,1,.3,1)}
+.uk-zoning__pin.is-on{opacity:1;transform:none}
+.uk-zoning__pin i{width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:var(--z-terra);box-shadow:0 0 0 4px rgba(255,255,255,.85)}
+.uk-zoning__pin i::after{content:"";display:block;width:clamp(28px,4vw,64px);height:1px;margin:4px 0 0 9px;background:var(--z-ink-2)}
+.uk-zoning__pin b{margin-left:clamp(30px,4.2vw,66px);padding:7px 11px;background:#fff;color:var(--z-ink);font:400 .74rem/1.2 var(--sans);letter-spacing:.06em;white-space:nowrap}
+[data-view="elevation"] .uk-zoning__pin i::after{width:clamp(40px,7vw,120px)}
+[data-view="elevation"] .uk-zoning__pin b{margin-left:clamp(42px,7.2vw,122px)}
+.uk-zoning__views{position:absolute;right:clamp(16px,2.6vw,40px);top:clamp(16px,2.6vw,40px);z-index:3;display:flex;background:#fff;border:1px solid #DCD8D1}
+.uk-zoning__views button{min-height:42px;padding:0 18px;border:0;background:transparent;color:var(--z-ink-2);font:500 .66rem/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:color .2s,background-color .2s}
+.uk-zoning__views button+button{border-left:1px solid #DCD8D1}
+.uk-zoning__views button:hover{color:var(--z-ink)}
+.uk-zoning__views button[aria-pressed=true]{background:var(--z-terra);color:#fff}
+.uk-zoning__stamp{position:absolute;right:clamp(16px,2.6vw,40px);bottom:clamp(14px,2vw,28px);z-index:2;color:var(--z-ink-2);font:400 .62rem/1 var(--sans);letter-spacing:.2em;text-transform:uppercase}
+.uk-zoning__list{position:absolute;left:clamp(16px,2.6vw,40px);bottom:clamp(16px,2.6vw,40px);z-index:3;width:min(330px,34vw);margin:0;padding:6px 0;list-style:none;background:#fff;border:1px solid #DCD8D1}
+.uk-zoning__zone{position:relative;display:flex;align-items:center;gap:14px;width:100%;min-height:58px;padding:10px 18px;border:0;background:none;text-align:left;cursor:pointer;color:var(--z-ink)}
+.uk-zoning__zone::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:2px;background:var(--z-terra);transform:scaleY(0);transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.uk-zoning__zone.is-active::before{transform:none}
+.uk-zoning__zone+.uk-zoning__zone,.uk-zoning__list li+li .uk-zoning__zone{border-top:1px solid #EEEBE6}
+.uk-zoning__icon{display:grid;place-items:center;flex:none;width:36px;height:36px;border:1px solid #DCD8D1;color:var(--z-ink-2);transition:color .2s,border-color .2s,background-color .2s}
+.uk-zoning__icon .uicon{width:18px;height:18px}
+.uk-zoning__zone.is-active .uk-zoning__icon{background:var(--z-terra);border-color:var(--z-terra);color:#fff}
+.uk-zoning__zone span:last-child{display:grid;gap:3px}
+.uk-zoning__zone i{font-style:normal;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--z-ink-2)}
+.uk-zoning__zone b{font-size:.92rem;font-weight:400;color:var(--z-ink)}
+.uk-zoning__zone:hover b,.uk-zoning__zone.is-active b{color:#3F3B36}
+@media(max-width:900px){
+  .uk-zoning__stage{aspect-ratio:1/1;overflow:visible;margin-top:58px}
+  .uk-zoning__view{overflow:hidden}
+  .uk-zoning__view img{object-position:47% 50%}
+  [data-view="elevation"] .uk-zoning__view img{object-position:50% 50%}
+  .uk-zoning__pin{display:none}
+  .uk-zoning__list{position:static;width:auto;margin:0 var(--gut);border-top:0}
+  .uk-zoning__views{left:var(--gut);right:var(--gut);top:-58px;justify-content:stretch}
+  .uk-zoning__views button{flex:1;padding:0 8px}
+  .uk-zoning__stamp{display:none}
+}
+@media(prefers-reduced-motion:reduce){.uk-zoning__layer,.uk-zoning__pin{transition:none}}
