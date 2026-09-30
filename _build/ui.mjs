@@ -250,7 +250,32 @@ FORM: Chaptered cinematic editorial — pinned by the client's brief and confirm
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->`;
 
-export const page = ({ title, desc, d = 0, current = "", body, bodyClass = "", head = "", scripts = "" }) => `<!DOCTYPE html>
+export const SITE_URL = "https://hillbottomproperties.com";
+
+const ORG_JSONLD = () => `<script type="application/ld+json">${JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "name": CO.name,
+  "url": SITE_URL,
+  "logo": `${SITE_URL}/assets/img/favicon.svg`,
+  "image": `${SITE_URL}/assets/img/hero-hillbottom-1400.webp`,
+  "description": "Luxury real estate developer in Addis Ababa, Ethiopia, serving buyers in Ethiopia and the Ethiopian diaspora.",
+  "telephone": CO.tel,
+  "email": CO.email,
+  "areaServed": ["Ethiopia", "Ethiopian diaspora"],
+  "address": CO.offices.map((o) => ({
+    "@type": "PostalAddress",
+    "streetAddress": o.lines[0],
+    "addressLocality": o.lines[1],
+    "addressCountry": "ET",
+  })),
+  "sameAs": CO.social.map((s) => s.href),
+})}</script>`;
+
+export const page = ({ title, desc, d = 0, current = "", body, bodyClass = "", head = "", scripts = "", path = "", image = "hero-hillbottom-1400" }) => {
+  const canonical = `${SITE_URL}/${path}`;
+  const ogImage = `${SITE_URL}/assets/img/${image}.webp`;
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -258,9 +283,18 @@ export const page = ({ title, desc, d = 0, current = "", body, bodyClass = "", h
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <meta name="theme-color" content="#060B14">
+<link rel="canonical" href="${canonical}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:type" content="website">
+<meta property="og:url" content="${canonical}">
+<meta property="og:image" content="${ogImage}">
+<meta property="og:site_name" content="${esc(CO.name)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(desc)}">
+<meta name="twitter:image" content="${ogImage}">
+${ORG_JSONLD()}
 <link rel="icon" href="${up(d)}assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="${up(d)}assets/fonts/gs-SB2OEB6IKZPRR6JT4GFJ2TFT6HBB6AZN.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${up(d)}assets/css/hb.css">
@@ -288,3 +322,4 @@ ${scripts}
 <script src="${up(d)}assets/js/hb.js" defer></script>
 </body>
 </html>`;
+};

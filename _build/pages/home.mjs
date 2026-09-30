@@ -70,9 +70,11 @@ const projectChapter = (p, i) => `
 </article>`;
 
 export default page({
-  title: "Hill Bottom Properties — Luxury Homes in Addis Ababa",
-  desc: "Luxury Homes and Vibrant Communities in the Heart of Addis Ababa. Hill Bottom Village in Ayat is complete and occupied; Urban Kaza in Kazanchis is now selling.",
+  title: "Hill Bottom Properties — Real Estate & Luxury Apartments in Addis Ababa, Ethiopia",
+  desc: "Luxury real estate in Addis Ababa, Ethiopia, for local and diaspora buyers. Hill Bottom Village in Ayat is complete and occupied; Urban Kaza in Kazanchis is now selling.",
   current: "",
+  path: "",
+  image: "urban-kaza-dusk-v2",
   bodyClass: "home-editorial",
   body: `
 ${welcome(0, WELCOME)}

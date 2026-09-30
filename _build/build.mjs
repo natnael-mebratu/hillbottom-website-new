@@ -17,6 +17,19 @@ for (const [rel, html] of Object.entries(pages)) {
 }
 console.log("\n" + Object.keys(pages).length + " pages, " + Math.round(bytes / 1024) + " kb total");
 
+/* sitemap.xml + robots.txt, generated from the same page map so they never
+   drift out of sync with the site's actual pages. */
+const SITE_URL = "https://hillbottomproperties.com";
+const today = new Date().toISOString().slice(0, 10);
+const urls = Object.keys(pages)
+  .map((rel) => (rel === "index.html" ? "" : rel))
+  .map((rel) => `  <url><loc>${SITE_URL}/${rel}</loc><lastmod>${today}</lastmod></url>`)
+  .join("\n");
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+fs.writeFileSync(path.join(ROOT, "sitemap.xml"), sitemap);
+fs.writeFileSync(path.join(ROOT, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+console.log("sitemap.xml + robots.txt written for " + Object.keys(pages).length + " pages");
+
 /* the contract must survive into the emitted HTML */
 const idx = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
 if (!idx.includes("IMPECCABLE DIRECTION CONTRACT")) throw new Error("direction contract missing from build output");

@@ -145,9 +145,11 @@ const STAGES = [
 ];
 
 out["projects.html"] = page({
-  title: "Projects — Hill Bottom Properties",
+  title: "Real Estate Projects in Addis Ababa — Hill Bottom Properties",
   desc: "Hill Bottom Village in Ayat, Urban Kaza in Kazanchis, and the Commercial + Recreation Center. What is complete, what is building, and what opens next.",
   current: "projects.html",
+  path: "projects.html",
+  image: "urban-kaza-ext-v2-1400",
   bodyClass: "projects-page",
   body: `
 ${pageHero(0, {
@@ -221,9 +223,11 @@ ${ctaBand(0, {
 const kaza = PROJECTS.find((p) => p.key === "urban-kaza");
 out["projects/urban-kaza.html"] = page({
   d: 1, current: "projects.html",
+  path: "projects/urban-kaza.html",
+  image: "urban-kaza-dusk-v2",
   bodyClass: "urban-kaza-page",
-  title: "Urban Kaza, Kazanchis — Hill Bottom Properties",
-  desc: "98 exclusive residential apartments in Kazanchis, near Addis Sport Park. Where sophistication meets community. From 135,000 ETB per sqm.",
+  title: "Urban Kaza — Apartments for Sale in Kazanchis, Addis Ababa",
+  desc: "98 exclusive residential apartments for sale in Kazanchis, near Addis Sport Park. Where sophistication meets community. From 135,000 ETB per sqm.",
   body: `
 
 ${ukIntro()}
@@ -362,7 +366,9 @@ ${lightbox()}
 /* ======================= HILL BOTTOM VILLAGE =========================== */
 out["projects/hillbottom-village.html"] = page({
   d: 1, current: "projects.html",
-  title: "Hill Bottom Village, Ayat — Hill Bottom Properties",
+  path: "projects/hillbottom-village.html",
+  image: "hero-hillbottom-1400",
+  title: "Hill Bottom Village — Apartments in Ayat, Addis Ababa",
   desc: "Phase 1 complete and fully occupied. Block B delivers October 2026. Phase 3 opens January 2027. Ayat Square, Addis Ababa.",
   bodyClass: "village-page",
   body: `
@@ -489,6 +495,8 @@ const recInside = (d) => {
 /* ======================= RECREATION CENTER ============================= */
 out["projects/recreation-center.html"] = page({
   d: 1, current: "projects.html",
+  path: "projects/recreation-center.html",
+  image: "recreation-hub-1400",
   title: "Commercial + Recreation Center, Ayat — Hill Bottom Properties",
   desc: "Phase 3 of Hill Bottom Village. A world-class commercial and community destination at Ayat Square, opening January 2027.",
   bodyClass: "recreation-page",
@@ -566,7 +574,9 @@ ${lightbox()}
 /* ============================ VR TOURS ================================= */
 out["vr-tours.html"] = page({
   current: "vr-tours.html",
-  title: "VR Tours — Hill Bottom Properties",
+  path: "vr-tours.html",
+  image: "urban-kaza-dusk-v2",
+  title: "Virtual Tours — Hill Bottom Properties, Addis Ababa",
   desc: "Explore Urban Kaza and Hill Bottom Village in full 360°. Virtual tours for buyers in Addis Ababa and the diaspora worldwide.",
   body: `
 ${pageHero(0, {
@@ -616,7 +626,9 @@ ${ctaBand(0, {
 /* ============================== ABOUT ================================== */
 out["about.html"] = page({
   current: "about.html",
-  title: "About Us — Hill Bottom Properties",
+  path: "about.html",
+  image: "about-residents-lifestyle",
+  title: "About Us — Hill Bottom Properties, Real Estate Developer in Ethiopia",
   desc: "A premium Ethiopian real estate developer committed to transparency, timelines, and technical excellence — since day one.",
   bodyClass: "about-page",
   body: `
@@ -699,6 +711,8 @@ ${pageHero(0, {
 /* =============================== TEAM ================================== */
 out["team.html"] = page({
   current: "team.html",
+  path: "team.html",
+  image: "about-residents-lifestyle",
   title: "Our Team — Hill Bottom Properties",
   desc: "The people behind Hill Bottom Properties: leadership, design and construction, and client relations for local and diaspora buyers.",
   body: `
@@ -764,8 +778,10 @@ ${ctaBand(0, {
 /* ================================ NEWS ================================= */
 out["news.html"] = page({
   current: "news.html",
+  path: "news.html",
+  image: "kaza-cafe-01-1400",
   bodyClass: "news-page",
-  title: "News & Stories — Hill Bottom Properties",
+  title: "Real Estate Insights in Ethiopia — Hill Bottom Properties",
   desc: "Expert guides, investment analysis, and market insights — written for buyers, investors, and the Ethiopian diaspora.",
   body: `
 ${pageHero(0, {
@@ -819,6 +835,8 @@ for (const p of POSTS) {
   const articleNumber = String(sorted.findIndex((o) => o.slug === p.slug) + 1).padStart(2, "0");
   out[`news/${p.slug}.html`] = page({
     d: 1, current: "news.html",
+    path: `news/${p.slug}.html`,
+    image: `${coverFor(p.slug)}-1400`,
     title: `${p.title} — Hill Bottom Properties`,
     desc: p.excerpt,
     bodyClass: "article-page",
@@ -888,7 +906,9 @@ ${ctaBand(1, {
 /* ============================== CONTACT ================================ */
 out["contact.html"] = page({
   current: "contact.html",
-  title: "Contact — Hill Bottom Properties",
+  path: "contact.html",
+  image: "hero-hillbottom-1400",
+  title: "Contact Us — Hill Bottom Properties, Addis Ababa",
   desc: "Speak to the Hill Bottom sales team. WhatsApp, direct line, short code 9508, or book a visit to the Ayat and Kazanchis sales offices.",
   bodyClass: "contact-page",
   head: `<link rel="stylesheet" href="assets/vendor/leaflet.css">`,

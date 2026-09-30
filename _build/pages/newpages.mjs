@@ -36,7 +36,9 @@ const iconGrid = (items, icons = REMOTE_ICONS, className = "") => `<ol class="pr
    the site. All copy carried over verbatim from the Diaspora page. */
 out["buying-from-abroad.html"] = page({
   current: "buying-from-abroad.html",
-  title: "Buying From Abroad — Hill Bottom Properties",
+  path: "buying-from-abroad.html",
+  image: "kaza-members-01",
+  title: "Buying Property in Ethiopia from Abroad — Hill Bottom Properties",
   desc: "Buy a Hill Bottom residence in Addis Ababa from anywhere. Remote purchase process, virtual tours, written confirmations, milestone-linked payments and legal support for the Ethiopian diaspora and international buyers.",
   bodyClass: "buying-abroad-page",
   body: `
@@ -123,7 +125,9 @@ ${pageHero(0, {
    the page says how updates are issued instead of inventing them. */
 out["construction.html"] = page({
   current: "construction.html",
-  title: "Construction Updates — Hill Bottom Properties",
+  path: "construction.html",
+  image: "construction-hero-1400",
+  title: "Construction Updates — Hill Bottom Properties, Addis Ababa",
   desc: "Current construction stage and next milestone for every Hill Bottom development. Dated photo and video updates are issued to buyers at every milestone.",
   bodyClass: "construction-page",
   body: `
