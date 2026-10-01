@@ -3,20 +3,25 @@ import path from "path";
 import home from "./pages/home.mjs";
 import rest from "./pages/rest.mjs";
 import newpages from "./pages/newpages.mjs";
+import promo from "./pages/promo.mjs";
 import { CO, PROJECTS } from "./data.mjs";
 
 const ROOT = path.resolve(new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
 const pages = { "index.html": home, ...rest, ...newpages };
+/* Unlisted: rendered to disk like any other page, but intentionally left out
+   of sitemap.xml/llms.txt — a billboard-QR landing page nobody should find
+   by browsing or search, only by scanning the code. */
+const unlisted = { "promo.html": promo };
 
 let bytes = 0;
-for (const [rel, html] of Object.entries(pages)) {
+for (const [rel, html] of Object.entries({ ...pages, ...unlisted })) {
   const fp = path.join(ROOT, rel);
   fs.mkdirSync(path.dirname(fp), { recursive: true });
   fs.writeFileSync(fp, html.trim() + "\n");
   bytes += html.length;
   console.log(String(Math.round(html.length / 1024)).padStart(4), "kb  ", rel);
 }
-console.log("\n" + Object.keys(pages).length + " pages, " + Math.round(bytes / 1024) + " kb total");
+console.log("\n" + (Object.keys(pages).length + Object.keys(unlisted).length) + " pages, " + Math.round(bytes / 1024) + " kb total");
 
 /* sitemap.xml + robots.txt, generated from the same page map so they never
    drift out of sync with the site's actual pages. */
@@ -80,7 +85,7 @@ console.log("contract: present in built output");
 
 /* every referenced local asset must exist in the emitted tree */
 const missing = new Set();
-for (const [rel, html] of Object.entries(pages)) {
+for (const [rel, html] of Object.entries({ ...pages, ...unlisted })) {
   const dir = path.dirname(path.join(ROOT, rel));
   for (const m of html.matchAll(/(?:src|href)="((?!https?:|mailto:|tel:|#|data:)[^"]+)"/g)) {
     const target = path.resolve(dir, m[1].split("#")[0].split("?")[0]);
