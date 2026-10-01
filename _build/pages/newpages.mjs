@@ -34,6 +34,16 @@ const iconGrid = (items, icons = REMOTE_ICONS, className = "") => `<ol class="pr
 /* ===================== BUYING FROM ABROAD (audit §12, §28) =====================
    A standalone landing page rather than diaspora references scattered across
    the site. All copy carried over verbatim from the Diaspora page. */
+const REMOTE_FAQ_JSONLD = `<script type="application/ld+json">${JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": REMOTE_FAQ.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+})}</script>`;
+
 out["buying-from-abroad.html"] = page({
   current: "buying-from-abroad.html",
   path: "buying-from-abroad.html",
@@ -41,6 +51,7 @@ out["buying-from-abroad.html"] = page({
   title: "Buying Property in Ethiopia from Abroad — Hill Bottom Properties",
   desc: "Buy a Hill Bottom residence in Addis Ababa from anywhere. Remote purchase process, virtual tours, written confirmations, milestone-linked payments and legal support for the Ethiopian diaspora and international buyers.",
   bodyClass: "buying-abroad-page",
+  head: REMOTE_FAQ_JSONLD,
   body: `
 ${pageHero(0, {
   title: "Buying from Abroad",
@@ -48,6 +59,10 @@ ${pageHero(0, {
   imgName: "kaza-members-01", alt: "Members lounge, Urban Kaza",
   stations: [],
 })}
+
+<section class="ch ch--paper pad" style="padding-bottom:0">
+  <div class="wrap"><p class="body" style="max-width:66ch">${esc(REMOTE_FAQ[0].a)}</p></div>
+</section>
 
 <section class="ch ch--paper pad">
   <div class="wrap">

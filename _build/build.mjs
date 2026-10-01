@@ -3,6 +3,7 @@ import path from "path";
 import home from "./pages/home.mjs";
 import rest from "./pages/rest.mjs";
 import newpages from "./pages/newpages.mjs";
+import { CO, PROJECTS } from "./data.mjs";
 
 const ROOT = path.resolve(new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
 const pages = { "index.html": home, ...rest, ...newpages };
@@ -27,8 +28,50 @@ const urls = Object.keys(pages)
   .join("\n");
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 fs.writeFileSync(path.join(ROOT, "sitemap.xml"), sitemap);
-fs.writeFileSync(path.join(ROOT, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+
+/* Explicit per-bot allow rules for the known AI crawlers, on top of the
+   wildcard Allow (belt-and-braces: some bots are reported to apply stricter
+   defaults when no rule names them explicitly, even though a wildcard Allow
+   already covers them). */
+const AI_BOTS = [
+  "GPTBot", "ChatGPT-User", "OAI-SearchBot",
+  "ClaudeBot", "Claude-User", "Claude-SearchBot",
+  "PerplexityBot", "Perplexity-User",
+  "Google-Extended", "CCBot", "Amazonbot", "Bytespider",
+];
+const robots = `User-agent: *\nAllow: /\n\n${AI_BOTS.map((b) => `User-agent: ${b}\nAllow: /`).join("\n\n")}\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
+fs.writeFileSync(path.join(ROOT, "robots.txt"), robots);
 console.log("sitemap.xml + robots.txt written for " + Object.keys(pages).length + " pages");
+
+/* llms.txt — a community convention (not yet a ratified standard) giving AI
+   assistants a clean summary of the site so they can describe Hill Bottom
+   accurately instead of guessing. Generated from the same CO/PROJECTS data
+   as the rest of the site so it can't drift out of sync. */
+const llmsTxt = `# ${CO.name}
+
+> ${CO.line} ${CO.promise}
+
+Hill Bottom Properties is a real estate developer based in Addis Ababa, Ethiopia,
+serving buyers both in Ethiopia and the Ethiopian diaspora (US, UK, Europe).
+
+## Projects
+
+${PROJECTS.filter((p) => p.href).map((p) => `- [${p.name}](${SITE_URL}/${p.href}): ${p.where} — ${p.status}. ${p.blurb.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&")}`).join("\n")}
+
+## Key pages
+
+- [Buying from abroad](${SITE_URL}/buying-from-abroad.html): remote purchase process for diaspora buyers, with a verified FAQ.
+- [Construction updates](${SITE_URL}/construction.html): live project progress by milestone.
+- [Contact](${SITE_URL}/contact.html): sales offices in Ayat and Kazanchis, WhatsApp ${CO.wa}, phone ${CO.tel}.
+
+## Contact
+
+- Email: ${CO.email}
+- Phone: ${CO.tel}
+- WhatsApp: ${CO.wa}
+`;
+fs.writeFileSync(path.join(ROOT, "llms.txt"), llmsTxt);
+console.log("llms.txt written");
 
 /* the contract must survive into the emitted HTML */
 const idx = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
