@@ -1,6 +1,10 @@
 # dependencies
 node_modules/
 
+# backend env + build output
+server/.env
+server/dist/
+
 # local tooling state
 .vercel
 .claude/
