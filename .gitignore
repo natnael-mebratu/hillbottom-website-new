@@ -5,6 +5,10 @@ node_modules/
 server/.env
 server/dist/
 
+# admin app build output
+admin/dist/
+admin/tsconfig.tsbuildinfo
+
 # local tooling state
 .vercel
 .claude/

@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@layer components {
+  .admin-input {
+    width: 100%;
+    background: #0b1629;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: #fff;
+  }
+  .admin-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .admin-input:focus {
+    outline: none;
+    border-color: rgba(192, 154, 96, 0.6);
+  }
+}

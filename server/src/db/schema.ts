@@ -127,6 +127,18 @@ export const leads = pgTable("leads", {
   interestedIn: varchar("interested_in", { length: 64 }),
   message: text("message"),
   source: varchar("source", { length: 128 }),
+  // Campaign attribution the site's inquiry form already captures
+  // client-side (assets/js/hb.js submitInquiry) — persisted so a lead's
+  // originating campaign survives past the session that created it.
+  utmSource: varchar("utm_source", { length: 128 }),
+  utmMedium: varchar("utm_medium", { length: 128 }),
+  utmCampaign: varchar("utm_campaign", { length: 128 }),
+  landingPage: text("landing_page"),
+  referrer: text("referrer"),
+  // Set once this lead is pushed to Odoo as a crm.lead (see
+  // src/integrations/odoo.ts) — lets us avoid double-creating it on retry
+  // and gives a direct link from our record to the CRM opportunity.
+  odooLeadId: integer("odoo_lead_id"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
