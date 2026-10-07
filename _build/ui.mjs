@@ -165,6 +165,70 @@ export const rail = () => `
   <a href="${CO.telHref}">${ICON.phone}Call</a>
 </nav>`;
 
+/* ---- chat widget -------------------------------------------------------
+   Real canned-question widget (ported from the old React ChatWidget —
+   same 5 questions), not a WhatsApp redirect dressed up as one. The
+   rail()'s "Live Chat" pill opens this via data-live-chat/data-chat-toggle
+   in hb.js instead of navigating. */
+const CHAT_QUESTIONS = [
+  {
+    q: "Where are your projects located?",
+    a: "Our developments are in Ayat Square and Kazanchis, Addis Ababa. Each project page has the exact location and nearby landmarks.",
+    link: { href: "projects.html", label: "View all projects" },
+  },
+  {
+    q: "What units are still available?",
+    a: "Availability varies by project and updates as units are reserved. Check a project's detail page for current unit types and availability, or message us directly for the latest.",
+    link: { href: "projects.html", label: "See residences" },
+  },
+  {
+    q: "Can I see real construction progress?",
+    a: "Yes — our Construction Updates page has live, admin-updated status for every project, compared against the original delivery plan.",
+    link: { href: "construction.html", label: "View construction updates" },
+  },
+  {
+    q: "Can I take a virtual tour?",
+    a: "Yes — explore Hill Bottom developments from wherever you are with our 360° virtual tour.",
+    link: { href: "vr-tours.html", label: "Take the virtual tour" },
+  },
+  {
+    q: "Can I check your projects?",
+    a: "Browse every Hill Bottom development — completed, ongoing, under construction, and upcoming — in one place.",
+    link: { href: "projects.html", label: "Check our projects" },
+  },
+];
+
+export const chatWidget = (d = 0) => `
+<div class="chatw" id="hb-chat">
+  <button type="button" class="chatw__fab" data-chat-toggle aria-expanded="false" aria-controls="hb-chat-panel" aria-label="Open chat">
+    <span class="chatw__fab-icon chatw__fab-icon--open">${ICON.chat}</span>
+    <span class="chatw__fab-icon chatw__fab-icon--close">${ICON.close}</span>
+  </button>
+  <div class="chatw__panel" id="hb-chat-panel" role="dialog" aria-label="Hill Bottom chat" aria-hidden="true">
+    <div class="chatw__head">
+      <div><span class="mark">Hill Bottom</span><p>How can we help?</p></div>
+      <button type="button" class="chatw__close" data-chat-close aria-label="Close chat">${ICON.close}</button>
+    </div>
+    <div class="chatw__body">
+      <div class="chatw__list" data-chat-list>
+        <p class="chatw__hint">Quick answers:</p>
+        ${CHAT_QUESTIONS.map((item, i) => `<button type="button" class="chatw__q" data-chat-q="${i}">${esc(item.q)}</button>`).join("")}
+      </div>
+      ${CHAT_QUESTIONS.map((item, i) => `
+      <div class="chatw__answer" data-chat-a="${i}" hidden>
+        <button type="button" class="chatw__back" data-chat-back>${ICON.left}Back</button>
+        <p class="chatw__q-echo">${esc(item.q)}</p>
+        <p class="chatw__a-text">${esc(item.a)}</p>
+        <a class="chatw__link" href="${rel(d, item.link.href)}">${esc(item.link.label)}${ICON.arrow}</a>
+      </div>`).join("")}
+    </div>
+    <div class="chatw__foot">
+      <p>Prefer to talk directly?</p>
+      <a class="btn btn--gold" href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}WhatsApp Us</a>
+    </div>
+  </div>
+</div>`;
+
 export const footer = (d) => `
 <footer class="ftr">
   <div class="wrap">
@@ -320,6 +384,7 @@ ${body}
 </main>
 ${footer(d)}
 ${rail()}
+${chatWidget(d)}
 ${scripts}
 <script src="${up(d)}assets/js/hb.js" defer></script>
 </body>

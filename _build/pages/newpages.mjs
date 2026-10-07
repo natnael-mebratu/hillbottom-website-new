@@ -1,4 +1,4 @@
-import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, PROCESS, MARKETING_POSTS } from "../data.mjs";
+import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, PROCESS, MARKETING_POSTS, SISTER_COMPANIES } from "../data.mjs";
 import { page, facts, alt, plate, btn, link, esc, ICON } from "../ui.mjs";
 import { pageHero, ctaBand, inquiryForm } from "./parts.mjs";
 
@@ -381,6 +381,115 @@ ${ctaBand(0, {
     parallax();
   }
 })();</script>` : "",
+});
+
+/* ===================== SISTER COMPANIES =====================
+   Hand-authored content (SISTER_COMPANIES in data.mjs), not DB-driven —
+   see that file for why. Tona Coffee gets the full treatment since real
+   content exists; "hold:true" entries (no confirmed content yet) render
+   a quieter placeholder card instead of inventing copy. */
+out["sister-companies.html"] = page({
+  current: "sister-companies.html",
+  path: "sister-companies.html",
+  image: "urban-kaza-ext-v2",
+  title: "Sister Companies — Hill Bottom Properties",
+  desc: "The companies in the Hill Bottom family — from Tona Coffee to our wellness and recreation ventures.",
+  bodyClass: "sister-page",
+  head: `<style>
+    .sister-hero{padding-bottom:0}
+    .sister{padding:clamp(50px,7vw,90px) 0}
+    .sister__top{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-bottom:clamp(30px,4vw,48px)}
+    .sister__logo{height:52px;width:auto;padding:10px 16px;background:var(--abyss);border-radius:4px}
+    .sister__top h2{margin:0;font-family:var(--display);font-weight:300;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--fg)}
+    .sister__tagline{margin:0;font-family:var(--sans);font-size:.95rem;font-style:italic;color:var(--accent)}
+    .sister__grid{display:grid;gap:clamp(30px,4vw,54px);grid-template-columns:1.3fr 1fr}
+    @media(max-width:860px){.sister__grid{grid-template-columns:1fr}}
+    .sister__about p{font-family:var(--sans);font-size:.95rem;line-height:1.75;color:var(--fg-2);max-width:60ch}
+    .sister__about p+p{margin-top:1.1em}
+    .sister__pron{font-family:var(--sans);font-size:.8rem;color:var(--fg-2);border-left:2px solid var(--accent);padding-left:14px;margin:1.4em 0}
+    .sister__pron b{display:block;color:var(--fg);margin-bottom:4px}
+    .sister__pron ul{margin:.4em 0 0;padding-left:1.1em}
+    .varieties{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:10px}
+    .variety{border:1px solid var(--line);border-radius:3px;padding:16px 18px}
+    .variety b{display:block;font-family:var(--display);font-weight:500;font-size:1rem;color:var(--fg);margin-bottom:6px}
+    .variety span{font-family:var(--sans);font-size:.82rem;line-height:1.5;color:var(--fg-2)}
+    .sister__side{border:1px solid var(--line);border-radius:3px;padding:clamp(22px,3vw,30px);align-self:start}
+    .sister__side h4{margin:0 0 14px;font-family:var(--sans);font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+    .sister__side ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+    .sister__side li{font-family:var(--sans);font-size:.86rem;line-height:1.5;color:var(--fg-2);padding-left:18px;position:relative}
+    .sister__side li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+    .sister__contact{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);display:grid;gap:8px;font-family:var(--sans);font-size:.85rem;color:var(--fg-2)}
+    .sister__contact a{color:var(--fg)}
+    .sister--hold{text-align:center;padding:clamp(40px,6vw,64px);border:1px dashed var(--line);border-radius:3px}
+    .sister--hold h2{margin:0 0 10px}
+    .sister--hold p{max-width:50ch;margin:0 auto;color:var(--fg-2)}
+    .sister--hold .mark{color:var(--accent);margin-bottom:12px}
+  </style>`,
+  body: `
+${pageHero(0, {
+  title: "Sister Companies",
+  sub: "The ventures that share Hill Bottom's name and standards — in real estate and beyond.",
+  imgName: "urban-kaza-ext-v2", alt: "Hill Bottom Properties sister companies",
+  stations: [],
+  heroClass: "sister-hero",
+})}
+
+${SISTER_COMPANIES.map((co, i) => co.hold ? `
+<section class="ch ${i % 2 ? "ch--paper" : "ch--paper-2"} pad">
+  <div class="wrap">
+    <div class="sister--hold rv">
+      <span class="mark">Coming Soon</span>
+      <h2 class="d3">${esc(co.name)}</h2>
+      <p>${esc(co.about)}</p>
+    </div>
+  </div>
+</section>` : `
+<section class="ch ${i % 2 ? "ch--paper" : "ch--paper-2"} pad sister">
+  <div class="wrap">
+    <div class="sister__top rv">
+      <img class="sister__logo" src="assets/img/${co.logo}.webp" alt="${esc(co.name)} logo">
+      <div>
+        <h2>${esc(co.name)}</h2>
+        <p class="sister__tagline">${esc(co.tagline)}</p>
+      </div>
+    </div>
+    <div class="sister__grid">
+      <div class="sister__about rv">
+        <p>${esc(co.about)}</p>
+        ${co.pronunciation ? `
+        <div class="sister__pron">
+          <b>${esc(co.pronunciation)}</b>
+          <ul>${co.definitions.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>
+        </div>` : ""}
+        ${co.founding ? `<p>${esc(co.founding)}</p>` : ""}
+        ${co.mission ? `<p>${esc(co.mission)}</p>` : ""}
+        ${co.varieties ? `
+        <div class="varieties">
+          ${co.varieties.map((v) => `<div class="variety"><b>${esc(v.name)}</b><span>${esc(v.note)}</span></div>`).join("")}
+        </div>` : ""}
+        ${co.sustainability ? `<p style="margin-top:1.4em">${esc(co.sustainability)}</p>` : ""}
+      </div>
+      <aside class="sister__side rv">
+        ${co.values ? `
+        <h4>Values</h4>
+        <ul>${co.values.map((v) => `<li>${esc(v)}</li>`).join("")}</ul>` : ""}
+        <div class="sister__contact">
+          ${co.contact.email ? `<a href="mailto:${esc(co.contact.email)}">${esc(co.contact.email)}</a>` : ""}
+          ${co.contact.phone ? `<a href="tel:${esc(co.contact.phone.replace(/\s+/g, ""))}">${esc(co.contact.phone)}</a>` : ""}
+          ${co.contact.address ? `<span>${esc(co.contact.address)}</span>` : ""}
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>`).join("")}
+
+${ctaBand(0, {
+  title: "Part of the Hill Bottom family.",
+  body: "From residences to recreation — built on the same standard of trust.",
+  primary: "View Residences", primaryHref: "projects.html",
+  secondary: "Contact Us", secondaryHref: "contact.html",
+})}
+`,
 });
 
 export default out;

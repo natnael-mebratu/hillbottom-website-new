@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Campaign Feed — Hill Bottom Properties</title>
-<meta name="description" content="Live campaign updates, launches and announcements from Hill Bottom Properties — delivery milestones, offers and news as they happen.">
+<title>Sister Companies — Hill Bottom Properties</title>
+<meta name="description" content="The companies in the Hill Bottom family — from Tona Coffee to our wellness and recreation ventures.">
 <meta name="theme-color" content="#060B14">
-<link rel="canonical" href="https://hillbottomproperties.com/marketing.html">
-<meta property="og:title" content="Campaign Feed — Hill Bottom Properties">
-<meta property="og:description" content="Live campaign updates, launches and announcements from Hill Bottom Properties — delivery milestones, offers and news as they happen.">
+<link rel="canonical" href="https://hillbottomproperties.com/sister-companies.html">
+<meta property="og:title" content="Sister Companies — Hill Bottom Properties">
+<meta property="og:description" content="The companies in the Hill Bottom family — from Tona Coffee to our wellness and recreation ventures.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://hillbottomproperties.com/marketing.html">
+<meta property="og:url" content="https://hillbottomproperties.com/sister-companies.html">
 <meta property="og:image" content="https://hillbottomproperties.com/assets/img/urban-kaza-ext-v2.webp">
 <meta property="og:site_name" content="Hill Bottom Properties">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Campaign Feed — Hill Bottom Properties">
-<meta name="twitter:description" content="Live campaign updates, launches and announcements from Hill Bottom Properties — delivery milestones, offers and news as they happen.">
+<meta name="twitter:title" content="Sister Companies — Hill Bottom Properties">
+<meta name="twitter:description" content="The companies in the Hill Bottom family — from Tona Coffee to our wellness and recreation ventures.">
 <meta name="twitter:image" content="https://hillbottomproperties.com/assets/img/urban-kaza-ext-v2.webp">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"RealEstateAgent","name":"Hill Bottom Properties","url":"https://hillbottomproperties.com","logo":"https://hillbottomproperties.com/assets/img/favicon.svg","image":"https://hillbottomproperties.com/assets/img/hero-hillbottom-1400.webp","description":"Luxury real estate developer in Addis Ababa, Ethiopia, serving buyers in Ethiopia and the Ethiopian diaspora.","telephone":"+251 116 390 420","email":"info@hillbottomproperties.com","areaServed":["Ethiopia","Ethiopian diaspora"],"address":[{"@type":"PostalAddress","streetAddress":"Hill Bottom Village Apartments","addressLocality":"Ayat Square, Addis Ababa","addressCountry":"ET"},{"@type":"PostalAddress","streetAddress":"Urban Kaza Sales Gallery","addressLocality":"Kazanchis, Diplomatic Corridor","addressCountry":"ET"}],"sameAs":["https://www.linkedin.com/company/hill-bottom-properties/","https://www.instagram.com/hillbottomproperties","https://www.facebook.com/hillbottomproperties"]}</script>
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -28,40 +28,39 @@
 <link rel="stylesheet" href="assets/css/site-unified.css">
 <link rel="stylesheet" href="assets/css/refine-2026.css">
 <style>
-    .feed-hero{padding-bottom:0}
-    .feed{columns:1;column-gap:clamp(18px,2.4vw,28px);margin-top:clamp(30px,4vw,54px)}
-    @media(min-width:720px){.feed{columns:2}}
-    @media(min-width:1080px){.feed{columns:3}}
-    .feed__card{display:block;break-inside:avoid;margin:0 0 clamp(18px,2.4vw,28px);border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--bg);cursor:pointer;will-change:transform;transition:transform .5s var(--ease),border-color .3s var(--ease);text-align:left;width:100%}
-    .feed__card:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
-    .feed__card--feature{column-span:all}
-    .feed__card--feature .feed__media{aspect-ratio:21/9}
-    .feed__card--feature .feed__body h3{font-size:clamp(1.4rem,2.6vw,2rem)}
-    .feed__media{position:relative;width:100%;aspect-ratio:4/3;background:var(--raise);overflow:hidden}
-    .feed__media img{width:100%;height:100%;object-fit:cover;display:block}
-    .feed__media--video iframe,.feed__media--video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
-    .feed__body{padding:clamp(18px,2.4vw,26px)}
-    .feed__tag{display:inline-block;margin-bottom:10px;padding:4px 12px;border:1px solid color-mix(in srgb,var(--accent) 50%,transparent);border-radius:999px;font-family:var(--sans);font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-    .feed__body h3{margin:0;font-family:var(--display);font-weight:300;font-size:1.15rem;line-height:1.25;color:var(--fg)}
-    .feed__body p{margin:.6em 0 0;font-family:var(--sans);font-size:.88rem;line-height:1.6;color:var(--fg-2)}
-    .feed__body time{display:block;margin-top:14px;font-family:var(--sans);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--fg-2) 70%,transparent)}
-    .feed-empty{margin-top:40px;padding:clamp(40px,6vw,70px);text-align:center;border:1px dashed var(--line);border-radius:3px;color:var(--fg-2)}
-    .feed-lb{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:clamp(16px,4vw,48px);background:rgba(6,11,20,.92);backdrop-filter:blur(8px)}
-    .feed-lb.is-open{display:flex}
-    .feed-lb__panel{position:relative;width:100%;max-width:860px;max-height:92vh;overflow-y:auto;background:var(--abyss);border:1px solid rgba(232,219,184,.18);border-radius:4px}
-    .feed-lb__media{width:100%;aspect-ratio:16/9;background:var(--raise);position:relative}
-    .feed-lb__media iframe,.feed-lb__media video,.feed-lb__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
-    .feed-lb__body{padding:clamp(22px,4vw,38px)}
-    .feed-lb__body h3{margin:.4em 0 0;font-family:var(--display);font-weight:300;font-size:clamp(1.3rem,3vw,1.8rem);color:#F6F8FB}
-    .feed-lb__body p{margin:.8em 0 0;font-family:var(--sans);font-size:.95rem;line-height:1.7;color:#C7D1DE}
-    .feed-lb__close{position:absolute;top:14px;right:14px;z-index:1;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:rgba(6,11,20,.6);color:#fff;border:1px solid rgba(255,255,255,.2)}
-    .feed-lb__close svg{width:18px;height:18px}
-    @media(prefers-reduced-motion:reduce){.feed__card{transition:none!important}}
+    .sister-hero{padding-bottom:0}
+    .sister{padding:clamp(50px,7vw,90px) 0}
+    .sister__top{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-bottom:clamp(30px,4vw,48px)}
+    .sister__logo{height:52px;width:auto;padding:10px 16px;background:var(--abyss);border-radius:4px}
+    .sister__top h2{margin:0;font-family:var(--display);font-weight:300;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--fg)}
+    .sister__tagline{margin:0;font-family:var(--sans);font-size:.95rem;font-style:italic;color:var(--accent)}
+    .sister__grid{display:grid;gap:clamp(30px,4vw,54px);grid-template-columns:1.3fr 1fr}
+    @media(max-width:860px){.sister__grid{grid-template-columns:1fr}}
+    .sister__about p{font-family:var(--sans);font-size:.95rem;line-height:1.75;color:var(--fg-2);max-width:60ch}
+    .sister__about p+p{margin-top:1.1em}
+    .sister__pron{font-family:var(--sans);font-size:.8rem;color:var(--fg-2);border-left:2px solid var(--accent);padding-left:14px;margin:1.4em 0}
+    .sister__pron b{display:block;color:var(--fg);margin-bottom:4px}
+    .sister__pron ul{margin:.4em 0 0;padding-left:1.1em}
+    .varieties{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:10px}
+    .variety{border:1px solid var(--line);border-radius:3px;padding:16px 18px}
+    .variety b{display:block;font-family:var(--display);font-weight:500;font-size:1rem;color:var(--fg);margin-bottom:6px}
+    .variety span{font-family:var(--sans);font-size:.82rem;line-height:1.5;color:var(--fg-2)}
+    .sister__side{border:1px solid var(--line);border-radius:3px;padding:clamp(22px,3vw,30px);align-self:start}
+    .sister__side h4{margin:0 0 14px;font-family:var(--sans);font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+    .sister__side ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+    .sister__side li{font-family:var(--sans);font-size:.86rem;line-height:1.5;color:var(--fg-2);padding-left:18px;position:relative}
+    .sister__side li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+    .sister__contact{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);display:grid;gap:8px;font-family:var(--sans);font-size:.85rem;color:var(--fg-2)}
+    .sister__contact a{color:var(--fg)}
+    .sister--hold{text-align:center;padding:clamp(40px,6vw,64px);border:1px dashed var(--line);border-radius:3px}
+    .sister--hold h2{margin:0 0 10px}
+    .sister--hold p{max-width:50ch;margin:0 auto;color:var(--fg-2)}
+    .sister--hold .mark{color:var(--accent);margin-bottom:12px}
   </style>
 <script>try{var c=document.documentElement.classList,s=sessionStorage;if(s.getItem("hb-intro-v3"))c.add("hbi-seen");if(s.getItem("uk-intro-v4"))c.add("uki-seen");if(matchMedia("(prefers-reduced-motion: reduce)").matches)c.add("hbi-seen","uki-seen")}catch(e){}</script>
 <noscript><style>.hbi,.uki{display:none!important}</style></noscript>
 </head>
-<body class="marketing-page">
+<body class="sister-page">
 <!--
 IMPECCABLE DIRECTION CONTRACT — Hill Bottom Properties
 THESIS: Elevation, made literal. The logo mark is a notched horizon, the name is a
@@ -125,28 +124,67 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <main id="main">
 
 
-<section class="hero hero--short feed-hero">
+<section class="hero hero--short sister-hero">
   <div class="hero__media">
-    <img src="assets/img/urban-kaza-ext-v2-1400.webp" srcset="assets/img/urban-kaza-ext-v2-800.webp 800w, assets/img/urban-kaza-ext-v2-1400.webp 1400w" sizes="100vw" alt="Hill Bottom Properties campaign updates" fetchpriority="high">
+    <img src="assets/img/urban-kaza-ext-v2-1400.webp" srcset="assets/img/urban-kaza-ext-v2-800.webp 800w, assets/img/urban-kaza-ext-v2-1400.webp 1400w" sizes="100vw" alt="Hill Bottom Properties sister companies" fetchpriority="high">
   </div>
   <span class="hero__veil"></span>
   <div class="wrap hero__in">
     <div class="hero__stage">
       
-      <h1 class="d1" data-words>Campaign Feed</h1>
-      <p class="hero__sub">Live updates from Hill Bottom Properties — launches, milestones, and offers as they happen.</p>
+      <h1 class="d1" data-words>Sister Companies</h1>
+      <p class="hero__sub">The ventures that share Hill Bottom's name and standards — in real estate and beyond.</p>
     </div>
     
   </div>
   <span class="ridge ridge--bottom" style="--ridge-fill:var(--paper)"></span>
 </section>
 
+
+<section class="ch ch--paper-2 pad sister">
+  <div class="wrap">
+    <div class="sister__top rv">
+      <img class="sister__logo" src="assets/img/tona-coffee-logo.webp" alt="Tona Coffee logo">
+      <div>
+        <h2>Tona Coffee</h2>
+        <p class="sister__tagline">Stay for Tona.</p>
+      </div>
+    </div>
+    <div class="sister__grid">
+      <div class="sister__about rv">
+        <p>Ethiopian coffee ceremony is a universe where coffee exists as less of a caffeine delivery mechanism and more as a means of bringing people together. This intersection between coffee and community is where our coffee was born. Tona Coffee uses the very essence of the second serving, where conversations, laughter and friendly banter are elevated — this is where coffee is experienced fully.</p>
+        
+        <div class="sister__pron">
+          <b>Tona /tow-nah/ [Noun]</b>
+          <ul><li>The second cup of coffee in the Ethiopian coffee ceremony.</li><li>A unique coffee brand with the essence of community and bringing people together.</li></ul>
+        </div>
+        <p>The vision to establish Tona Coffee was developed by the daughter company of Hill Bottom. Hill Bottom was founded in 1994, Addis Ababa, Ethiopia.</p>
+        <p>Tona Coffee is working on being the leading Ethiopian coffee producer and exporter while ensuring environmental sustainability — delivering the best high-quality coffee beans to customers around the world while building mutually beneficial relationships with the community.</p>
+        
+        <div class="varieties">
+          <div class="variety"><b>Gesha</b><span>Distinctive, flowery and fruit-like flavor with hints of exotic fruit.</span></div><div class="variety"><b>Guji</b><span>Grown using traditional methods by Guji farmers.</span></div><div class="variety"><b>Sidama</b><span>Lemon-citric tones with bright acidity.</span></div><div class="variety"><b>Yirgacheffe</b><span>Sweet flavor and aroma, with a light to medium body.</span></div>
+        </div>
+        <p style="margin-top:1.4em">Tona Coffee has developed a strong relationship with local farmers and is devoted to giving back to the community — committed to the land and the people behind every harvest.</p>
+      </div>
+      <aside class="sister__side rv">
+        
+        <h4>Values</h4>
+        <ul><li>Respect for all farmers and laborers involved.</li><li>Commitment to long-term relationships with partners.</li><li>Trust at every stage of the process.</li></ul>
+        <div class="sister__contact">
+          <a href="mailto:tonacoffee11@gmail.com">tonacoffee11@gmail.com</a>
+          <a href="tel:+251986212224">+251 98 621 2224</a>
+          <span>Addis Ababa, in front of Ayat roundabout.</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
 <section class="ch ch--paper pad">
   <div class="wrap">
-    
-    <div class="feed-empty">
-      <p class="mark" style="margin-bottom:10px">Nothing posted yet</p>
-      <p>Campaign updates will appear here as soon as they're published from the admin panel.</p>
+    <div class="sister--hold rv">
+      <span class="mark">Coming Soon</span>
+      <h2 class="d3">Hill Bottom Recreation</h2>
+      <p>A spa and recreation destination from Hill Bottom — steam sauna, Morocco bath, and wellness treatments. Full details coming soon.</p>
     </div>
   </div>
 </section>
@@ -155,29 +193,17 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <section class="ch ch--abyss pad">
   <div class="wrap">
     <div class="head head--split rv">
-      <h2 class="d2">Don't miss a launch.</h2>
+      <h2 class="d2">Part of the Hill Bottom family.</h2>
       <div class="head__side">
-        <p>Message us on WhatsApp to be notified the moment a new project, unit release, or offer goes live.</p>
+        <p>From residences to recreation — built on the same standard of trust.</p>
         <div class="btn-row" style="margin-top:28px">
-          <a class="btn btn--gold" href="https://wa.me/251992707070">WhatsApp Us</a>
-          <a class="btn " href="projects.html">View Residences</a>
+          <a class="btn btn--gold" href="projects.html">View Residences</a>
+          <a class="btn " href="contact.html">Contact Us</a>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-<div class="feed-lb" id="feed-lb">
-  <div class="feed-lb__panel">
-    <button class="feed-lb__close" type="button" data-feed-lb-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <div class="feed-lb__media" data-feed-lb-media></div>
-    <div class="feed-lb__body">
-      <span class="feed__tag" data-feed-lb-tag hidden></span>
-      <h3 data-feed-lb-title></h3>
-      <p data-feed-lb-body></p>
-    </div>
-  </div>
-</div>
 
 </main>
 

@@ -168,7 +168,7 @@
       drawer.classList.toggle("is-open", open);
       drawer.setAttribute("aria-hidden", String(!open));
       drawer.inert = !open;
-      $$("main,.ftr,.rail,.bar,.welcome").forEach(function (el) { el.inert = open || el.getAttribute("aria-hidden") === "true"; });
+      $$("main,.ftr,.rail,.bar,.welcome,.chatw").forEach(function (el) { el.inert = open || el.getAttribute("aria-hidden") === "true"; });
       root.style.overflow = open ? "hidden" : "";
       if (open) requestAnimationFrame(function () {
         if (drawer.classList.contains("is-open")) $("a", drawer).focus();
@@ -185,6 +185,53 @@
       trap(e, [burger].concat($$(focusables, drawer)));
     });
     window.addEventListener("resize", function () { if (window.innerWidth >= 1140 && drawer.classList.contains("is-open")) setDrawer(false); });
+  }
+
+  /* ---- chat widget: real canned-question panel, not a WhatsApp redirect ---- */
+  var chatw = $("#hb-chat");
+  if (chatw) {
+    var chatFab = $("[data-chat-toggle]", chatw);
+    var chatPanel = $(".chatw__panel", chatw);
+    var chatList = $("[data-chat-list]", chatw);
+    var chatAnswers = $$("[data-chat-a]", chatw);
+    var setChat = function (open) {
+      chatw.classList.toggle("is-open", open);
+      chatFab.setAttribute("aria-expanded", String(open));
+      chatPanel.setAttribute("aria-hidden", String(!open));
+      if (!open) {
+        chatList.hidden = false;
+        chatAnswers.forEach(function (a) { a.hidden = true; });
+      }
+    };
+    chatFab.addEventListener("click", function () {
+      setChat(!chatw.classList.contains("is-open"));
+    });
+    $$("[data-chat-close]", chatw).forEach(function (b) { b.addEventListener("click", function () { setChat(false); }); });
+    $$("[data-chat-q]", chatw).forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var i = btn.getAttribute("data-chat-q");
+        chatList.hidden = true;
+        chatAnswers.forEach(function (a) { a.hidden = a.getAttribute("data-chat-a") !== i; });
+      });
+    });
+    $$("[data-chat-back]", chatw).forEach(function (b) {
+      b.addEventListener("click", function () {
+        chatList.hidden = false;
+        chatAnswers.forEach(function (a) { a.hidden = true; });
+      });
+    });
+    doc.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && chatw.classList.contains("is-open")) setChat(false);
+    });
+    /* Every [data-live-chat] link (the rail's "Live Chat" pill) opens this
+       widget instead of navigating — its href stays a real WhatsApp link
+       as a no-JS fallback. */
+    $$("[data-live-chat]").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        setChat(true);
+      });
+    });
   }
 
   /* ---- welcome sheet: the Ayat-to-Kazanchis handover ---- */

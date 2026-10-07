@@ -56,6 +56,7 @@ export const NAV_SECONDARY = [
   { href: "vr-tours.html", label: "Virtual Tours" },
   { href: "team.html", label: "Leadership & Team" },
   { href: "marketing.html", label: "Campaign Feed" },
+  { href: "sister-companies.html", label: "Sister Companies" },
   { href: "contact.html", label: "Contact" },
 ];
 
@@ -288,6 +289,46 @@ export const CTA = {
   construction: "Speak With Sales",
   article: "Download Buyer Guide",
 };
+
+/* ---- sister companies ----------------------------------------------------
+   Hand-authored like PROJECTS/CONSTRUCTION, not DB-driven: this is bespoke
+   per-company editorial copy (tagline, variety list, values), not an
+   operational field an admin would update week to week. The sisterCompanies
+   DB table + admin screen still exist for adding future companies with
+   simpler content — these two just aren't wired to it. */
+export const SISTER_COMPANIES = [
+  {
+    key: "tona-coffee",
+    name: "Tona Coffee",
+    logo: "tona-coffee-logo",
+    tagline: "Stay for Tona.",
+    pronunciation: "Tona /tow-nah/ [Noun]",
+    definitions: [
+      "The second cup of coffee in the Ethiopian coffee ceremony.",
+      "A unique coffee brand with the essence of community and bringing people together.",
+    ],
+    about: "Ethiopian coffee ceremony is a universe where coffee exists as less of a caffeine delivery mechanism and more as a means of bringing people together. This intersection between coffee and community is where our coffee was born. Tona Coffee uses the very essence of the second serving, where conversations, laughter and friendly banter are elevated — this is where coffee is experienced fully.",
+    founding: "The vision to establish Tona Coffee was developed by the daughter company of Hill Bottom. Hill Bottom was founded in 1994, Addis Ababa, Ethiopia.",
+    mission: "Tona Coffee is working on being the leading Ethiopian coffee producer and exporter while ensuring environmental sustainability — delivering the best high-quality coffee beans to customers around the world while building mutually beneficial relationships with the community.",
+    varieties: [
+      { name: "Gesha", note: "Distinctive, flowery and fruit-like flavor with hints of exotic fruit." },
+      { name: "Guji", note: "Grown using traditional methods by Guji farmers." },
+      { name: "Sidama", note: "Lemon-citric tones with bright acidity." },
+      { name: "Yirgacheffe", note: "Sweet flavor and aroma, with a light to medium body." },
+    ],
+    values: ["Respect for all farmers and laborers involved.", "Commitment to long-term relationships with partners.", "Trust at every stage of the process."],
+    sustainability: "Tona Coffee has developed a strong relationship with local farmers and is devoted to giving back to the community — committed to the land and the people behind every harvest.",
+    contact: { email: "tonacoffee11@gmail.com", phone: "+251 98 621 2224", address: "Addis Ababa, in front of Ayat roundabout." },
+  },
+  {
+    key: "hillbottom-recreation",
+    name: "Hill Bottom Recreation",
+    hold: true,
+    tagline: "Wellness, within reach.",
+    about: "A spa and recreation destination from Hill Bottom — steam sauna, Morocco bath, and wellness treatments. Full details coming soon.",
+    contact: { email: "", phone: "", address: "Ayat, Addis Ababa" },
+  },
+];
 
 export const INTEREST = [
   "1 Bedroom Residence", "2 Bedroom Residence", "Investment Opportunity", "General Inquiry",
