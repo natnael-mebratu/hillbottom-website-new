@@ -215,15 +215,16 @@ p{margin:0}
 .drawer{
   position:fixed;inset:0;z-index:89;background:rgba(6,11,20,.9);
   -webkit-backdrop-filter:blur(30px) saturate(1.2);backdrop-filter:blur(30px) saturate(1.2);
-  padding:110px var(--gut) 44px;display:flex;flex-direction:column;
+  padding:96px var(--gut) 40px;display:flex;flex-direction:column;
   opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility .5s;overflow-y:auto;
 }
 .drawer.is-open{opacity:1;visibility:visible}
 .drawer a.dl{
-  display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:20px 0;
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:13px 0;
   border-bottom:1px solid rgba(200,181,127,.13);
-  font-family:var(--display);font-weight:300;font-size:clamp(1.5rem,7vw,2.1rem);letter-spacing:-.025em;color:#F6F8FB;
+  font-family:var(--display);font-weight:300;font-size:clamp(1.05rem,4vw,1.3rem);letter-spacing:-.015em;color:#F6F8FB;
 }
+.drawer a.dl--sub{font-size:clamp(.92rem,3.2vw,1.05rem);color:rgba(246,248,251,.78)}
 .drawer a.dl em{font-style:normal;font-family:var(--sans);font-size:.625rem;font-weight:600;letter-spacing:.2em;color:var(--gold-lit);flex:none}
 .drawer .btn-row{margin-top:34px}
 .drawer .btn{flex:1;justify-content:center}

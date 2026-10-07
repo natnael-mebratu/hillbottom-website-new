@@ -435,7 +435,7 @@ ${pageHero(0, {
 })}
 
 ${SISTER_COMPANIES.map((co, i) => co.hold ? `
-<section class="ch ${i % 2 ? "ch--paper" : "ch--abyss"} pad">
+<section class="ch ${i % 2 ? "ch--abyss" : "ch--paper"} pad">
   <div class="wrap">
     <div class="sister--hold rv">
       <span class="mark">Coming Soon</span>
@@ -444,7 +444,7 @@ ${SISTER_COMPANIES.map((co, i) => co.hold ? `
     </div>
   </div>
 </section>` : `
-<section class="ch ${i % 2 ? "ch--paper" : "ch--abyss"} pad sister">
+<section class="ch ${i % 2 ? "ch--abyss" : "ch--paper"} pad sister">
   <div class="wrap">
     <div class="sister__top rv">
       <img class="sister__logo" src="assets/img/${co.logo}.webp" alt="${esc(co.name)} logo">
