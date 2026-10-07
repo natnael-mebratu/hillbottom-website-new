@@ -1,4 +1,4 @@
-import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, PROCESS } from "../data.mjs";
+import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, PROCESS, MARKETING_POSTS } from "../data.mjs";
 import { page, facts, alt, plate, btn, link, esc, ICON } from "../ui.mjs";
 import { pageHero, ctaBand, inquiryForm } from "./parts.mjs";
 
@@ -196,6 +196,191 @@ ${ctaBand(0, {
   secondary: "WhatsApp Us", secondaryHref: CO.waHref,
 })}
 `,
+});
+
+/* ===================== MARKETING FEED =====================
+   A "floating campaign wall": masonry cards with a per-card scroll
+   parallax drift and a large featured first post, not a flat grid.
+   Fully database-driven (marketing_posts via admin) — no static fallback
+   copy, since this is meant to read as current, not evergreen. Reuses
+   the promo page's video-autoplay technique for YouTube/direct-video
+   posts; text/image-only posts get a quieter editorial card treatment. */
+const youtubeIdFrom = (url) => {
+  const m = String(url || "").match(/(?:youtu\.be\/|[?&]v=|embed\/)([\w-]{6,})/);
+  return m ? m[1] : null;
+};
+const isDirectVideo = (url) => /\.(mp4|webm|ogg)(\?|$)/i.test(String(url || ""));
+
+const feedMedia = (post, { eager = false } = {}) => {
+  const yt = youtubeIdFrom(post.mediaUrl);
+  if (yt) {
+    return `<div class="feed__media feed__media--video">
+      <iframe src="https://www.youtube.com/embed/${yt}?autoplay=1&mute=1&loop=1&playlist=${yt}&controls=0&modestbranding=1&playsinline=1&rel=0" title="${esc(post.title)}" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+    </div>`;
+  }
+  if (isDirectVideo(post.mediaUrl)) {
+    return `<div class="feed__media feed__media--video">
+      <video autoplay muted loop playsinline preload="metadata"><source src="${esc(post.mediaUrl)}"></video>
+    </div>`;
+  }
+  if (post.mediaUrl) {
+    return `<div class="feed__media"><img src="${esc(post.mediaUrl)}" alt="${esc(post.title)}" loading="${eager ? "eager" : "lazy"}"${eager ? ' fetchpriority="high"' : ""}></div>`;
+  }
+  return "";
+};
+
+const feedCard = (post, i) => `
+<article class="feed__card${i === 0 ? " feed__card--feature" : ""} rv" style="--depth:${1 + (i % 3)}" data-feed-index="${i}" tabindex="0" role="button" aria-label="Open ${esc(post.title)}">
+  ${feedMedia(post, { eager: i === 0 })}
+  <div class="feed__body">
+    ${post.campaignTag ? `<span class="feed__tag">${esc(post.campaignTag)}</span>` : ""}
+    <h3>${esc(post.title)}</h3>
+    ${post.body ? `<p>${esc(post.body)}</p>` : ""}
+    <time datetime="${esc(post.publishedAt)}">${new Date(post.publishedAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</time>
+  </div>
+</article>`;
+
+const feedLightboxMedia = (post) => {
+  const yt = youtubeIdFrom(post.mediaUrl);
+  if (yt) return `<iframe src="https://www.youtube.com/embed/${yt}" title="" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+  if (isDirectVideo(post.mediaUrl)) return `<video controls preload="metadata"><source src="${esc(post.mediaUrl)}"></video>`;
+  if (post.mediaUrl) return `<img src="${esc(post.mediaUrl)}" alt="">`;
+  return "";
+};
+
+out["marketing.html"] = page({
+  current: "marketing.html",
+  path: "marketing.html",
+  image: "urban-kaza-ext-v2",
+  title: "Campaign Feed — Hill Bottom Properties",
+  desc: "Live campaign updates, launches and announcements from Hill Bottom Properties — delivery milestones, offers and news as they happen.",
+  bodyClass: "marketing-page",
+  head: `<style>
+    .feed-hero{padding-bottom:0}
+    .feed{columns:1;column-gap:clamp(18px,2.4vw,28px);margin-top:clamp(30px,4vw,54px)}
+    @media(min-width:720px){.feed{columns:2}}
+    @media(min-width:1080px){.feed{columns:3}}
+    .feed__card{display:block;break-inside:avoid;margin:0 0 clamp(18px,2.4vw,28px);border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--bg);cursor:pointer;will-change:transform;transition:transform .5s var(--ease),border-color .3s var(--ease);text-align:left;width:100%}
+    .feed__card:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+    .feed__card--feature{column-span:all}
+    .feed__card--feature .feed__media{aspect-ratio:21/9}
+    .feed__card--feature .feed__body h3{font-size:clamp(1.4rem,2.6vw,2rem)}
+    .feed__media{position:relative;width:100%;aspect-ratio:4/3;background:var(--raise);overflow:hidden}
+    .feed__media img{width:100%;height:100%;object-fit:cover;display:block}
+    .feed__media--video iframe,.feed__media--video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
+    .feed__body{padding:clamp(18px,2.4vw,26px)}
+    .feed__tag{display:inline-block;margin-bottom:10px;padding:4px 12px;border:1px solid color-mix(in srgb,var(--accent) 50%,transparent);border-radius:999px;font-family:var(--sans);font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+    .feed__body h3{margin:0;font-family:var(--display);font-weight:300;font-size:1.15rem;line-height:1.25;color:var(--fg)}
+    .feed__body p{margin:.6em 0 0;font-family:var(--sans);font-size:.88rem;line-height:1.6;color:var(--fg-2)}
+    .feed__body time{display:block;margin-top:14px;font-family:var(--sans);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--fg-2) 70%,transparent)}
+    .feed-empty{margin-top:40px;padding:clamp(40px,6vw,70px);text-align:center;border:1px dashed var(--line);border-radius:3px;color:var(--fg-2)}
+    .feed-lb{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:clamp(16px,4vw,48px);background:rgba(6,11,20,.92);backdrop-filter:blur(8px)}
+    .feed-lb.is-open{display:flex}
+    .feed-lb__panel{position:relative;width:100%;max-width:860px;max-height:92vh;overflow-y:auto;background:var(--abyss);border:1px solid rgba(232,219,184,.18);border-radius:4px}
+    .feed-lb__media{width:100%;aspect-ratio:16/9;background:var(--raise);position:relative}
+    .feed-lb__media iframe,.feed-lb__media video,.feed-lb__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
+    .feed-lb__body{padding:clamp(22px,4vw,38px)}
+    .feed-lb__body h3{margin:.4em 0 0;font-family:var(--display);font-weight:300;font-size:clamp(1.3rem,3vw,1.8rem);color:#F6F8FB}
+    .feed-lb__body p{margin:.8em 0 0;font-family:var(--sans);font-size:.95rem;line-height:1.7;color:#C7D1DE}
+    .feed-lb__close{position:absolute;top:14px;right:14px;z-index:1;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:rgba(6,11,20,.6);color:#fff;border:1px solid rgba(255,255,255,.2)}
+    .feed-lb__close svg{width:18px;height:18px}
+    @media(prefers-reduced-motion:reduce){.feed__card{transition:none!important}}
+  </style>`,
+  body: `
+${pageHero(0, {
+  title: "Campaign Feed",
+  sub: "Live updates from Hill Bottom Properties — launches, milestones, and offers as they happen.",
+  imgName: "urban-kaza-ext-v2", alt: "Hill Bottom Properties campaign updates",
+  stations: [],
+  heroClass: "feed-hero",
+})}
+
+<section class="ch ch--paper pad">
+  <div class="wrap">
+    ${MARKETING_POSTS.length === 0 ? `
+    <div class="feed-empty">
+      <p class="mark" style="margin-bottom:10px">Nothing posted yet</p>
+      <p>Campaign updates will appear here as soon as they're published from the admin panel.</p>
+    </div>` : `
+    <div class="feed">
+      ${MARKETING_POSTS.map(feedCard).join("")}
+    </div>`}
+  </div>
+</section>
+
+${ctaBand(0, {
+  title: "Don't miss a launch.",
+  body: "Message us on WhatsApp to be notified the moment a new project, unit release, or offer goes live.",
+  primary: "WhatsApp Us", primaryHref: CO.waHref,
+  secondary: "View Residences", secondaryHref: "projects.html",
+})}
+
+<div class="feed-lb" id="feed-lb">
+  <div class="feed-lb__panel">
+    <button class="feed-lb__close" type="button" data-feed-lb-close aria-label="Close">${ICON.close}</button>
+    <div class="feed-lb__media" data-feed-lb-media></div>
+    <div class="feed-lb__body">
+      <span class="feed__tag" data-feed-lb-tag hidden></span>
+      <h3 data-feed-lb-title></h3>
+      <p data-feed-lb-body></p>
+    </div>
+  </div>
+</div>
+`,
+  scripts: MARKETING_POSTS.length ? `<script>(function(){
+  var posts = ${JSON.stringify(MARKETING_POSTS.map((p) => ({ title: p.title, body: p.body, campaignTag: p.campaignTag, media: feedLightboxMedia(p) })))};
+  var lb = document.getElementById("feed-lb");
+  if (!lb) return;
+  var mediaEl = lb.querySelector("[data-feed-lb-media]");
+  var titleEl = lb.querySelector("[data-feed-lb-title]");
+  var bodyEl = lb.querySelector("[data-feed-lb-body]");
+  var tagEl = lb.querySelector("[data-feed-lb-tag]");
+  function open(i) {
+    var p = posts[i];
+    if (!p) return;
+    mediaEl.innerHTML = p.media;
+    titleEl.textContent = p.title;
+    bodyEl.textContent = p.body || "";
+    bodyEl.hidden = !p.body;
+    tagEl.textContent = p.campaignTag || "";
+    tagEl.hidden = !p.campaignTag;
+    lb.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  }
+  function close() {
+    lb.classList.remove("is-open");
+    mediaEl.innerHTML = "";
+    document.body.style.overflow = "";
+  }
+  document.querySelectorAll("[data-feed-index]").forEach(function (card) {
+    card.addEventListener("click", function () { open(Number(card.getAttribute("data-feed-index"))); });
+    card.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(Number(card.getAttribute("data-feed-index"))); } });
+  });
+  lb.addEventListener("click", function (e) { if (e.target === lb) close(); });
+  lb.querySelector("[data-feed-lb-close]").addEventListener("click", close);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduced) {
+    var cards = Array.prototype.slice.call(document.querySelectorAll(".feed__card"));
+    var ticking = false;
+    function parallax() {
+      var vh = window.innerHeight;
+      cards.forEach(function (card) {
+        var rect = card.getBoundingClientRect();
+        var center = rect.top + rect.height / 2;
+        var offset = (center - vh / 2) / vh;
+        var depth = Number(card.style.getPropertyValue("--depth")) || 1;
+        card.style.transform = "translateY(" + (offset * depth * -14) + "px)";
+      });
+      ticking = false;
+    }
+    window.addEventListener("scroll", function () {
+      if (!ticking) { requestAnimationFrame(parallax); ticking = true; }
+    }, { passive: true });
+    parallax();
+  }
+})();</script>` : "",
 });
 
 export default out;

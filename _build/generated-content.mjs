@@ -12,3 +12,6 @@ export const PROMO = {
 // Keyed by project slug, overlaid onto data.mjs's PROJECTS/CONSTRUCTION —
 // see mergeLiveProject() in data.mjs.
 export const PROJECTS_LIVE = [];
+
+// marketing.html's feed, newest first. No merge needed — rendered as-is.
+export const MARKETING_POSTS = [];

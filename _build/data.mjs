@@ -4,7 +4,9 @@
    Items flagged `hold:true` are placeholders the client must replace. */
 
 import fs from "fs";
-import { PROJECTS_LIVE } from "./generated-content.mjs";
+import { PROJECTS_LIVE, MARKETING_POSTS } from "./generated-content.mjs";
+
+export { MARKETING_POSTS };
 
 export const POSTS = JSON.parse(fs.readFileSync(new URL("./blog.json", import.meta.url), "utf8"));
 
@@ -53,6 +55,7 @@ export const NAV = [
 export const NAV_SECONDARY = [
   { href: "vr-tours.html", label: "Virtual Tours" },
   { href: "team.html", label: "Leadership & Team" },
+  { href: "marketing.html", label: "Campaign Feed" },
   { href: "contact.html", label: "Contact" },
 ];
 
