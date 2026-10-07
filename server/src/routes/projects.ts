@@ -16,7 +16,7 @@ const projectInput = z.object({
   heroImageUrl: z.string().optional(),
   unitTypes: z.array(z.record(z.string(), z.any())).default([]),
   floorPlans: z.array(z.record(z.string(), z.any())).default([]),
-  completionPercent: z.number().int().min(0).max(100).default(0),
+  completionPercent: z.number().int().min(0).max(100).optional(),
   currentStage: z.string().optional(),
   nextMilestone: z.string().optional(),
 });

@@ -177,6 +177,11 @@ ${pageHero(0, {
           <div><span>${INFO_ICONS[1]}</span><small>Next milestone</small><strong>${esc(c.milestone)}</strong></div>
           <div><span>${INFO_ICONS[2]}</span><small>Project status</small><strong>${esc(c.status)}</strong></div>
         </div>
+        ${c.pct != null ? `
+        <div class="construction-card__progress">
+          <span class="live-badge"><i></i> Live progress</span>
+          ${alt(c.pct, `${c.pct}% complete`, c.milestone)}
+        </div>` : ""}
         <p class="story__d" style="max-width:44ch">Dated photo and video updates for this development are issued directly to buyers at each milestone. Request the latest pack or a live video walkthrough at any time.</p>
         ${btn("Request Latest Update", "contact.html", { kind: "btn--gold" })}
       </div>

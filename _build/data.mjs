@@ -4,8 +4,17 @@
    Items flagged `hold:true` are placeholders the client must replace. */
 
 import fs from "fs";
+import { PROJECTS_LIVE } from "./generated-content.mjs";
 
 export const POSTS = JSON.parse(fs.readFileSync(new URL("./blog.json", import.meta.url), "utf8"));
+
+// Operational fields (progress %, current stage, next milestone) come from
+// the admin-managed database; editorial copy (taglines, CTAs, hero images)
+// stays hand-authored below and is never overwritten. A project with no
+// matching DB row (e.g. "the-switch", concept-phase) just keeps its static
+// values untouched.
+const liveProjectBySlug = Object.fromEntries(PROJECTS_LIVE.map((p) => [p.slug, p]));
+const mergeLiveProject = (key) => liveProjectBySlug[key] ?? null;
 
 export const CO = {
   name: "Hill Bottom Properties",
@@ -105,7 +114,10 @@ export const PROJECTS = [
     pct: 6,
     concept: true,
   },
-];
+].map((p) => {
+  const live = mergeLiveProject(p.key);
+  return live?.completionPercent != null ? { ...p, pct: live.completionPercent } : p;
+});
 
 /* Hero dimension line: the whole portfolio as one measured span. */
 export const PORTFOLIO_LINE = [
@@ -319,7 +331,16 @@ export const CONSTRUCTION = [
   { key: "urban-kaza", name: "Urban Kaza", where: "Kazanchis, near Addis Sport Park", stage: "Superstructure in progress", milestone: "Reserve now — 98 residences", img: "urban-kaza-ext-v2", href: "projects/urban-kaza.html", status: "In Progress" },
   { key: "hillbottom-village", name: "Hill Bottom Village — Block B", where: "Ayat Square, Addis Ababa", stage: "In construction", milestone: "Delivery October 2026", img: "block-c-10", href: "projects/hillbottom-village.html", status: "Block A Complete" },
   { key: "recreation-center", name: "Commercial + Recreation Centre", where: "Ayat, Addis Ababa — Phase 3", stage: "Begins after Block B handover", milestone: "Opening January 2027", img: "block-c-01", href: "projects/recreation-center.html", status: "Coming Jan 2027" },
-];
+].map((c) => {
+  const live = mergeLiveProject(c.key);
+  if (!live) return c;
+  return {
+    ...c,
+    stage: live.currentStage || c.stage,
+    milestone: live.nextMilestone || c.milestone,
+    pct: live.completionPercent ?? undefined,
+  };
+});
 
 /* ---- Urban Kaza unit selector (audit §18) -------------------------------
    Derived from the published unit schedule. Bedrooms, areas and parking are

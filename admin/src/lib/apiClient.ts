@@ -12,7 +12,9 @@ export type Project = {
   heroImageUrl: string | null;
   unitTypes: Record<string, unknown>[];
   floorPlans: Record<string, unknown>[];
-  completionPercent: number;
+  // null = never set by an admin. Kept distinct from 0 so an untouched
+  // project can't be mistaken for "0% complete" — see schema.ts.
+  completionPercent: number | null;
   currentStage: string | null;
   nextMilestone: string | null;
   createdAt: string;

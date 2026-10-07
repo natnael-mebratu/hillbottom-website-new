@@ -290,3 +290,15 @@
   .uk-zoning__stamp{display:none}
 }
 @media(prefers-reduced-motion:reduce){.uk-zoning__layer,.uk-zoning__pin{transition:none}}
+
+/* ---------- Live status badge ---------------------------------------------
+   A quiet pulsing dot marking admin-managed, database-live fields (e.g. a
+   construction card's progress bar). Same visual language everywhere it
+   appears, deliberately restrained — one pulse, not a flashing alarm. */
+.live-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
+.live-badge i{position:relative;width:7px;height:7px;border-radius:50%;background:var(--gold-lit);flex:none}
+.live-badge i::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--gold-lit);animation:liveBadgePulse 2.4s ease-out infinite}
+@keyframes liveBadgePulse{0%{transform:scale(.6);opacity:.8}75%,100%{transform:scale(1.9);opacity:0}}
+@media(prefers-reduced-motion:reduce){.live-badge i::after{animation:none;display:none}}
+
+.construction-card__progress{margin-top:18px}

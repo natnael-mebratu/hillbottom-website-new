@@ -46,7 +46,11 @@ export const projects = pgTable("projects", {
   // without schema churn.
   unitTypes: jsonb("unit_types").notNull().default([]),
   floorPlans: jsonb("floor_plans").notNull().default([]),
-  completionPercent: integer("completion_percent").notNull().default(0),
+  // Nullable, no default: null means "never set by an admin" and is
+  // overlay-skipped by _build/data.mjs's mergeLiveProject so an untouched
+  // row can never silently clobber a project's curated editorial pct with
+  // a false "0% complete". Only an explicit admin-set 0 means 0.
+  completionPercent: integer("completion_percent"),
   // Drives the construction.html per-project status cards on the static
   // site — a short human label, not a structured milestone record (that's
   // what progressUpdates is for).

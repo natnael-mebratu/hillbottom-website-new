@@ -531,7 +531,7 @@ function ProjectsSection() {
       location: project.location ?? "",
       summary: project.summary ?? "",
       heroImageUrl: project.heroImageUrl ?? "",
-      completionPercent: project.completionPercent,
+      completionPercent: project.completionPercent ?? 0,
       currentStage: project.currentStage ?? "",
       nextMilestone: project.nextMilestone ?? "",
       unitTypes: project.unitTypes,
@@ -575,7 +575,7 @@ function ProjectsSection() {
                   )}
                 </div>
                 <span className="text-xl font-semibold text-[#c09a60]">
-                  {project.completionPercent}%
+                  {project.completionPercent != null ? `${project.completionPercent}%` : "Not set"}
                 </span>
               </div>
               <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-white/35">
