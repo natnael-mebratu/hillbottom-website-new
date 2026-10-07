@@ -130,7 +130,7 @@ body.js .portfolio-index.in .status-facts .fact:nth-child(4){transition-delay:21
 .form__ok{border-radius:3px}
 .ch--paper .mark--accent,.ch--paper-2 .mark--accent{color:#66562F}
 .rail{top:auto;bottom:26px;transform:none}
-.rail a{transition:transform 220ms var(--ease-ui),background 180ms ease;color:#F6F8FB}
+.rail a{transition:transform .6s var(--ease),background .4s var(--ease),color .4s var(--ease);color:#F6F8FB}
 .welcome{top:auto;bottom:28px;transform:translateX(calc(100% + 40px));width:390px;max-height:calc(100svh - 120px);background:#0D1B30;padding:40px 30px 30px;border:0;border-radius:5px;transition:transform 240ms var(--ease-ui),visibility 240ms;visibility:hidden}
 .welcome.is-open{transform:translateX(0);visibility:visible}
 .welcome .d3{font-size:1.8rem;line-height:1.2;padding-right:28px}
