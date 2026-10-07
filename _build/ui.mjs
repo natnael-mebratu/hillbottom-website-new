@@ -157,7 +157,6 @@ export const rail = () => `
 <div class="rail">
   <a href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}<b>WhatsApp ${esc(CO.wa)}</b></a>
   <a href="${CO.telHref}">${ICON.phone}<b>Call ${esc(CO.tel)}</b></a>
-  <a href="${CO.waHref}" target="_blank" rel="noreferrer" data-live-chat>${ICON.chat}<b>Live Chat</b></a>
   <a href="${CO.shortHref}">${ICON.doc}<b>Short code ${esc(CO.short)}</b></a>
 </div>
 <nav class="bar" aria-label="Quick contact">

@@ -260,7 +260,7 @@ out["marketing.html"] = page({
     .feed{columns:1;column-gap:clamp(18px,2.4vw,28px);margin-top:clamp(30px,4vw,54px)}
     @media(min-width:720px){.feed{columns:2}}
     @media(min-width:1080px){.feed{columns:3}}
-    .feed__card{display:block;break-inside:avoid;margin:0 0 clamp(18px,2.4vw,28px);border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--bg);cursor:pointer;will-change:transform;transition:transform .5s var(--ease),border-color .3s var(--ease);text-align:left;width:100%}
+    .feed__card{display:block;break-inside:avoid;margin:0 0 clamp(18px,2.4vw,28px);border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--raise);cursor:pointer;will-change:transform;transition:transform .5s var(--ease),border-color .3s var(--ease);text-align:left;width:100%}
     .feed__card:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
     .feed__card--feature{column-span:all}
     .feed__card--feature .feed__media{aspect-ratio:21/9}
@@ -295,7 +295,7 @@ ${pageHero(0, {
   heroClass: "feed-hero",
 })}
 
-<section class="ch ch--paper pad">
+<section class="ch ch--abyss pad">
   <div class="wrap">
     ${MARKETING_POSTS.length === 0 ? `
     <div class="feed-empty">
@@ -399,7 +399,7 @@ out["sister-companies.html"] = page({
     .sister-hero{padding-bottom:0}
     .sister{padding:clamp(50px,7vw,90px) 0}
     .sister__top{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-bottom:clamp(30px,4vw,48px)}
-    .sister__logo{height:52px;width:auto;padding:10px 16px;background:var(--abyss);border-radius:4px}
+    .sister__logo{height:52px;width:auto;padding:10px 16px;background:#060B14;border:1px solid rgba(232,219,124,.22);border-radius:4px}
     .sister__top h2{margin:0;font-family:var(--display);font-weight:300;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--fg)}
     .sister__tagline{margin:0;font-family:var(--sans);font-size:.95rem;font-style:italic;color:var(--accent)}
     .sister__grid{display:grid;gap:clamp(30px,4vw,54px);grid-template-columns:1.3fr 1fr}
@@ -435,7 +435,7 @@ ${pageHero(0, {
 })}
 
 ${SISTER_COMPANIES.map((co, i) => co.hold ? `
-<section class="ch ${i % 2 ? "ch--paper" : "ch--paper-2"} pad">
+<section class="ch ${i % 2 ? "ch--paper" : "ch--abyss"} pad">
   <div class="wrap">
     <div class="sister--hold rv">
       <span class="mark">Coming Soon</span>
@@ -444,7 +444,7 @@ ${SISTER_COMPANIES.map((co, i) => co.hold ? `
     </div>
   </div>
 </section>` : `
-<section class="ch ${i % 2 ? "ch--paper" : "ch--paper-2"} pad sister">
+<section class="ch ${i % 2 ? "ch--paper" : "ch--abyss"} pad sister">
   <div class="wrap">
     <div class="sister__top rv">
       <img class="sister__logo" src="assets/img/${co.logo}.webp" alt="${esc(co.name)} logo">

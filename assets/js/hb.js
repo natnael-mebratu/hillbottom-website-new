@@ -223,14 +223,10 @@
     doc.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && chatw.classList.contains("is-open")) setChat(false);
     });
-    /* Every [data-live-chat] link (the rail's "Live Chat" pill) opens this
-       widget instead of navigating — its href stays a real WhatsApp link
-       as a no-JS fallback. */
-    $$("[data-live-chat]").forEach(function (a) {
-      a.addEventListener("click", function (e) {
-        e.preventDefault();
-        setChat(true);
-      });
+    /* Clicking anywhere outside the widget (the rest of the page) closes
+       it, same as the question list's own Back/Close controls. */
+    doc.addEventListener("click", function (e) {
+      if (chatw.classList.contains("is-open") && !chatw.contains(e.target)) setChat(false);
     });
   }
 
