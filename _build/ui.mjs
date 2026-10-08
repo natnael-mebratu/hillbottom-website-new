@@ -19,6 +19,7 @@ export const ICON = {
   left: S(`<path d="M19 12H5M11 18l-6-6 6-6"/>`),
   right: S(`<path d="M5 12h14M13 6l6 6-6 6"/>`),
   close: S(`<path d="M6 6l12 12M18 6L6 18"/>`),
+  chevronDown: S(`<path d="M6 9l6 6 6-6"/>`),
   phone: S(`<path d="M15.6 13.4a9.2 9.2 0 0 1-5-5l1.7-1.6a1 1 0 0 0 .2-1.1L11.1 2.6a1 1 0 0 0-1.1-.6l-3 .6A1 1 0 0 0 6.2 3.7 17.6 17.6 0 0 0 20.3 17.8a1 1 0 0 0 1.1-.8l.6-3a1 1 0 0 0-.6-1.1l-3.1-1.4a1 1 0 0 0-1.1.2z"/>`),
   mail: S(`<rect x="2.5" y="5" width="19" height="14" rx="1.6"/><path d="m3 6.5 9 6 9-6"/>`),
   pin: S(`<path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/>`),
@@ -137,6 +138,12 @@ export const header = (d, current) => `
     ${lockup(d)}
     <nav class="nav" aria-label="Primary">
       ${NAV.map((n) => `<a href="${up(d)}${n.href}"${current === n.href ? ' aria-current="page"' : ""}>${esc(n.label)}</a>`).join("")}
+      <div class="nav__more" data-nav-more>
+        <button type="button" class="nav__more-btn" aria-expanded="false" aria-haspopup="true" aria-controls="hb-nav-more-menu">More${ICON.chevronDown}</button>
+        <div class="nav__more-menu" id="hb-nav-more-menu" role="menu">
+          ${NAV_SECONDARY.map((n) => `<a role="menuitem" href="${up(d)}${n.href}"${current === n.href ? ' aria-current="page"' : ""}>${esc(n.label)}</a>`).join("")}
+        </div>
+      </div>
     </nav>
     <div class="hdr__cta">
       <a class="btn btn--gold" href="${up(d)}contact.html">${CTA.project}</a>
@@ -146,6 +153,7 @@ export const header = (d, current) => `
 </header>
 <div class="drawer" id="hb-drawer" aria-hidden="true" inert>
   ${NAV.map((n) => `<a class="dl" href="${up(d)}${n.href}">${esc(n.label)}${n.note ? `<em>${esc(n.note)}</em>` : ""}</a>`).join("")}
+  <p class="dl--more-label">More</p>
   ${NAV_SECONDARY.map((n) => `<a class="dl dl--sub" href="${up(d)}${n.href}">${esc(n.label)}</a>`).join("")}
   <div class="btn-row">
     <a class="btn" href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}WhatsApp</a>

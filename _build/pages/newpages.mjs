@@ -1,5 +1,5 @@
 import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, PROCESS, MARKETING_POSTS, SISTER_COMPANIES } from "../data.mjs";
-import { page, facts, alt, plate, btn, link, esc, ICON } from "../ui.mjs";
+import { page, facts, alt, plate, img, btn, link, esc, ICON } from "../ui.mjs";
 import { pageHero, ctaBand, inquiryForm } from "./parts.mjs";
 
 const out = {};
@@ -295,6 +295,28 @@ ${pageHero(0, {
   heroClass: "feed-hero",
 })}
 
+<section class="ch ch--paper pad rec-intro">
+  <div class="wrap rec-intro__layout">
+    <figure class="rec-intro__media rv">${img("urban-kaza-ext-v2", "Hill Bottom Properties, under construction", { sizes: "(min-width:900px) 52vw, 100vw" })}</figure>
+    <div class="rec-intro__copy rv">
+      <p class="mark mark--accent">Campaign Feed</p>
+      <h2 class="d2">Every Launch, Live</h2>
+      <p class="body">The Campaign Feed is where Hill Bottom posts as things happen — new releases, price changes, and milestone photography, straight from the sales and marketing team.</p>
+    </div>
+  </div>
+</section>
+
+<section class="ch ch--abyss pad rec-intro">
+  <div class="wrap rec-intro__layout">
+    <div class="rec-intro__copy rv">
+      <p class="mark mark--accent">How It Works</p>
+      <h2 class="d2">Scroll for What's New</h2>
+      <p class="body">Posts below are ordered newest first. Tap any card to open it full size — photos, video, and the full caption — or message us directly if you want more detail on a specific launch.</p>
+    </div>
+    <figure class="rec-intro__media rv">${img("block-c-10", "Hill Bottom community plaza", { sizes: "(min-width:900px) 52vw, 100vw" })}</figure>
+  </div>
+</section>
+
 <section class="ch ch--abyss pad">
   <div class="wrap">
     ${MARKETING_POSTS.length === 0 ? `
@@ -424,6 +446,13 @@ out["sister-companies.html"] = page({
     .sister--hold h2{margin:0 0 10px}
     .sister--hold p{max-width:50ch;margin:0 auto;color:var(--fg-2)}
     .sister--hold .mark{color:var(--accent);margin-bottom:12px}
+    /* Reuses the same two-column split component as recreation-center.html's
+       rec-intro (see site-unified.css ~658) — one shared "chapter" pattern,
+       not a duplicate. */
+    .sister-chapter .rec-intro__copy{gap:0;align-self:stretch}
+    .sister-chapter .rec-intro__media{align-self:stretch}
+    .sister-chapter .rec-intro__media--logo{display:flex;align-items:center;justify-content:center;background:#060B14;border:1px solid rgba(232,219,124,.22)}
+    .sister-chapter .rec-intro__media--logo img{width:auto;max-width:62%;height:auto;min-height:0;object-fit:contain}
   </style>`,
   body: `
 ${pageHero(0, {
@@ -434,54 +463,55 @@ ${pageHero(0, {
   heroClass: "sister-hero",
 })}
 
-${SISTER_COMPANIES.map((co, i) => co.hold ? `
-<section class="ch ${i % 2 ? "ch--abyss" : "ch--paper"} pad">
-  <div class="wrap">
-    <div class="sister--hold rv">
-      <span class="mark">Coming Soon</span>
-      <h2 class="d3">${esc(co.name)}</h2>
-      <p>${esc(co.about)}</p>
+${SISTER_COMPANIES.map((co, i) => {
+  const dark = i % 2 ? "ch--abyss" : "ch--paper";
+  // Media panel: Tona has only its logo asset (no standalone photography),
+  // so the logo gets the full media slot on the dark-chip background that
+  // was already fixed for contrast — never a plain/unstyled logo. The
+  // placeholder company reuses the recreation-hub render until it has its
+  // own photography.
+  const media = co.logo
+    ? `<figure class="rec-intro__media rec-intro__media--logo rv"><img src="assets/img/${co.logo}.webp" alt="${esc(co.name)} logo"></figure>`
+    : `<figure class="rec-intro__media rv">${img("recreation-hub", `${co.name} — coming soon`, { sizes: "(min-width:900px) 52vw, 100vw" })}</figure>`;
+  return `
+<section class="ch ${dark} pad sister-chapter">
+  <div class="wrap rec-intro__layout">
+    ${media}
+    <div class="rec-intro__copy rv">
+      ${co.hold ? `
+      <span class="mark mark--accent">Coming Soon</span>
+      <h2 class="d2">${esc(co.name)}</h2>
+      <p class="body" style="margin-top:14px">${esc(co.about)}</p>
+      ` : `
+      <p class="mark mark--accent">${esc(co.tagline)}</p>
+      <h2 class="d2">${esc(co.name)}</h2>
+      <p class="body" style="margin-top:14px">${esc(co.about)}</p>
+      ${co.pronunciation ? `
+      <div class="sister__pron">
+        <b>${esc(co.pronunciation)}</b>
+        <ul>${co.definitions.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>
+      </div>` : ""}
+      ${co.founding ? `<p class="body">${esc(co.founding)}</p>` : ""}
+      ${co.mission ? `<p class="body">${esc(co.mission)}</p>` : ""}
+      ${co.varieties ? `
+      <div class="varieties">
+        ${co.varieties.map((v) => `<div class="variety"><b>${esc(v.name)}</b><span>${esc(v.note)}</span></div>`).join("")}
+      </div>` : ""}
+      ${co.sustainability ? `<p class="body" style="margin-top:1.4em">${esc(co.sustainability)}</p>` : ""}
+      ${co.values ? `
+      <h4 style="margin-top:28px;font-family:var(--sans);font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)">Values</h4>
+      <ul style="list-style:none;margin:10px 0 0;padding:0;display:grid;gap:10px">
+        ${co.values.map((v) => `<li style="font-family:var(--sans);font-size:.86rem;line-height:1.5;color:var(--fg-2);padding-left:18px;position:relative"><span style="position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--accent)"></span>${esc(v)}</li>`).join("")}
+      </ul>` : ""}
+      <div class="sister__contact">
+        ${co.contact.email ? `<a href="mailto:${esc(co.contact.email)}">${esc(co.contact.email)}</a>` : ""}
+        ${co.contact.phone ? `<a href="tel:${esc(co.contact.phone.replace(/\s+/g, ""))}">${esc(co.contact.phone)}</a>` : ""}
+        ${co.contact.address ? `<span>${esc(co.contact.address)}</span>` : ""}
+      </div>`}
     </div>
   </div>
-</section>` : `
-<section class="ch ${i % 2 ? "ch--abyss" : "ch--paper"} pad sister">
-  <div class="wrap">
-    <div class="sister__top rv">
-      <img class="sister__logo" src="assets/img/${co.logo}.webp" alt="${esc(co.name)} logo">
-      <div>
-        <h2>${esc(co.name)}</h2>
-        <p class="sister__tagline">${esc(co.tagline)}</p>
-      </div>
-    </div>
-    <div class="sister__grid">
-      <div class="sister__about rv">
-        <p>${esc(co.about)}</p>
-        ${co.pronunciation ? `
-        <div class="sister__pron">
-          <b>${esc(co.pronunciation)}</b>
-          <ul>${co.definitions.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>
-        </div>` : ""}
-        ${co.founding ? `<p>${esc(co.founding)}</p>` : ""}
-        ${co.mission ? `<p>${esc(co.mission)}</p>` : ""}
-        ${co.varieties ? `
-        <div class="varieties">
-          ${co.varieties.map((v) => `<div class="variety"><b>${esc(v.name)}</b><span>${esc(v.note)}</span></div>`).join("")}
-        </div>` : ""}
-        ${co.sustainability ? `<p style="margin-top:1.4em">${esc(co.sustainability)}</p>` : ""}
-      </div>
-      <aside class="sister__side rv">
-        ${co.values ? `
-        <h4>Values</h4>
-        <ul>${co.values.map((v) => `<li>${esc(v)}</li>`).join("")}</ul>` : ""}
-        <div class="sister__contact">
-          ${co.contact.email ? `<a href="mailto:${esc(co.contact.email)}">${esc(co.contact.email)}</a>` : ""}
-          ${co.contact.phone ? `<a href="tel:${esc(co.contact.phone.replace(/\s+/g, ""))}">${esc(co.contact.phone)}</a>` : ""}
-          ${co.contact.address ? `<span>${esc(co.contact.address)}</span>` : ""}
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>`).join("")}
+</section>`;
+}).join("")}
 
 ${ctaBand(0, {
   title: "Part of the Hill Bottom family.",

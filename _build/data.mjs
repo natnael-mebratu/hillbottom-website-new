@@ -4,9 +4,9 @@
    Items flagged `hold:true` are placeholders the client must replace. */
 
 import fs from "fs";
-import { PROJECTS_LIVE, MARKETING_POSTS } from "./generated-content.mjs";
+import { PROJECTS_LIVE, MARKETING_POSTS, TEAM_MEMBERS } from "./generated-content.mjs";
 
-export { MARKETING_POSTS };
+export { MARKETING_POSTS, TEAM_MEMBERS };
 
 export const POSTS = JSON.parse(fs.readFileSync(new URL("./blog.json", import.meta.url), "utf8"));
 
@@ -45,19 +45,22 @@ export const CO = {
 
 export const NAV = [
   { href: "projects.html", label: "Residences", note: "04" },
-  { href: "about.html", label: "About", note: "" },
-  { href: "buying-from-abroad.html", label: "Buying From Abroad", note: "" },
   { href: "construction.html", label: "Construction Updates", note: "" },
-  { href: "news.html", label: "Insights", note: "" },
+  { href: "about.html", label: "About", note: "" },
+  { href: "team.html", label: "Team", note: "" },
+  { href: "contact.html", label: "Contact", note: "" },
 ];
 
-/* Demoted from the primary bar per audit §6 — still reachable everywhere. */
+/* "More" dropdown in the primary nav — client-confirmed restructure: these
+   pages were hard to find under the old NAV_SECONDARY treatment, so they
+   now live in an explicit, discoverable "More" menu rather than a
+   demoted/overflow list. */
 export const NAV_SECONDARY = [
+  { href: "buying-from-abroad.html", label: "Buying From Abroad" },
   { href: "vr-tours.html", label: "Virtual Tours" },
-  { href: "team.html", label: "Leadership & Team" },
   { href: "marketing.html", label: "Campaign Feed" },
   { href: "sister-companies.html", label: "Sister Companies" },
-  { href: "contact.html", label: "Contact" },
+  { href: "news.html", label: "Insights" },
 ];
 
 /* ---- projects ---------------------------------------------------------

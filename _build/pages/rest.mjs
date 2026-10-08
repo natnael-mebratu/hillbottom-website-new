@@ -4,7 +4,7 @@ import { ukIntro } from "../intros.mjs";
 import {
   CO, CTA, KAZA_UNIT_SET, KAZA_BANDS, PROJECTS, PILLARS, POSTS, TESTIMONIALS, VR_TOURS, PROCESS, VALUES, TEAMS,
   KAZA_FLOORS, KAZA_UNITS, KAZA_UNIT_COLS, KAZA_NOTE, KAZA_CONTEXT, KAZA_GALLERY,
-  VILLAGE_P1, VILLAGE_P2, REC_FACILITIES, REC_GALLERY,
+  VILLAGE_P1, VILLAGE_P2, REC_FACILITIES, REC_GALLERY, TEAM_MEMBERS,
 } from "../data.mjs";
 import { page, facts, alt, ridge, plate, img, btn, link, lightbox, unitSelector, esc, ICON } from "../ui.mjs";
 import { inquiryForm, pageHero, ctaBand, storyCard, fmtDate, coverFor } from "./parts.mjs";
@@ -709,6 +709,46 @@ ${pageHero(0, {
 });
 
 /* =============================== TEAM ================================== */
+/* Member grid, from TEAM_MEMBERS (admin-managed DB, see fetchData.mjs). When
+   empty — a fresh clone or before anyone's added a real roster in admin —
+   the section is simply skipped and the page reads fine on the existing
+   hero/stats + TEAMS copy alone. */
+const teamCard = (m) => `
+<div class="story rv">
+  ${m.photoUrl
+    ? `<div class="story__photo"><img src="${esc(m.photoUrl)}" alt="${esc(m.name)}" loading="lazy"></div>`
+    : `<div class="story__photo story__photo--ph" aria-hidden="true">${esc((m.name || "?").trim().charAt(0))}</div>`}
+  <div>
+    <h3 class="story__t">${esc(m.name)}</h3>
+    <p class="mark mark--accent" style="margin-top:4px">${esc(m.role)}${m.department ? ` &middot; ${esc(m.department)}` : ""}</p>
+    ${m.bio ? `<p class="story__d" style="margin-top:10px">${esc(m.bio)}</p>` : ""}
+  </div>
+</div>`;
+
+const teamMemberSection = () => {
+  if (!TEAM_MEMBERS.length) return "";
+  const depts = [...new Set(TEAM_MEMBERS.map((m) => m.department || "Team"))];
+  const grouped = depts.length > 1;
+  return `
+<section class="ch ch--paper pad">
+  <div class="wrap">
+    <div class="head head--split rv" style="margin-bottom:clamp(36px,4vw,60px)">
+      <h2 class="d2">Meet the Team</h2>
+      <div class="head__side"><p>The named people behind every project, every milestone update, and every buyer conversation.</p></div>
+    </div>
+    ${grouped
+      ? depts.map((dept) => `
+    <div style="margin-bottom:clamp(30px,3.5vw,48px)">
+      <h3 class="d4 rv" style="margin-bottom:22px">${esc(dept)}</h3>
+      <div class="grid grid--3">
+        ${TEAM_MEMBERS.filter((m) => (m.department || "Team") === dept).map(teamCard).join("")}
+      </div>
+    </div>`).join("")
+      : `<div class="grid grid--3">${TEAM_MEMBERS.map(teamCard).join("")}</div>`}
+  </div>
+</section>`;
+};
+
 out["team.html"] = page({
   current: "team.html",
   path: "team.html",
@@ -751,7 +791,7 @@ ${pageHero(0, {
     </div>
   </div>
 </section>
-
+${teamMemberSection()}
 <section class="ch ch--paper pad" id="careers">
   <div class="wrap">
     <div class="head head--split rv" style="margin-bottom:clamp(30px,3.5vw,48px)">

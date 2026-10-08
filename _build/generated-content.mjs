@@ -15,3 +15,7 @@ export const PROJECTS_LIVE = [];
 
 // marketing.html's feed, newest first. No merge needed — rendered as-is.
 export const MARKETING_POSTS = [];
+
+// team.html's member grid, by sortOrder. No merge needed — rendered as-is;
+// team.html falls back to generic hero/stats copy when this is empty.
+export const TEAM_MEMBERS = [];

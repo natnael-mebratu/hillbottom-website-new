@@ -187,6 +187,24 @@
     window.addEventListener("resize", function () { if (window.innerWidth >= 1140 && drawer.classList.contains("is-open")) setDrawer(false); });
   }
 
+  /* ---- "More" nav dropdown: click/keyboard toggle; hover handled in CSS ---- */
+  var navMore = $(".nav__more"), navMoreBtn = navMore && $(".nav__more-btn", navMore);
+  if (navMore && navMoreBtn) {
+    var setNavMore = function (open) {
+      navMore.classList.toggle("is-open", open);
+      navMoreBtn.setAttribute("aria-expanded", String(open));
+    };
+    navMoreBtn.addEventListener("click", function () {
+      setNavMore(!navMore.classList.contains("is-open"));
+    });
+    doc.addEventListener("click", function (e) {
+      if (navMore.classList.contains("is-open") && !navMore.contains(e.target)) setNavMore(false);
+    });
+    doc.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navMore.classList.contains("is-open")) { setNavMore(false); navMoreBtn.focus(); }
+    });
+  }
+
   /* ---- chat widget: real canned-question panel, not a WhatsApp redirect ---- */
   var chatw = $("#hb-chat");
   if (chatw) {
