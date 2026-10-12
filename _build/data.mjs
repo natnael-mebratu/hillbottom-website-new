@@ -43,8 +43,24 @@ export const CO = {
   copyright: "Hill Bottom Properties 2026 © All rights reserved",
 };
 
+/* The real sales office pinned on the Contact and Home page Google Maps
+   embeds — the Urban Kaza Sales Gallery in Kazanchis, the live sales
+   office CO.offices already lists for in-person visits. Coordinates match
+   the Urban Kaza project pin already used in rest.mjs's CONTACT_LOCATIONS. */
+export const SALES_OFFICE = {
+  name: "Urban Kaza Sales Gallery",
+  role: "Hill Bottom Sales Office — Kazanchis",
+  address: "Kazanchis, Diplomatic Corridor, Addis Ababa, Ethiopia",
+  lat: 9.0146,
+  lng: 38.7729,
+};
+
 export const NAV = [
-  { href: "projects.html", label: "Residences", note: "04" },
+  { href: "projects.html", label: "Projects", note: "04", sub: [
+    { href: "projects.html#hillbottom-village", label: "Hill Bottom Village" },
+    { href: "projects.html#urban-kaza", label: "Urban Kaza" },
+    { href: "projects.html#recreation-center", label: "Recreation Center" },
+  ] },
   { href: "construction.html", label: "Construction Updates", note: "" },
   { href: "about.html", label: "About", note: "" },
   { href: "team.html", label: "Team", note: "" },
@@ -386,6 +402,11 @@ export const CONSTRUCTION = [
     stage: live.currentStage || c.stage,
     milestone: live.nextMilestone || c.milestone,
     pct: live.completionPercent ?? undefined,
+    // Final architect render + dated real progress photos (oldest first),
+    // from progress_updates via fetchData.mjs. Absent/empty when an admin
+    // hasn't uploaded any yet — construction.html renders nothing extra.
+    finalRenderUrl: live.finalRenderUrl || null,
+    progressPhotos: live.progressPhotos || [],
   };
 });
 

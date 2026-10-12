@@ -1,4 +1,4 @@
-import { CO, CTA, PROJECTS, PORTFOLIO_LINE, PILLARS, POSTS, TESTIMONIALS, VR_TOURS, WELCOME, CONSTRUCTION } from "../data.mjs";
+import { CO, CTA, PROJECTS, PORTFOLIO_LINE, PILLARS, POSTS, TESTIMONIALS, VR_TOURS, WELCOME, CONSTRUCTION, SALES_OFFICE } from "../data.mjs";
 import { page, facts, alt, ridge, plate, img, btn, link, welcome, esc, ICON, HAS_HERO_VIDEO } from "../ui.mjs";
 import { inquiryForm, storyCard } from "./parts.mjs";
 
@@ -40,6 +40,11 @@ const DELIVERY_GALLERY = [
   ["feedback-gallery-06.webp", "Urban Kaza apartment kitchen and dining"],
 ];
 const deliveryFrames = (hidden = false) => `<div class="delivery-marquee__group"${hidden ? ' aria-hidden="true"' : ''}>${DELIVERY_GALLERY.map(([src, altText]) => `<figure><img src="assets/img/${src}" alt="${hidden ? "" : altText}" loading="lazy" decoding="async"></figure>`).join("")}</div>`;
+/* Real Google Maps `output=embed` iframe for the sales-office section
+   below — same pattern as Urban Kaza's neighbourhood map and the Contact
+   page (see googleMapEmbed() in rest.mjs/pages). */
+const googleMapEmbed = (lat, lng, title, zoom = 15) => `<iframe title="${esc(title)}" src="https://www.google.com/maps?q=${lat}%2C${lng}&amp;z=${zoom}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+const SALES_OFFICE_ICON = `<svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><path pathLength="1" d="M12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>`;
 const testimonialSlides = (hidden = false) => `<div class="testimonial-marquee__group"${hidden ? ' aria-hidden="true"' : ''}>${TESTIMONIALS.map((t) => `
   <figure class="testimonial-card">
     <span class="quote-mark" aria-hidden="true">&ldquo;</span>
@@ -122,6 +127,23 @@ ${welcome(0, WELCOME)}
   </div>
 </section>
 
+<section class="ch ch--paper pad home-values" id="why">
+  <div class="wrap">
+    <div class="head head--split rv" style="margin-bottom:clamp(44px,5vw,72px)">
+      <h2 class="d2">Why Hillbottom?</h2>
+      <div class="head__side"><p>${esc(CO.promise)}</p></div>
+    </div>
+    <ul class="ledger rv">
+      ${PILLARS.map((p) => `
+      <li class="ledger__row" style="--i:${PILLARS.indexOf(p)}">
+        <span class="pillar-icon">${PILLAR_ICONS[PILLARS.indexOf(p)]}</span>
+        <div><h3 class="ledger__t">${esc(p.t)}</h3>
+        <p class="ledger__d">${esc(p.d)}</p></div>
+      </li>`).join("")}
+    </ul>
+  </div>
+</section>
+
 <section class="ch ch--paper pad-s home-proof">
   <div class="proof-grid">
       <a class="proofcard rv" href="projects/hillbottom-village.html" style="--proof-image:url('../img/feedback-village.webp')">
@@ -174,25 +196,6 @@ ${welcome(0, WELCOME)}
   </div>
 </section>
 
-
-<section class="ch ch--paper pad home-delivered">
-  <div class="wrap">
-    <div class="head head--split rv" style="margin-bottom:clamp(44px,5vw,76px)">
-      <h2 class="d2" style="max-width:17ch">Before we ask for your trust, <em>see what we delivered</em>.</h2>
-      <div class="head__side">
-        <p>Hill Bottom Village Phase 1 is complete and fully occupied. Prospective buyers are welcome to visit the completed Phase 1 and speak with current residents before committing to Phase 2.</p>
-        <div class="btn-row" style="margin-top:26px">
-          ${btn(CTA.delivered, "contact.html", { kind: "btn--gold" })}
-          ${btn("View Development", "projects/hillbottom-village.html", { kind: "btn--ghost" })}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="delivery-marquee rv" aria-label="Completed Hill Bottom spaces">
-    <div class="delivery-marquee__track">${deliveryFrames()}${deliveryFrames(true)}</div>
-  </div>
-</section>
-
 <section class="home-abroad">
   <img class="home-abroad__media" src="assets/img/feedback-abroad.webp" alt="Hill Bottom development in Addis Ababa" loading="lazy" decoding="async">
   <span class="home-abroad__veil"></span>
@@ -204,34 +207,6 @@ ${welcome(0, WELCOME)}
       ${btn(CTA.diaspora, "buying-from-abroad.html", { kind: "btn--gold" })}
       <a class="btn btn--ghost" href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}WhatsApp International Sales</a>
     </div>
-  </div>
-</section>
-
-<!-- imagery owns a whole screen; the ridge cuts it into the chapter below -->
-<section class="band">
-  <div class="band__media"><img src="assets/img/feedback-community.webp" alt="Members lounge and social space" loading="lazy" decoding="async"></div>
-  <span class="band__veil"></span>
-  <div class="wrap band__in rv">
-    <h2 class="d2" style="max-width:16ch">Discover a <em>thriving community</em>.</h2>
-    <p class="lede" style="margin-top:22px">At Hill Bottom, we blend luxury with connection, offering vibrant social spaces, state-of-the-art health facilities, and lush gardens for an unparalleled lifestyle.</p>
-  </div>
-  ${ridge("bottom", "var(--paper)")}
-</section>
-
-<section class="ch ch--paper pad home-values" id="why">
-  <div class="wrap">
-    <div class="head head--split rv" style="margin-bottom:clamp(44px,5vw,72px)">
-      <h2 class="d2">Why Hillbottom?</h2>
-      <div class="head__side"><p>${esc(CO.promise)}</p></div>
-    </div>
-    <ul class="ledger rv">
-      ${PILLARS.map((p) => `
-      <li class="ledger__row" style="--i:${PILLARS.indexOf(p)}">
-        <span class="pillar-icon">${PILLAR_ICONS[PILLARS.indexOf(p)]}</span>
-        <div><h3 class="ledger__t">${esc(p.t)}</h3>
-        <p class="ledger__d">${esc(p.d)}</p></div>
-      </li>`).join("")}
-    </ul>
   </div>
 </section>
 
@@ -262,19 +237,6 @@ ${welcome(0, WELCOME)}
   <div class="testimonial-marquee wrap rv" aria-label="Resident testimonials"><div class="testimonial-marquee__track">${testimonialSlides()}</div></div>
 </section>
 
-<!-- The brand line, set as the page's one held breath. This is the CEO
-     chapter until the real message and portrait arrive; it needs neither,
-     and it never pretends to be a quotation from a person. -->
-<section class="home-team-line">
-  <img src="assets/img/feedback-team.webp" alt="Hill Bottom team environment" loading="lazy" decoding="async">
-  <span class="home-team-line__veil"></span>
-  <div class="wrap home-team-line__content">
-    <p class="d2 rv">&ldquo;We make dream lifestyles a reality.&rdquo;</p>
-    <p class="mark rv">Hill Bottom Properties</p>
-    <div class="rv">${link("Meet the Team", "team.html")}</div>
-  </div>
-</section>
-
 <section class="ch ch--paper-2 pad home-stories">
   <div class="wrap">
     <div class="stories-head rv">
@@ -299,6 +261,27 @@ ${welcome(0, WELCOME)}
       </div>
     </div>
     ${inquiryForm(0, "home-inquiry")}
+  </div>
+</section>
+
+<!-- ===== Sales office map (isolated section — see item 1 of the SEO/maps
+     work): a real Google Maps embed pinned to the Urban Kaza Sales
+     Gallery, styled with the same dark navy + gold .project-location
+     card pattern used on the project pages' own "Find Us" sections. ===== -->
+<section class="ch ch--paper pad home-sales-office">
+  <div class="wrap">
+    <div class="head head--split rv" style="margin-bottom:clamp(30px,3.5vw,48px)">
+      <h2 class="d2">Visit Our Sales Office</h2>
+      <div class="head__side"><p>Speak to our team in person at the Urban Kaza Sales Gallery in the Kazanchis Diplomatic Corridor.</p></div>
+    </div>
+    <div class="project-location rv">
+      <div class="project-location__map">${googleMapEmbed(SALES_OFFICE.lat, SALES_OFFICE.lng, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}</div>
+      <div class="project-location__card">
+        <span class="contact-location__icon">${SALES_OFFICE_ICON}</span>
+        <div class="contact-location__copy"><i>Sales Office</i><b>${esc(SALES_OFFICE.name)}</b><small>${esc(SALES_OFFICE.role)}</small><em>${esc(SALES_OFFICE.address)}</em></div>
+        <a class="contact-map__open-link" href="https://www.google.com/maps/search/?api=1&amp;query=${SALES_OFFICE.lat}%2C${SALES_OFFICE.lng}" target="_blank" rel="noreferrer">Open in Google Maps ${ICON.arrow}</a>
+      </div>
+    </div>
   </div>
 </section>
 `,

@@ -31,6 +31,35 @@ const iconGrid = (items, icons = REMOTE_ICONS, className = "") => `<ol class="pr
   </li>`).join("")}
 </ol>`;
 
+/* Construction photo marquee — a continuous, seamless-loop scrolling strip
+   of real dated progress photos (not a timed-interval carousel), reusing
+   the exact .delivery-marquee markup/CSS pattern from home.mjs's old
+   delivered-proof section (rules live in assets/css/home-feedback.css and
+   are kept there for this reuse). Each project supplies its own photos via
+   PROJECTS_LIVE (progress_updates in Postgres) — see data.mjs CONSTRUCTION. */
+const constructionProgressFrames = (photos, hidden = false) => `<div class="delivery-marquee__group"${hidden ? ' aria-hidden="true"' : ""}>${photos.map((p) => `<figure><img src="${esc(p.url)}" alt="${hidden ? "" : esc(p.caption || "")}" loading="lazy" decoding="async"></figure>`).join("")}</div>`;
+const constructionProgress = (c) => {
+  if (!c.finalRenderUrl && !(c.progressPhotos && c.progressPhotos.length)) return "";
+  return `
+  <div class="construction-progress-wrap">
+    ${c.finalRenderUrl ? `
+    <figure class="construction-render">
+      <img src="${esc(c.finalRenderUrl)}" alt="${esc(c.name)} — final architectural render" loading="lazy" decoding="async">
+      <figcaption>Final render — architectural vision</figcaption>
+    </figure>` : ""}
+    ${c.progressPhotos && c.progressPhotos.length ? `
+    <div class="construction-marquee">
+      <p class="mark mark--accent">Progress Photos · Dated, Oldest to Newest</p>
+      <div class="delivery-marquee" data-marquee>
+        <div class="delivery-marquee__track">
+          ${constructionProgressFrames(c.progressPhotos)}
+          ${constructionProgressFrames(c.progressPhotos, true)}
+        </div>
+      </div>
+    </div>` : ""}
+  </div>`;
+};
+
 /* ===================== BUYING FROM ABROAD (audit §12, §28) =====================
    A standalone landing page rather than diaspora references scattered across
    the site. All copy carried over verbatim from the Diaspora page. */
@@ -185,6 +214,7 @@ ${pageHero(0, {
         <p class="story__d" style="max-width:44ch">Dated photo and video updates for this development are issued directly to buyers at each milestone. Request the latest pack or a live video walkthrough at any time.</p>
         ${btn("Request Latest Update", "contact.html", { kind: "btn--gold" })}
       </div>
+      ${constructionProgress(c)}
     </article>`).join("")}
   </div>
 </section>

@@ -4,7 +4,7 @@ import { ukIntro } from "../intros.mjs";
 import {
   CO, CTA, KAZA_UNIT_SET, KAZA_BANDS, PROJECTS, PILLARS, POSTS, TESTIMONIALS, VR_TOURS, PROCESS, VALUES, TEAMS,
   KAZA_FLOORS, KAZA_UNITS, KAZA_UNIT_COLS, KAZA_NOTE, KAZA_CONTEXT, KAZA_GALLERY,
-  VILLAGE_P1, VILLAGE_P2, REC_FACILITIES, REC_GALLERY, TEAM_MEMBERS,
+  VILLAGE_P1, VILLAGE_P2, REC_FACILITIES, REC_GALLERY, TEAM_MEMBERS, SALES_OFFICE,
 } from "../data.mjs";
 import { page, facts, alt, ridge, plate, img, btn, link, lightbox, unitSelector, esc, ICON } from "../ui.mjs";
 import { inquiryForm, pageHero, ctaBand, storyCard, fmtDate, coverFor } from "./parts.mjs";
@@ -86,6 +86,10 @@ const CONTACT_LOCATIONS = [
     lng: 38.7729,
   },
 ];
+/* Real Google Maps `output=embed` iframe, same pattern as Urban Kaza's
+   neighbourhood map above (q=<lat>,<lng>&z=<zoom>&output=embed) — used for
+   the Contact page sales-office pin and each project page's own site map. */
+const googleMapEmbed = (lat, lng, title, zoom = 15) => `<iframe title="${esc(title)}" src="https://www.google.com/maps?q=${lat}%2C${lng}&amp;z=${zoom}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
 const projectFeatureGrid = (items, className = "") => `<ol class="project-feature-grid ${className} rv">
   ${items.map((item, i) => `<li class="project-feature-card" style="--feature-i:${i}">
     <span class="project-feature-card__icon">${PROJECT_FEATURE_ICONS[i % PROJECT_FEATURE_ICONS.length]}</span>
@@ -168,7 +172,7 @@ ${STAGES.map((stage) => {
 <section class="ch ${dark ? "ch--abyss" : "ch--paper"} pad">
   <div class="wrap">
     ${list.map((p, i) => p.concept ? `
-    <div class="rv" style="border-top:1px solid var(--hair-strong);padding-top:26px;display:grid;gap:14px;max-width:62ch">
+    <div class="rv" id="${esc(p.key)}" style="border-top:1px solid var(--hair-strong);padding-top:26px;display:grid;gap:14px;max-width:62ch">
       <span class="project-stage-chip">${esc(stage.note)}</span>
       <h3 class="d3">${esc(p.name)}</h3>
       <p class="mark">${esc(p.where)}</p>
@@ -176,7 +180,7 @@ ${STAGES.map((stage) => {
       ${alt(p.pct, p.status)}
       ${link("Register Interest", "contact.html")}
     </div>` : `
-    <article class="proj ${i % 2 ? "proj--flip" : ""} rv">
+    <article class="proj ${i % 2 ? "proj--flip" : ""} rv" id="${esc(p.key)}">
       <div class="proj__media zoom">
         <a href="${p.href}" aria-label="${esc(p.name)} — ${esc(p.cta)}">${plate(p.img, p.alt, { ar: "ar", sizes: "(min-width:1000px) 55vw, 100vw" })}</a>
       </div>
@@ -427,6 +431,23 @@ ${pageHero(1, {
         <p class="body">Phase 3 completes the Hill Bottom Village masterplan — creating a self-contained community with everything residents need within walking distance.</p>
         ${projectFeatureGrid(REC_FACILITIES.slice(0, 6), "project-feature-grid--phase3")}
         ${link("View Recreation Center", "./recreation-center.html", { d: 1 })}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ch ch--abyss pad village-location">
+  <div class="wrap">
+    <div class="head head--split rv" style="margin-bottom:clamp(30px,3.5vw,48px)">
+      <h2 class="d2">Ayat Square · Addis Ababa</h2>
+      <div class="head__side"><p>Hill Bottom Village sits at Ayat Square — a well-established, fast-growing residential district on the eastern edge of Addis Ababa.</p></div>
+    </div>
+    <div class="project-location rv">
+      <div class="project-location__map">${googleMapEmbed(CONTACT_LOCATIONS[0].lat, CONTACT_LOCATIONS[0].lng, "Google Maps view of Hill Bottom Village, Ayat Square")}</div>
+      <div class="project-location__card">
+        <span class="contact-location__icon">${UK_CONTEXT_ICONS[0]}</span>
+        <div class="contact-location__copy"><i>Site</i><b>${esc(CONTACT_LOCATIONS[0].name)}</b><small>${esc(CONTACT_LOCATIONS[0].role)}</small><em>${esc(CONTACT_LOCATIONS[0].address)}</em></div>
+        <a class="contact-map__open-link" href="https://www.google.com/maps/search/?api=1&amp;query=${CONTACT_LOCATIONS[0].lat}%2C${CONTACT_LOCATIONS[0].lng}" target="_blank" rel="noreferrer">Open in Google Maps ${ICON.arrow}</a>
       </div>
     </div>
   </div>
@@ -951,8 +972,6 @@ out["contact.html"] = page({
   title: "Contact Us — Hill Bottom Properties, Addis Ababa",
   desc: "Speak to the Hill Bottom sales team. WhatsApp, direct line, short code 9508, or book a visit to the Ayat and Kazanchis sales offices.",
   bodyClass: "contact-page",
-  head: `<link rel="stylesheet" href="assets/vendor/leaflet.css">`,
-  scripts: `<script src="assets/vendor/leaflet.js" defer></script>`,
   body: `
 ${pageHero(0, {
   title: "Get In Touch",
@@ -993,21 +1012,18 @@ ${pageHero(0, {
   <div class="wrap">
     <div class="head head--split rv" style="margin-bottom:clamp(36px,4vw,56px)">
       <h2 class="d2">Where to Find Us</h2>
-      <div class="head__side"><p>Select a location to move the live map directly to Hill Bottom Village in Ayat or Urban Kaza in Kazanchis.</p></div>
+      <div class="head__side"><p>Visit our sales office in person — the Urban Kaza Sales Gallery in the Kazanchis Diplomatic Corridor.</p></div>
     </div>
     <div class="contact-map rv" data-contact-map>
-      <div class="contact-map__canvas" data-contact-map-canvas role="region" aria-label="Interactive map showing Hill Bottom locations in Addis Ababa">
-        <span class="contact-map__grade" aria-hidden="true"></span>
-        <div class="contact-map__label">
-          <small>Selected location</small>
-          <strong data-contact-map-title>Hill Bottom Village</strong>
-        </div>
+      <div class="contact-map__canvas">
+        ${googleMapEmbed(SALES_OFFICE.lat, SALES_OFFICE.lng, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}
       </div>
-      <div class="contact-map__locations" aria-label="Choose a Hill Bottom location">
-        ${CONTACT_LOCATIONS.map((location, i) => `<button type="button" class="contact-location ${i === 0 ? "is-active" : ""}" data-contact-location data-location-lat="${location.lat}" data-location-lng="${location.lng}" data-location-title="${esc(location.name)}" aria-pressed="${i === 0 ? "true" : "false"}">
-          <span class="contact-location__icon">${UK_CONTEXT_ICONS[i ? 2 : 0]}</span>
-          <span class="contact-location__copy"><i>0${i + 1}</i><b>${esc(location.name)}</b><small>${esc(location.role)}</small><em>${esc(location.address)}</em></span>
-        </button>`).join("")}
+      <div class="contact-map__locations contact-map__locations--single" aria-label="Hill Bottom sales office">
+        <div class="contact-location is-active">
+          <span class="contact-location__icon">${UK_CONTEXT_ICONS[2]}</span>
+          <span class="contact-location__copy"><i>Office</i><b>${esc(SALES_OFFICE.name)}</b><small>${esc(SALES_OFFICE.role)}</small><em>${esc(SALES_OFFICE.address)}</em></span>
+        </div>
+        <a class="contact-map__open-link" href="https://www.google.com/maps/search/?api=1&amp;query=${SALES_OFFICE.lat}%2C${SALES_OFFICE.lng}" target="_blank" rel="noreferrer">Open in Google Maps ${ICON.arrow}</a>
       </div>
     </div>
   </div>

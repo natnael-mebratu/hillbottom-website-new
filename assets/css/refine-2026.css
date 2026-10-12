@@ -312,8 +312,18 @@
 @media(max-width:939px){.chatw{bottom:calc(82px + env(safe-area-inset-bottom,0))}}
 .chatw__fab{position:relative;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;
   background:linear-gradient(135deg,var(--gold-lit),var(--gold));color:#0B1422;border:0;cursor:pointer;
-  box-shadow:var(--lift-1);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
-.chatw__fab:hover{transform:scale(1.06);box-shadow:var(--lift-2)}
+  box-shadow:var(--lift-1);transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+  animation:chatwJiggle 7s ease-in-out infinite}
+.chatw__fab:hover{transform:scale(1.06);box-shadow:var(--lift-2);animation-play-state:paused}
+.chatw.is-open .chatw__fab{animation:none}
+/* idle attention jiggle: a quick ±3deg rocking pulse near the end of each cycle, at rest the rest of the time */
+@keyframes chatwJiggle{
+  0%,91%,100%{transform:none}
+  92.5%{transform:rotate(-3deg) scale(1.04)}
+  94.5%{transform:rotate(3deg) scale(1.04)}
+  96.5%{transform:rotate(-2deg) scale(1.02)}
+  98.5%{transform:none}
+}
 .chatw__fab-icon{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .25s var(--ease),transform .25s var(--ease)}
 .chatw__fab-icon svg{width:22px;height:22px}
 .chatw__fab-icon--close{opacity:0;transform:scale(.6) rotate(-45deg)}
@@ -350,4 +360,4 @@
 .chatw__foot{flex:none;padding:16px 20px;border-top:1px solid rgba(255,255,255,.08);display:grid;gap:10px}
 .chatw__foot p{margin:0;font-family:var(--sans);font-size:.72rem;color:rgba(255,255,255,.4)}
 .chatw__foot .btn{width:100%;justify-content:center;font-size:.76rem;padding:.85em 1em}
-@media(prefers-reduced-motion:reduce){.chatw__panel,.chatw__fab,.chatw__fab-icon{transition:none}}
+@media(prefers-reduced-motion:reduce){.chatw__panel,.chatw__fab,.chatw__fab-icon{transition:none}.chatw__fab{animation:none}}

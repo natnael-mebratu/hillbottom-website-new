@@ -187,9 +187,12 @@
     window.addEventListener("resize", function () { if (window.innerWidth >= 1140 && drawer.classList.contains("is-open")) setDrawer(false); });
   }
 
-  /* ---- "More" nav dropdown: click/keyboard toggle; hover handled in CSS ---- */
-  var navMore = $(".nav__more"), navMoreBtn = navMore && $(".nav__more-btn", navMore);
-  if (navMore && navMoreBtn) {
+  /* ---- nav dropdowns ("More", "Projects", ...): click/keyboard toggle; hover handled in CSS.
+     Several .nav__more instances can exist side by side in the primary nav, each wired up
+     the same way and closing independently of the others. ---- */
+  $$(".nav__more").forEach(function (navMore) {
+    var navMoreBtn = $(".nav__more-btn", navMore);
+    if (!navMoreBtn) return;
     var setNavMore = function (open) {
       navMore.classList.toggle("is-open", open);
       navMoreBtn.setAttribute("aria-expanded", String(open));
@@ -203,7 +206,7 @@
     doc.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && navMore.classList.contains("is-open")) { setNavMore(false); navMoreBtn.focus(); }
     });
-  }
+  });
 
   /* ---- chat widget: real canned-question panel, not a WhatsApp redirect ---- */
   var chatw = $("#hb-chat");
@@ -577,63 +580,9 @@
     } else stage.classList.add("is-cinematic");
   });
 
-  /* ---- contact locations: locally styled Leaflet / OpenStreetMap view ---- */
-  $$("[data-contact-map]").forEach(function (map) {
-    var canvas = $("[data-contact-map-canvas]", map);
-    var title = $("[data-contact-map-title]", map);
-    var locations = $$("[data-contact-location]", map);
-    if (!canvas || !window.L || !locations.length) return;
-    var points = locations.map(function (location) {
-      return {
-        lat: Number(location.getAttribute("data-location-lat")),
-        lng: Number(location.getAttribute("data-location-lng")),
-        name: location.getAttribute("data-location-title"),
-        button: location
-      };
-    });
-    var locationMap = L.map(canvas, {
-      zoomControl: false,
-      attributionControl: true,
-      scrollWheelZoom: false,
-      minZoom: 10,
-      maxZoom: 18
-    }).setView([points[0].lat, points[0].lng], 16);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: "&copy; OpenStreetMap contributors"
-    }).addTo(locationMap);
-    L.control.zoom({ position: "topright" }).addTo(locationMap);
-    var pin = L.divIcon({
-      className: "hb-map-marker",
-      html: '<span><i></i></span>',
-      iconSize: [42, 52],
-      iconAnchor: [21, 48],
-      tooltipAnchor: [0, -44]
-    });
-    var markers = points.map(function (point) {
-      return L.marker([point.lat, point.lng], { icon: pin })
-        .addTo(locationMap)
-        .bindTooltip(point.name, { direction: "top", permanent: false, className: "hb-map-tooltip" });
-    });
-    var activate = function (index) {
-      var point = points[index];
-      locations.forEach(function (item, i) {
-        var active = i === index;
-        item.classList.toggle("is-active", active);
-        item.setAttribute("aria-pressed", String(active));
-      });
-      map.setAttribute("data-active-location", point.name);
-      if (title) title.textContent = point.name;
-      if (reduced) locationMap.setView([point.lat, point.lng], 16);
-      else locationMap.flyTo([point.lat, point.lng], 16, { duration: 1.15 });
-      markers[index].openTooltip();
-    };
-    locations.forEach(function (location, index) {
-      location.addEventListener("click", function () { activate(index); });
-    });
-    activate(0);
-    setTimeout(function () { locationMap.invalidateSize(false); }, 120);
-  });
+  /* ---- contact map: now a real Google Maps `output=embed` iframe (see
+     googleMapEmbed() in rest.mjs), a single static sales-office pin with
+     no switcher — no JS needed here any more. */
 
   /* ---- Urban Kaza tower: functions move through the isometric model ---- */
   /* ---- Urban Kaza zoning model: three orthographic views x five zones ---- */

@@ -34,13 +34,41 @@ async function main() {
       `select slug, status, completion_percent, current_stage, next_milestone
        from projects`,
     );
-    const projectsLive = projectRows.map((p) => ({
-      slug: p.slug,
-      status: p.status,
-      completionPercent: p.completion_percent,
-      currentStage: p.current_stage,
-      nextMilestone: p.next_milestone,
-    }));
+
+    // Construction Updates (construction.html): "dream" entries are the
+    // architect's final render for a project (we take the most recently
+    // posted one as the hero image); "actual" entries are real dated
+    // site-progress photos, surfaced oldest-first for the chronological
+    // auto-scrolling marquee. Joined by slug so data.mjs can merge them
+    // into CONSTRUCTION alongside status/stage/milestone.
+    const { rows: progressRows } = await client.query(
+      `select p.slug, pu.type, pu.media_url, pu.caption, pu.posted_at
+       from progress_updates pu
+       join projects p on p.id = pu.project_id
+       order by pu.posted_at asc`,
+    );
+    const progressBySlug = {};
+    for (const r of progressRows) {
+      (progressBySlug[r.slug] ??= []).push(r);
+    }
+    const projectsLive = projectRows.map((p) => {
+      const entries = progressBySlug[p.slug] || [];
+      const dreams = entries.filter((e) => e.type === "dream");
+      const actuals = entries.filter((e) => e.type === "actual");
+      return {
+        slug: p.slug,
+        status: p.status,
+        completionPercent: p.completion_percent,
+        currentStage: p.current_stage,
+        nextMilestone: p.next_milestone,
+        finalRenderUrl: dreams.length ? dreams[dreams.length - 1].media_url : null,
+        progressPhotos: actuals.map((e) => ({
+          url: e.media_url,
+          caption: e.caption,
+          postedAt: e.posted_at,
+        })),
+      };
+    });
 
     // Marketing Feed (marketing.html) — fully DB-driven, no static fallback
     // content, since this is meant to be current/live, not evergreen copy.
@@ -88,7 +116,10 @@ export const PROMO = {
 };
 
 // Keyed by project slug, overlaid onto data.mjs's PROJECTS/CONSTRUCTION —
-// see mergeLiveProject() in data.mjs.
+// see mergeLiveProject() in data.mjs. finalRenderUrl/progressPhotos come
+// from progress_updates ("dream" = final render, "actual" = dated
+// progress photos, oldest first) and drive construction.html's hero
+// render + auto-scrolling photo marquee per project.
 export const PROJECTS_LIVE = ${JSON.stringify(projectsLive, null, 2)};
 
 // marketing.html's feed, newest first. No merge needed — rendered as-is.

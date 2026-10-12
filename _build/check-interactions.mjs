@@ -211,10 +211,7 @@ for (const [name, selector] of [["rec-intro",".rec-intro"],["rec-amenities",".re
 await send("Page.navigate",{url:"http://localhost:8422/contact.html"},sessionId);
 await sleep(500);
 await check("Contact removes the hero facts and organizes four sales cards", "!document.querySelector('.hero .facts') && document.querySelectorAll('.contact-card').length===4 && getComputedStyle(document.querySelector('.hero .d1')).fontFamily.includes('Montserrat')");
-await check("Contact exposes two selectable styled OpenStreetMap locations", "document.querySelectorAll('[data-contact-location]').length===2 && document.querySelector('[data-contact-map-canvas]').classList.contains('leaflet-container') && document.querySelectorAll('.hb-map-marker').length===2 && !document.body.textContent.includes('Open in Maps')");
-await evaluate("document.querySelectorAll('[data-contact-location]')[1].click()");
-await sleep(100);
-await check("Contact location selection zooms to Urban Kaza", "document.querySelectorAll('[data-contact-location]')[1].getAttribute('aria-pressed')==='true' && document.querySelector('[data-contact-map]').getAttribute('data-active-location')==='Urban Kaza' && document.querySelector('[data-contact-map-title]').textContent==='Urban Kaza'");
+await check("Contact shows a real single-pin Google Maps embed for the sales office", "document.querySelector('.contact-map__canvas iframe') && document.querySelector('.contact-map__canvas iframe').src.includes('google.com/maps') && document.querySelector('.contact-map__canvas iframe').src.includes('output=embed') && document.querySelectorAll('.contact-location').length===1");
 await evaluate("(()=>{const element=document.querySelector('.contact-map-section');window.scrollTo(0,element.getBoundingClientRect().top+scrollY)})()");
 await sleep(900);
 {

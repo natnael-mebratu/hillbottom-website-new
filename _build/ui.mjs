@@ -137,7 +137,13 @@ export const header = (d, current) => `
   <div class="wrap"><div class="hdr__in">
     ${lockup(d)}
     <nav class="nav" aria-label="Primary">
-      ${NAV.map((n) => `<a href="${up(d)}${n.href}"${current === n.href ? ' aria-current="page"' : ""}>${esc(n.label)}</a>`).join("")}
+      ${NAV.map((n) => n.sub ? `
+      <div class="nav__more" data-nav-more>
+        <button type="button" class="nav__more-btn" aria-expanded="false" aria-haspopup="true" aria-controls="hb-nav-${n.key || n.href.replace(/\.html$/, "")}-menu"${current === n.href ? ' aria-current="page"' : ""}>${esc(n.label)}${ICON.chevronDown}</button>
+        <div class="nav__more-menu" id="hb-nav-${n.key || n.href.replace(/\.html$/, "")}-menu" role="menu">
+          ${n.sub.map((s) => `<a role="menuitem" href="${up(d)}${s.href}">${esc(s.label)}</a>`).join("")}
+        </div>
+      </div>` : `<a href="${up(d)}${n.href}"${current === n.href ? ' aria-current="page"' : ""}>${esc(n.label)}</a>`).join("")}
       <div class="nav__more" data-nav-more>
         <button type="button" class="nav__more-btn" aria-expanded="false" aria-haspopup="true" aria-controls="hb-nav-more-menu">More${ICON.chevronDown}</button>
         <div class="nav__more-menu" id="hb-nav-more-menu" role="menu">
@@ -164,7 +170,7 @@ export const header = (d, current) => `
 export const rail = () => `
 <div class="rail">
   <a href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}<b>WhatsApp ${esc(CO.wa)}</b></a>
-  <a href="${CO.telHref}">${ICON.phone}<b>Call ${esc(CO.tel)}</b></a>
+  <a href="${CO.shortHref}">${ICON.phone}<b>${esc(CO.short)}</b></a>
   <a href="${CO.shortHref}">${ICON.doc}<b>Short code ${esc(CO.short)}</b></a>
 </div>
 <nav class="bar" aria-label="Quick contact">
