@@ -61,7 +61,32 @@ export const PROJECTS_LIVE = [
 ];
 
 // marketing.html's feed, newest first. No merge needed — rendered as-is.
-export const MARKETING_POSTS = [];
+export const MARKETING_POSTS = [
+  {
+    "id": 8,
+    "title": "Urban Kaza — Now Reserving",
+    "body": "Reserve your residence at Addis Ababa's diplomatic corridor before the next price release.",
+    "mediaUrl": "assets/img/urban-kaza-ext-v2-1400.webp",
+    "campaignTag": "Launch",
+    "publishedAt": "2026-10-10T11:45:13.743Z"
+  },
+  {
+    "id": 9,
+    "title": "Block B Progress Update",
+    "body": "Superstructure complete at Hill Bottom Village Block B — finishes now underway, handover October 2026.",
+    "mediaUrl": "assets/img/block-c-10-1400.webp",
+    "campaignTag": "Progress",
+    "publishedAt": "2026-10-06T11:45:13.743Z"
+  },
+  {
+    "id": 10,
+    "title": "Phase 3 — Commercial & Recreation",
+    "body": "A first look at the Commercial + Recreation Center coming to Ayat Square in January 2027.",
+    "mediaUrl": "assets/img/recreation-hub-1400.webp",
+    "campaignTag": "Preview",
+    "publishedAt": "2026-10-02T11:45:13.743Z"
+  }
+];
 
 // team.html's member grid, by sortOrder. No merge needed — rendered as-is;
 // team.html falls back to generic hero/stats copy when this is empty.
