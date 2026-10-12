@@ -42,11 +42,6 @@ export const PROJECTS_LIVE = [
     "finalRenderUrl": "assets/img/urban-kaza-ext-v2-1400.webp",
     "progressPhotos": [
       {
-        "url": "assets/img/construction-hero-1400.webp",
-        "caption": "Site progress — placeholder photo 1",
-        "postedAt": "2026-09-22T11:27:38.104Z"
-      },
-      {
         "url": "assets/img/kaza-building-1400.webp",
         "caption": "Site progress — placeholder photo 2",
         "postedAt": "2026-10-02T11:27:38.104Z"
