@@ -260,15 +260,19 @@ const feedMedia = (post, { eager = false } = {}) => {
 };
 
 const feedCard = (post, i) => `
-<article class="feed__card${i === 0 ? " feed__card--feature" : ""} rv" style="--depth:${1 + (i % 3)}" data-feed-index="${i}" tabindex="0" role="button" aria-label="Open ${esc(post.title)}">
-  ${feedMedia(post, { eager: i === 0 })}
-  <div class="feed__body">
-    ${post.campaignTag ? `<span class="feed__tag">${esc(post.campaignTag)}</span>` : ""}
-    <h3>${esc(post.title)}</h3>
-    ${post.body ? `<p>${esc(post.body)}</p>` : ""}
-    <time datetime="${esc(post.publishedAt)}">${new Date(post.publishedAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</time>
+<div class="feed-stack__item" style="z-index:${i + 1}" data-feed-item>
+  <div class="feed-stack__pin">
+    <article class="feed-stack__card" data-feed-index="${i}" tabindex="0" role="button" aria-label="Open ${esc(post.title)}">
+      ${feedMedia(post, { eager: i === 0 })}
+      <div class="feed__body">
+        ${post.campaignTag ? `<span class="feed__tag">${esc(post.campaignTag)}</span>` : ""}
+        <h3>${esc(post.title)}</h3>
+        ${post.body ? `<p>${esc(post.body)}</p>` : ""}
+        <time datetime="${esc(post.publishedAt)}">${new Date(post.publishedAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</time>
+      </div>
+    </article>
   </div>
-</article>`;
+</div>`;
 
 const feedLightboxMedia = (post) => {
   const yt = youtubeIdFrom(post.mediaUrl);
@@ -287,21 +291,35 @@ out["marketing.html"] = page({
   bodyClass: "marketing-page",
   head: `<style>
     .feed-hero{padding-bottom:0}
-    .feed{columns:1;column-gap:clamp(18px,2.4vw,28px);margin-top:clamp(30px,4vw,54px)}
-    @media(min-width:720px){.feed{columns:2}}
-    @media(min-width:1080px){.feed{columns:3}}
-    .feed__card{display:block;break-inside:avoid;margin:0 0 clamp(18px,2.4vw,28px);border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--raise);cursor:pointer;will-change:transform;transition:transform .5s var(--ease),border-color .3s var(--ease);text-align:left;width:100%}
-    .feed__card:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
-    .feed__card--feature{column-span:all}
-    .feed__card--feature .feed__media{aspect-ratio:21/9}
-    .feed__card--feature .feed__body h3{font-size:clamp(1.4rem,2.6vw,2rem)}
+    /* ---- scroll-pinned stacking deck (Apple-style) ----
+       Each .feed-stack__item is a tall track (220vh desktop / 150vh mobile).
+       Its .feed-stack__pin child is position:sticky;top:0;height:100vh, so it
+       rides pinned at the top of the viewport for the whole track. Because
+       later items sit later in the DOM with a higher z-index, the next card's
+       pin visually slides up and covers the current one purely from sticky +
+       document flow — no JS needed for the covering mechanic itself. JS only
+       tracks scroll progress through each track to scale/dim the card as the
+       next one comes in (see the page script below), and still needs to flag
+       which card is topmost for the lightbox's pointer-events. */
+    .feed-stack{position:relative;margin-top:clamp(20px,3vw,36px)}
+    .feed-stack__item{position:relative;height:220vh}
+    .feed-stack__item:last-child{height:140vh}
+    .feed-stack__pin{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,40px) var(--gut)}
+    .feed-stack__card{
+      position:relative;display:flex;flex-direction:column;width:min(1040px,100%);max-height:min(640px,82vh);
+      border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--raise);
+      box-shadow:var(--lift-3);cursor:pointer;text-align:left;
+      transform-origin:50% 100%;transition:transform .25s var(--ease-soft),filter .25s var(--ease-soft);
+    }
+    @media(min-width:860px){.feed-stack__card{flex-direction:row}.feed-stack__card .feed__media{flex:1.15 1 0;aspect-ratio:auto;min-height:0}.feed-stack__card .feed__body{flex:1 1 0;display:flex;flex-direction:column;justify-content:center;overflow-y:auto}}
+    @media(max-width:859px){.feed-stack__card{flex-direction:column}.feed-stack__card .feed__media{flex:1 1 auto;aspect-ratio:auto;min-height:0}.feed-stack__card .feed__body{overflow-y:auto}}
     .feed__media{position:relative;width:100%;aspect-ratio:4/3;background:var(--raise);overflow:hidden}
     .feed__media img{width:100%;height:100%;object-fit:cover;display:block}
     .feed__media--video iframe,.feed__media--video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
     .feed__body{padding:clamp(18px,2.4vw,26px)}
     .feed__tag{display:inline-block;margin-bottom:10px;padding:4px 12px;border:1px solid color-mix(in srgb,var(--accent) 50%,transparent);border-radius:999px;font-family:var(--sans);font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-    .feed__body h3{margin:0;font-family:var(--display);font-weight:300;font-size:1.15rem;line-height:1.25;color:var(--fg)}
-    .feed__body p{margin:.6em 0 0;font-family:var(--sans);font-size:.88rem;line-height:1.6;color:var(--fg-2)}
+    .feed__body h3{margin:0;font-family:var(--display);font-weight:300;font-size:clamp(1.2rem,2.2vw,1.7rem);line-height:1.25;color:var(--fg)}
+    .feed__body p{margin:.6em 0 0;font-family:var(--sans);font-size:.92rem;line-height:1.65;color:var(--fg-2)}
     .feed__body time{display:block;margin-top:14px;font-family:var(--sans);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--fg-2) 70%,transparent)}
     .feed-empty{margin-top:40px;padding:clamp(40px,6vw,70px);text-align:center;border:1px dashed var(--line);border-radius:3px;color:var(--fg-2)}
     .feed-lb{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:clamp(16px,4vw,48px);background:rgba(6,11,20,.92);backdrop-filter:blur(8px)}
@@ -314,7 +332,13 @@ out["marketing.html"] = page({
     .feed-lb__body p{margin:.8em 0 0;font-family:var(--sans);font-size:.95rem;line-height:1.7;color:#C7D1DE}
     .feed-lb__close{position:absolute;top:14px;right:14px;z-index:1;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:rgba(6,11,20,.6);color:#fff;border:1px solid rgba(255,255,255,.2)}
     .feed-lb__close svg{width:18px;height:18px}
-    @media(prefers-reduced-motion:reduce){.feed__card{transition:none!important}}
+    @media(max-width:720px){
+      .feed-stack__item{height:150vh}
+      .feed-stack__item:last-child{height:112vh}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .feed-stack__card{transition:none!important;transform:none!important;filter:none!important}
+    }
   </style>`,
   body: `
 ${pageHero(0, {
@@ -354,7 +378,7 @@ ${pageHero(0, {
       <p class="mark" style="margin-bottom:10px">Nothing posted yet</p>
       <p>Campaign updates will appear here as soon as they're published from the admin panel.</p>
     </div>` : `
-    <div class="feed">
+    <div class="feed-stack">
       ${MARKETING_POSTS.map(feedCard).join("")}
     </div>`}
   </div>
@@ -412,25 +436,32 @@ ${ctaBand(0, {
   lb.querySelector("[data-feed-lb-close]").addEventListener("click", close);
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
 
+  /* Stacking deck: pure CSS (position:sticky + z-index) does the actual
+     covering — this just drives the "receding" card's scale/dim as the next
+     one scrolls up to cover it, reading scroll progress through each card's
+     own tall track. */
   var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!reduced) {
-    var cards = Array.prototype.slice.call(document.querySelectorAll(".feed__card"));
+    var stackItems = Array.prototype.slice.call(document.querySelectorAll("[data-feed-item]"));
     var ticking = false;
-    function parallax() {
+    function updateStack() {
       var vh = window.innerHeight;
-      cards.forEach(function (card) {
-        var rect = card.getBoundingClientRect();
-        var center = rect.top + rect.height / 2;
-        var offset = (center - vh / 2) / vh;
-        var depth = Number(card.style.getPropertyValue("--depth")) || 1;
-        card.style.transform = "translateY(" + (offset * depth * -14) + "px)";
+      stackItems.forEach(function (item) {
+        var card = item.querySelector(".feed-stack__card");
+        if (!card) return;
+        var rect = item.getBoundingClientRect();
+        var track = rect.height - vh;
+        var progress = track > 0 ? Math.min(1, Math.max(0, -rect.top / track)) : 0;
+        card.style.transform = "scale(" + (1 - progress * 0.08).toFixed(3) + ")";
+        card.style.filter = "brightness(" + (1 - progress * 0.35).toFixed(3) + ")";
       });
       ticking = false;
     }
     window.addEventListener("scroll", function () {
-      if (!ticking) { requestAnimationFrame(parallax); ticking = true; }
+      if (!ticking) { requestAnimationFrame(updateStack); ticking = true; }
     }, { passive: true });
-    parallax();
+    window.addEventListener("resize", updateStack);
+    updateStack();
   }
 })();</script>` : "",
 });
