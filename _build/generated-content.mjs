@@ -10,8 +10,55 @@ export const PROMO = {
 };
 
 // Keyed by project slug, overlaid onto data.mjs's PROJECTS/CONSTRUCTION —
-// see mergeLiveProject() in data.mjs.
-export const PROJECTS_LIVE = [];
+// see mergeLiveProject() in data.mjs. finalRenderUrl/progressPhotos come
+// from progress_updates ("dream" = final render, "actual" = dated
+// progress photos, oldest first) and drive construction.html's hero
+// render + auto-scrolling photo marquee per project.
+export const PROJECTS_LIVE = [
+  {
+    "slug": "hillbottom-village",
+    "status": "ongoing",
+    "completionPercent": null,
+    "currentStage": null,
+    "nextMilestone": null,
+    "finalRenderUrl": null,
+    "progressPhotos": []
+  },
+  {
+    "slug": "recreation-center",
+    "status": "upcoming",
+    "completionPercent": null,
+    "currentStage": null,
+    "nextMilestone": null,
+    "finalRenderUrl": null,
+    "progressPhotos": []
+  },
+  {
+    "slug": "urban-kaza",
+    "status": "ongoing",
+    "completionPercent": null,
+    "currentStage": null,
+    "nextMilestone": null,
+    "finalRenderUrl": "assets/img/urban-kaza-ext-v2-1400.webp",
+    "progressPhotos": [
+      {
+        "url": "assets/img/construction-hero-1400.webp",
+        "caption": "Site progress — placeholder photo 1",
+        "postedAt": "2026-09-22T11:27:38.104Z"
+      },
+      {
+        "url": "assets/img/kaza-building-1400.webp",
+        "caption": "Site progress — placeholder photo 2",
+        "postedAt": "2026-10-02T11:27:38.104Z"
+      },
+      {
+        "url": "assets/img/urban-kaza-dusk-v2.webp",
+        "caption": "Site progress — placeholder photo 3",
+        "postedAt": "2026-10-12T11:27:38.104Z"
+      }
+    ]
+  }
+];
 
 // marketing.html's feed, newest first. No merge needed — rendered as-is.
 export const MARKETING_POSTS = [];
