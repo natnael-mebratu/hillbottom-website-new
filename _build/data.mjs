@@ -44,15 +44,14 @@ export const CO = {
 };
 
 /* The real sales office pinned on the Contact and Home page Google Maps
-   embeds — the Urban Kaza Sales Gallery in Kazanchis, the live sales
-   office CO.offices already lists for in-person visits. Coordinates match
-   the Urban Kaza project pin already used in rest.mjs's CONTACT_LOCATIONS. */
+   embeds — Hill Bottom Properties' Bole Sales Office, per the client's own
+   Google Maps share link (place id 0x164b850045f2696f:0x57d7ad9c91d22b39). */
 export const SALES_OFFICE = {
-  name: "Urban Kaza Sales Gallery",
-  role: "Hill Bottom Sales Office — Kazanchis",
-  address: "Kazanchis, Diplomatic Corridor, Addis Ababa, Ethiopia",
-  lat: 9.0146,
-  lng: 38.7729,
+  name: "Hill Bottom Properties — Bole Sales Office",
+  role: "Hill Bottom Sales Office — Bole",
+  address: "Bole, Addis Ababa, Ethiopia",
+  lat: 8.993746789543646,
+  lng: 38.77401787314339,
 };
 
 export const NAV = [

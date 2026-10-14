@@ -167,11 +167,11 @@ export const header = (d, current) => `
   </div>
 </div>`;
 
-export const rail = () => `
+export const rail = (d = 0) => `
 <div class="rail">
   <a href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}<b>WhatsApp ${esc(CO.wa)}</b></a>
   <a href="${CO.shortHref}">${ICON.phone}<b>${esc(CO.short)}</b></a>
-  <a href="${CO.shortHref}">${ICON.doc}<b>Short code ${esc(CO.short)}</b></a>
+  <a href="${up(d)}assets/docs/hill-bottom-properties-overview.pdf" download>${ICON.doc}<b>Download Overview</b></a>
 </div>
 <nav class="bar" aria-label="Quick contact">
   <a href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}WhatsApp</a>
@@ -396,7 +396,7 @@ ${header(d, current)}
 ${body}
 </main>
 ${footer(d)}
-${rail()}
+${rail(d)}
 ${chatWidget(d)}
 ${scripts}
 <script src="${up(d)}assets/js/hb.js" defer></script>
