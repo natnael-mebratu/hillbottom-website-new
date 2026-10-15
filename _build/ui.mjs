@@ -354,6 +354,17 @@ const ORG_JSONLD = () => `<script type="application/ld+json">${JSON.stringify({
 export const page = ({ title, desc, d = 0, current = "", body, bodyClass = "", head = "", scripts = "", path = "", image = "hero-hillbottom-1400" }) => {
   const canonical = `${SITE_URL}/${path}`;
   const ogImage = `${SITE_URL}/assets/img/${image}.webp`;
+  /* kaza.css and home-feedback.css are page-specific (Urban Kaza's own
+     brand system; the home hero/marquee revision — the latter also reused
+     by construction.html's progress marquee, see home-feedback.css's own
+     header note). Every selector in each file is scoped under these body
+     classes (or, for kaza.css, under classes that only ever appear on the
+     Urban Kaza page), so loading them only here changes nothing visually
+     where they were already irrelevant. The other five sheets reach into
+     shared chrome — header, nav, buttons, .wrap, forms, footer — so they
+     stay on every page. */
+  const needsKaza = bodyClass.includes("urban-kaza-page");
+  const needsHomeFeedback = bodyClass.includes("home-editorial") || bodyClass.includes("construction-page");
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -379,10 +390,8 @@ ${ORG_JSONLD()}
 <link rel="stylesheet" href="${up(d)}assets/css/fonts.css">
 <link rel="stylesheet" href="${up(d)}assets/css/hb.css">
 <link rel="stylesheet" href="${up(d)}assets/css/editorial.css">
-<link rel="stylesheet" href="${up(d)}assets/css/kaza.css">
-<link rel="stylesheet" href="${up(d)}assets/css/premium-2026.css">
-<link rel="stylesheet" href="${up(d)}assets/css/home-feedback.css">
-<link rel="stylesheet" href="${up(d)}assets/css/site-unified.css">
+${needsKaza ? `<link rel="stylesheet" href="${up(d)}assets/css/kaza.css">\n` : ""}<link rel="stylesheet" href="${up(d)}assets/css/premium-2026.css">
+${needsHomeFeedback ? `<link rel="stylesheet" href="${up(d)}assets/css/home-feedback.css">\n` : ""}<link rel="stylesheet" href="${up(d)}assets/css/site-unified.css">
 <link rel="stylesheet" href="${up(d)}assets/css/refine-2026.css">
 ${head}
 <script>try{var c=document.documentElement.classList,s=sessionStorage;if(s.getItem("hb-intro-v3"))c.add("hbi-seen");if(s.getItem("uk-intro-v4"))c.add("uki-seen");if(matchMedia("(prefers-reduced-motion: reduce)").matches)c.add("hbi-seen","uki-seen")}catch(e){}</script>
