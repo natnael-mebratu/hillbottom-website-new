@@ -3,10 +3,10 @@
    Loaded last: typography, cinematic page heroes and Urban Kaza.
    ============================================================ */
 
-@font-face{font-family:"Inter Local";src:url("../fonts/Inter-Light.ttf") format("truetype");font-style:normal;font-weight:300;font-display:swap}
-@font-face{font-family:"Inter Local";src:url("../fonts/Inter-Regular.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
-@font-face{font-family:"Inter Local";src:url("../fonts/Inter-Medium.ttf") format("truetype");font-style:normal;font-weight:500;font-display:swap}
-@font-face{font-family:"Inter Local";src:url("../fonts/Inter-Semibold.ttf") format("truetype");font-style:normal;font-weight:600;font-display:swap}
+@font-face{font-family:"Inter Local";src:url("../fonts/Inter-Light.woff2") format("woff2");font-style:normal;font-weight:300;font-display:swap}
+@font-face{font-family:"Inter Local";src:url("../fonts/Inter-Regular.woff2") format("woff2");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:"Inter Local";src:url("../fonts/Inter-Medium.woff2") format("woff2");font-style:normal;font-weight:500;font-display:swap}
+@font-face{font-family:"Inter Local";src:url("../fonts/Inter-Semibold.woff2") format("woff2");font-style:normal;font-weight:600;font-display:swap}
 
 :root{
   --sans:"Inter Local","Noto Sans Ethiopic",system-ui,-apple-system,"Segoe UI",sans-serif;

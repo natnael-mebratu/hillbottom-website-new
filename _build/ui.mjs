@@ -375,7 +375,8 @@ export const page = ({ title, desc, d = 0, current = "", body, bodyClass = "", h
 <meta name="twitter:image" content="${ogImage}">
 ${ORG_JSONLD()}
 <link rel="icon" href="${up(d)}assets/img/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="${up(d)}assets/fonts/gs-SB2OEB6IKZPRR6JT4GFJ2TFT6HBB6AZN.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="${up(d)}assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="${up(d)}assets/css/fonts.css">
 <link rel="stylesheet" href="${up(d)}assets/css/hb.css">
 <link rel="stylesheet" href="${up(d)}assets/css/editorial.css">
 <link rel="stylesheet" href="${up(d)}assets/css/kaza.css">
