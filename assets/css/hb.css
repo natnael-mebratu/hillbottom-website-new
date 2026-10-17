@@ -358,6 +358,22 @@ body:not(.js) .wr > span{transform:none}
 .story__photo img{width:100%;height:100%;object-fit:cover;display:block}
 .story__photo--ph{display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.6rem;font-weight:400;color:var(--accent);background:rgba(200,181,127,.14)}
 
+/* ---------- team photo: thin rotating gold ring --------------------------- */
+.team-card{display:grid;justify-items:center;text-align:center;gap:0}
+.team-grid{row-gap:clamp(36px,4vw,56px)}
+@keyframes team-ring-spin{to{transform:rotate(360deg)}}
+.team-photo{position:relative;width:132px;height:132px;border-radius:50%;margin-inline:auto}
+.team-photo::before{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0deg 55deg,var(--gold-lit) 90deg,transparent 150deg 360deg);
+  animation:team-ring-spin 6s linear infinite;
+}
+.team-photo--lg{width:200px;height:200px}
+.team-photo img,.team-photo__ph{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);border-radius:50%;object-fit:cover;display:block;background:var(--paper);z-index:1}
+.team-photo--lg img{inset:4px;width:calc(100% - 8px);height:calc(100% - 8px)}
+.team-photo__ph{display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:2rem;font-weight:400;color:var(--accent);background:rgba(200,181,127,.14)}
+@media(prefers-reduced-motion:reduce){.team-photo::before{animation:none}}
+
 /* ---------- spec list ---------------------------------------------------- */
 ul.specs{display:grid;gap:0;margin:0;padding:0;grid-template-columns:1fr}
 @media(min-width:640px){ul.specs--2{grid-template-columns:1fr 1fr;column-gap:clamp(20px,3vw,48px)}}

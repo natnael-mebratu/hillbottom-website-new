@@ -735,21 +735,19 @@ ${pageHero(0, {
    the section is simply skipped and the page reads fine on the existing
    hero/stats + TEAMS copy alone. */
 const teamCard = (m) => `
-<div class="story rv">
-  ${m.photoUrl
-    ? `<div class="story__photo"><img src="${esc(m.photoUrl)}" alt="${esc(m.name)}" loading="lazy"></div>`
-    : `<div class="story__photo story__photo--ph" aria-hidden="true">${esc((m.name || "?").trim().charAt(0))}</div>`}
-  <div>
-    <h3 class="story__t">${esc(m.name)}</h3>
-    <p class="mark mark--accent" style="margin-top:4px">${esc(m.role)}${m.department ? ` &middot; ${esc(m.department)}` : ""}</p>
-    ${m.bio ? `<p class="story__d" style="margin-top:10px">${esc(m.bio)}</p>` : ""}
+<div class="team-card rv">
+  <div class="team-photo">
+    ${m.photoUrl
+      ? `<img src="${esc(m.photoUrl)}" alt="${esc(m.name)}" loading="lazy">`
+      : `<span class="team-photo__ph" aria-hidden="true">${esc((m.name || "?").trim().charAt(0))}</span>`}
   </div>
+  <h3 class="story__t" style="margin-top:18px">${esc(m.name)}</h3>
+  <p class="mark mark--accent" style="margin-top:4px">${esc(m.role)}${m.department ? ` &middot; ${esc(m.department)}` : ""}</p>
+  ${m.bio ? `<p class="story__d" style="margin-top:10px">${esc(m.bio)}</p>` : ""}
 </div>`;
 
 const teamMemberSection = () => {
   if (!TEAM_MEMBERS.length) return "";
-  const depts = [...new Set(TEAM_MEMBERS.map((m) => m.department || "Team"))];
-  const grouped = depts.length > 1;
   return `
 <section class="ch ch--paper pad">
   <div class="wrap">
@@ -757,15 +755,7 @@ const teamMemberSection = () => {
       <h2 class="d2">Meet the Team</h2>
       <div class="head__side"><p>The named people behind every project, every milestone update, and every buyer conversation.</p></div>
     </div>
-    ${grouped
-      ? depts.map((dept) => `
-    <div style="margin-bottom:clamp(30px,3.5vw,48px)">
-      <h3 class="d4 rv" style="margin-bottom:22px">${esc(dept)}</h3>
-      <div class="grid grid--3">
-        ${TEAM_MEMBERS.filter((m) => (m.department || "Team") === dept).map(teamCard).join("")}
-      </div>
-    </div>`).join("")
-      : `<div class="grid grid--3">${TEAM_MEMBERS.map(teamCard).join("")}</div>`}
+    <div class="grid grid--3 team-grid">${TEAM_MEMBERS.map(teamCard).join("")}</div>
   </div>
 </section>`;
 };
@@ -781,38 +771,18 @@ ${pageHero(0, {
   title: "Our Team",
   sub: "Experienced real estate professionals with roots in Ethiopia and a global perspective.",
   imgName: "kaza-members-01", alt: "Members lounge, Urban Kaza",
-  stations: [
-    { k: "Leadership", v: "Executive Team", n: "Roots in Ethiopia, global perspective" },
-    { k: "Delivery", v: "Technical Team", n: "Architects and engineers" },
-    { k: "Sales", v: "Client Relations", n: "Ethiopia, Europe, North America" },
-    { k: "Careers", v: "Job Portal", n: "Openings listed below", href: "team.html#careers" },
-  ],
+  stations: [],
 })}
 
 <section class="ch ch--abyss pad-s" id="ceo">
   <div class="wrap" style="padding-block:clamp(60px,9vw,130px);display:grid;gap:clamp(32px,4vw,56px);grid-template-columns:auto 1fr;align-items:center;max-width:860px">
-    <img src="assets/img/dagmawe-t-abebe-800.webp" srcset="assets/img/dagmawe-t-abebe-800.webp 800w, assets/img/dagmawe-t-abebe-1400.webp 1254w" sizes="200px" alt="Dagmawe T. Abebe, CEO of Hill Bottom Properties" class="rv" style="width:200px;height:200px;border-radius:50%;object-fit:cover;flex:none">
+    <div class="team-photo team-photo--lg">
+      <img src="assets/img/dagmawe-t-abebe-800.webp" srcset="assets/img/dagmawe-t-abebe-800.webp 800w, assets/img/dagmawe-t-abebe-1400.webp 1254w" sizes="200px" alt="Dagmawe T. Abebe, CEO of Hill Bottom Properties">
+    </div>
     <div class="rv">
       <p class="mark mark--accent">Chief Executive Officer</p>
       <h2 class="d2" style="margin-top:10px">Dagmawe T. Abebe</h2>
       <p class="body" style="margin-top:18px;max-width:52ch;color:var(--fg-2)">Placeholder bio — real copy pending. Dagmawe leads Hill Bottom Properties' vision for transparent, on-time delivery across every project, building communities that stand for generations in Addis Ababa.</p>
-    </div>
-  </div>
-</section>
-
-<section class="ch ch--paper pad">
-  <div class="wrap">
-    <div class="head head--split rv" style="margin-bottom:clamp(36px,4vw,60px)">
-      <h2 class="d2">Our Teams</h2>
-      <div class="head__side"><p>Three groups, one standard. Every buyer deals with named people, not a queue.</p></div>
-    </div>
-    <div class="grid grid--3">
-      ${TEAMS.map((t) => `
-      <div class="story rv">
-        <p class="mark mark--accent">${esc(t.role)}</p>
-        <h3 class="d4">${esc(t.t)}</h3>
-        <p class="story__d">${esc(t.d)}</p>
-      </div>`).join("")}
     </div>
   </div>
 </section>
