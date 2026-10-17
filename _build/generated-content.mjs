@@ -85,4 +85,50 @@ export const MARKETING_POSTS = [
 
 // team.html's member grid, by sortOrder. No merge needed — rendered as-is;
 // team.html falls back to generic hero/stats copy when this is empty.
-export const TEAM_MEMBERS = [];
+export const TEAM_MEMBERS = [
+  {
+    "id": 4,
+    "name": "Hanna Demessie",
+    "role": "Finance Director",
+    "department": "Executive Team",
+    "bio": "Oversees financial planning and investment strategy across every Hill Bottom development.",
+    "photoUrl": "assets/img/hanna-demessie-1400.webp",
+    "sortOrder": 1
+  },
+  {
+    "id": 5,
+    "name": "Lemma Moges",
+    "role": "Project Director",
+    "department": "Technical Team",
+    "bio": "Leads delivery across design, engineering, and construction from groundbreaking to handover.",
+    "photoUrl": "assets/img/lemma-moges-1400.webp",
+    "sortOrder": 2
+  },
+  {
+    "id": 6,
+    "name": "Emebet Tsehay",
+    "role": "Sales Manager",
+    "department": "Client Relations",
+    "bio": "Guides buyers in Ethiopia and the diaspora through every stage of reserving a home.",
+    "photoUrl": "assets/img/emebet-tsehay-1400.webp",
+    "sortOrder": 3
+  },
+  {
+    "id": 7,
+    "name": "Fasika Getachew",
+    "role": "Sales Supervisor",
+    "department": "Client Relations",
+    "bio": "Supports local and international buyers with site visits, documentation, and follow-up.",
+    "photoUrl": "assets/img/fasika-getachew-1400.webp",
+    "sortOrder": 4
+  },
+  {
+    "id": 8,
+    "name": "Anna Charles",
+    "role": "Marketing Supervisor",
+    "department": "Marketing",
+    "bio": "Leads campaign strategy and brand presence across Hill Bottom's developments.",
+    "photoUrl": "assets/img/anna-charles-1400.webp",
+    "sortOrder": 5
+  }
+];
