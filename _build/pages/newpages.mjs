@@ -512,7 +512,7 @@ out["sister-companies.html"] = page({
        not a duplicate. */
     .sister-chapter .rec-intro__copy{gap:0;align-self:stretch}
     .sister-chapter .rec-intro__media{align-self:stretch}
-    .sister-chapter .rec-intro__media--logo{display:flex;align-items:center;justify-content:center;background:#060B14;border:1px solid rgba(232,219,124,.22)}
+    .sister-chapter .rec-intro__media--logo{align-self:start;min-height:0;height:clamp(280px,32vw,400px);display:flex;align-items:center;justify-content:center;background:#060B14;border:1px solid rgba(232,219,124,.22)}
     .sister-chapter .rec-intro__media--logo img{width:auto;max-width:62%;height:auto;min-height:0;object-fit:contain}
     /* Logos with dark lettering (e.g. Moabé's charcoal wordmark) need a
        light chip instead of the default dark one, or they vanish. */
