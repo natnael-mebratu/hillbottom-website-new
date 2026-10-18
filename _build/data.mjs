@@ -341,10 +341,29 @@ export const SISTER_COMPANIES = [
   {
     key: "hillbottom-recreation",
     name: "Hill Bottom Recreation",
-    hold: true,
-    tagline: "Wellness, within reach.",
-    about: "A spa and recreation destination from Hill Bottom — steam sauna, Morocco bath, and wellness treatments. Full details coming soon.",
-    contact: { email: "", phone: "", address: "Ayat, Addis Ababa" },
+    img: "recreation-gym",
+    tagline: "A sanctuary for fitness, relaxation, and connection.",
+    about: "Here we introduce our signature Recreational Section, a holistic wellness and lifestyle destination designed to nurture body, mind, and community. Nestled in a verdant enclave of Addis Ababa, this purpose-built facility extends our legacy of crafting mixed-use environments that seamlessly blend premium amenities with public benefit — offering residents and members a sanctuary for fitness, relaxation, and social connection.",
+    contact: { email: "", phone: "", address: "Lemi-Kura, Addis Ababa" },
+  },
+  {
+    key: "moabe-developers",
+    name: "Moabé Developers",
+    logo: "moabe-developers-logo",
+    logoLight: true,
+    tagline: "Creating lasting wealth, driving national progress.",
+    about: "Moabé Developers PLC is a real estate development and investment firm dedicated to creating lasting wealth for clients while driving national progress. Guided by integrity and a customer-first ethos, we serve as a reliable partner to premium and emerging investors, small and medium-sized enterprises, and communities in search of sustainable property solutions.",
+    mission: "By blending robust financial performance with projects that advance the public good — such as affordable housing, state-of-the-art industrial parks, and key infrastructure developments — we deliver meaningful returns and foster broader economic growth. Throughout our portfolio, you'll find a steadfast commitment to ethical conduct, full transparency, and a genuine passion for building vibrant communities and empowering our investors.",
+    contact: { email: "", phone: "", address: "Addis Ababa, Ethiopia" },
+  },
+  {
+    key: "lyte",
+    name: "Lyte",
+    logo: "lyte-hydration-mix",
+    tagline: "Hydration, elevated.",
+    about: "Lyte is a hydration brand tailored for health-conscious individuals, offering organic electrolyte mixes that enhance performance, recovery, and overall wellness. With a carefully balanced blend of ingredients like sodium, potassium, magnesium, and calcium, Lyte caters to athletes, fitness enthusiasts, and anyone looking for a clean, health-focused hydration solution.",
+    mission: "Differentiating itself with organic ingredients, low sugar content, and natural vitamins for energy, Lyte promotes a sustainable approach to hydration, making it an essential addition to a healthy lifestyle in Ethiopia and beyond.",
+    contact: { email: "", phone: "", address: "Addis Ababa, Ethiopia" },
   },
 ];
 

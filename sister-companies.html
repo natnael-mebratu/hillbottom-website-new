@@ -62,6 +62,9 @@
     .sister-chapter .rec-intro__media{align-self:stretch}
     .sister-chapter .rec-intro__media--logo{display:flex;align-items:center;justify-content:center;background:#060B14;border:1px solid rgba(232,219,124,.22)}
     .sister-chapter .rec-intro__media--logo img{width:auto;max-width:62%;height:auto;min-height:0;object-fit:contain}
+    /* Logos with dark lettering (e.g. Moabé's charcoal wordmark) need a
+       light chip instead of the default dark one, or they vanish. */
+    .sister-chapter .rec-intro__media--logo-light{background:var(--paper);border-color:var(--line)}
   </style>
 <script>try{var c=document.documentElement.classList,s=sessionStorage;if(s.getItem("hb-intro-v3"))c.add("hbi-seen");if(s.getItem("uk-intro-v4"))c.add("uki-seen");if(matchMedia("(prefers-reduced-motion: reduce)").matches)c.add("hbi-seen","uki-seen")}catch(e){}</script>
 <noscript><style>.hbi,.uki{display:none!important}</style></noscript>
@@ -195,13 +198,67 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 </section>
 <section class="ch ch--abyss pad sister-chapter">
   <div class="wrap rec-intro__layout">
-    <figure class="rec-intro__media rv"><img src="assets/img/recreation-hub-1400.webp" srcset="assets/img/recreation-hub-800.webp 800w, assets/img/recreation-hub-1400.webp 1400w" sizes="(min-width:900px) 52vw, 100vw" alt="Hill Bottom Recreation — coming soon" class="" loading="lazy" decoding="async"></figure>
+    <figure class="rec-intro__media rv"><img src="assets/img/recreation-gym-1400.webp" srcset="assets/img/recreation-gym-800.webp 800w, assets/img/recreation-gym-1400.webp 1400w" sizes="(min-width:900px) 52vw, 100vw" alt="Hill Bottom Recreation" class="" loading="lazy" decoding="async"></figure>
     <div class="rec-intro__copy rv">
       
-      <span class="mark mark--accent">Coming Soon</span>
+      <p class="mark mark--accent">A sanctuary for fitness, relaxation, and connection.</p>
       <h2 class="d2">Hill Bottom Recreation</h2>
-      <p class="body" style="margin-top:14px">A spa and recreation destination from Hill Bottom — steam sauna, Morocco bath, and wellness treatments. Full details coming soon.</p>
+      <p class="body" style="margin-top:14px">Here we introduce our signature Recreational Section, a holistic wellness and lifestyle destination designed to nurture body, mind, and community. Nestled in a verdant enclave of Addis Ababa, this purpose-built facility extends our legacy of crafting mixed-use environments that seamlessly blend premium amenities with public benefit — offering residents and members a sanctuary for fitness, relaxation, and social connection.</p>
       
+      
+      
+      
+      
+      
+      <div class="sister__contact">
+        
+        
+        <span>Lemi-Kura, Addis Ababa</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="ch ch--paper pad sister-chapter">
+  <div class="wrap rec-intro__layout">
+    <figure class="rec-intro__media rec-intro__media--logo rec-intro__media--logo-light rv"><img src="assets/img/moabe-developers-logo.webp" alt="Moabé Developers logo"></figure>
+    <div class="rec-intro__copy rv">
+      
+      <p class="mark mark--accent">Creating lasting wealth, driving national progress.</p>
+      <h2 class="d2">Moabé Developers</h2>
+      <p class="body" style="margin-top:14px">Moabé Developers PLC is a real estate development and investment firm dedicated to creating lasting wealth for clients while driving national progress. Guided by integrity and a customer-first ethos, we serve as a reliable partner to premium and emerging investors, small and medium-sized enterprises, and communities in search of sustainable property solutions.</p>
+      
+      
+      <p class="body">By blending robust financial performance with projects that advance the public good — such as affordable housing, state-of-the-art industrial parks, and key infrastructure developments — we deliver meaningful returns and foster broader economic growth. Throughout our portfolio, you'll find a steadfast commitment to ethical conduct, full transparency, and a genuine passion for building vibrant communities and empowering our investors.</p>
+      
+      
+      
+      <div class="sister__contact">
+        
+        
+        <span>Addis Ababa, Ethiopia</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="ch ch--abyss pad sister-chapter">
+  <div class="wrap rec-intro__layout">
+    <figure class="rec-intro__media rec-intro__media--logo rv"><img src="assets/img/lyte-hydration-mix.webp" alt="Lyte logo"></figure>
+    <div class="rec-intro__copy rv">
+      
+      <p class="mark mark--accent">Hydration, elevated.</p>
+      <h2 class="d2">Lyte</h2>
+      <p class="body" style="margin-top:14px">Lyte is a hydration brand tailored for health-conscious individuals, offering organic electrolyte mixes that enhance performance, recovery, and overall wellness. With a carefully balanced blend of ingredients like sodium, potassium, magnesium, and calcium, Lyte caters to athletes, fitness enthusiasts, and anyone looking for a clean, health-focused hydration solution.</p>
+      
+      
+      <p class="body">Differentiating itself with organic ingredients, low sugar content, and natural vitamins for energy, Lyte promotes a sustainable approach to hydration, making it an essential addition to a healthy lifestyle in Ethiopia and beyond.</p>
+      
+      
+      
+      <div class="sister__contact">
+        
+        
+        <span>Addis Ababa, Ethiopia</span>
+      </div>
     </div>
   </div>
 </section>

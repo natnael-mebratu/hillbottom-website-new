@@ -732,5 +732,41 @@
    "name": 1400,
    "w": 1254
   }
+ ],
+ "recreation-gym": [
+  {
+   "name": 800,
+   "w": 800
+  },
+  {
+   "name": 1400,
+   "w": 1400
+  }
+ ],
+ "recreation-spa": [
+  {
+   "name": 800,
+   "w": 800
+  },
+  {
+   "name": 1400,
+   "w": 1400
+  }
+ ],
+ "recreation-salon": [
+  {
+   "name": 1400,
+   "w": 516
+  }
+ ],
+ "recreation-cafe": [
+  {
+   "name": 800,
+   "w": 800
+  },
+  {
+   "name": 1400,
+   "w": 1358
+  }
  ]
 }

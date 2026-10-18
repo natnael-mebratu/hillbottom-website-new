@@ -514,6 +514,9 @@ out["sister-companies.html"] = page({
     .sister-chapter .rec-intro__media{align-self:stretch}
     .sister-chapter .rec-intro__media--logo{display:flex;align-items:center;justify-content:center;background:#060B14;border:1px solid rgba(232,219,124,.22)}
     .sister-chapter .rec-intro__media--logo img{width:auto;max-width:62%;height:auto;min-height:0;object-fit:contain}
+    /* Logos with dark lettering (e.g. Moabé's charcoal wordmark) need a
+       light chip instead of the default dark one, or they vanish. */
+    .sister-chapter .rec-intro__media--logo-light{background:var(--paper);border-color:var(--line)}
   </style>`,
   body: `
 ${pageHero(0, {
@@ -526,14 +529,13 @@ ${pageHero(0, {
 
 ${SISTER_COMPANIES.map((co, i) => {
   const dark = i % 2 ? "ch--abyss" : "ch--paper";
-  // Media panel: Tona has only its logo asset (no standalone photography),
-  // so the logo gets the full media slot on the dark-chip background that
-  // was already fixed for contrast — never a plain/unstyled logo. The
-  // placeholder company reuses the recreation-hub render until it has its
-  // own photography.
+  // Media panel: companies with a logo asset (co.logo) show it on a chip
+  // background — dark by default, light when co.logoLight (dark lettering).
+  // Companies with real photography (co.img) show that instead; falls back
+  // to the recreation-hub render only if neither is set.
   const media = co.logo
-    ? `<figure class="rec-intro__media rec-intro__media--logo rv"><img src="assets/img/${co.logo}.webp" alt="${esc(co.name)} logo"></figure>`
-    : `<figure class="rec-intro__media rv">${img("recreation-hub", `${co.name} — coming soon`, { sizes: "(min-width:900px) 52vw, 100vw" })}</figure>`;
+    ? `<figure class="rec-intro__media rec-intro__media--logo${co.logoLight ? " rec-intro__media--logo-light" : ""} rv"><img src="assets/img/${co.logo}.webp" alt="${esc(co.name)} logo"></figure>`
+    : `<figure class="rec-intro__media rv">${img(co.img || "recreation-hub", `${co.name}${co.img ? "" : " — coming soon"}`, { sizes: "(min-width:900px) 52vw, 100vw" })}</figure>`;
   return `
 <section class="ch ${dark} pad sister-chapter">
   <div class="wrap rec-intro__layout">
