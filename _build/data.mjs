@@ -346,6 +346,7 @@ export const SISTER_COMPANIES = [
     key: "lyte",
     name: "Lyte",
     logo: "lyte-hydration-mix",
+    logoTall: true,
     tagline: "Hydration, elevated.",
     about: "Lyte is a hydration brand tailored for health-conscious individuals, offering organic electrolyte mixes that enhance performance, recovery, and overall wellness. With a carefully balanced blend of ingredients like sodium, potassium, magnesium, and calcium, Lyte caters to athletes, fitness enthusiasts, and anyone looking for a clean, health-focused hydration solution.",
     mission: "Differentiating itself with organic ingredients, low sugar content, and natural vitamins for energy, Lyte promotes a sustainable approach to hydration, making it an essential addition to a healthy lifestyle in Ethiopia and beyond.",

@@ -65,6 +65,10 @@
     /* Logos with dark lettering (e.g. Moabé's charcoal wordmark) need a
        light chip instead of the default dark one, or they vanish. */
     .sister-chapter .rec-intro__media--logo-light{background:var(--paper);border-color:var(--line)}
+    /* Tall product shots (e.g. Lyte's tube) read better filling the full
+       media height like a real photo, not boxed to the small-logo size. */
+    .sister-chapter .rec-intro__media--logo-tall{align-self:stretch;height:auto;min-height:610px}
+    .sister-chapter .rec-intro__media--logo-tall img{max-width:48%;max-height:88%}
   </style>
 <script>try{var c=document.documentElement.classList,s=sessionStorage;if(s.getItem("hb-intro-v3"))c.add("hbi-seen");if(s.getItem("uk-intro-v4"))c.add("uki-seen");if(matchMedia("(prefers-reduced-motion: reduce)").matches)c.add("hbi-seen","uki-seen")}catch(e){}</script>
 <noscript><style>.hbi,.uki{display:none!important}</style></noscript>
@@ -231,7 +235,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 </section>
 <section class="ch ch--abyss pad sister-chapter">
   <div class="wrap rec-intro__layout">
-    <figure class="rec-intro__media rec-intro__media--logo rv"><img src="assets/img/lyte-hydration-mix.webp" alt="Lyte logo"></figure>
+    <figure class="rec-intro__media rec-intro__media--logo rec-intro__media--logo-tall rv"><img src="assets/img/lyte-hydration-mix.webp" alt="Lyte logo"></figure>
     <div class="rec-intro__copy rv">
       
       <p class="mark mark--accent">Hydration, elevated.</p>

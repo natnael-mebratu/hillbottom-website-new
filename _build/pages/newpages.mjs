@@ -517,6 +517,10 @@ out["sister-companies.html"] = page({
     /* Logos with dark lettering (e.g. Moabé's charcoal wordmark) need a
        light chip instead of the default dark one, or they vanish. */
     .sister-chapter .rec-intro__media--logo-light{background:var(--paper);border-color:var(--line)}
+    /* Tall product shots (e.g. Lyte's tube) read better filling the full
+       media height like a real photo, not boxed to the small-logo size. */
+    .sister-chapter .rec-intro__media--logo-tall{align-self:stretch;height:auto;min-height:610px}
+    .sister-chapter .rec-intro__media--logo-tall img{max-width:48%;max-height:88%}
   </style>`,
   body: `
 ${pageHero(0, {
@@ -531,10 +535,12 @@ ${SISTER_COMPANIES.map((co, i) => {
   const dark = i % 2 ? "ch--abyss" : "ch--paper";
   // Media panel: companies with a logo asset (co.logo) show it on a chip
   // background — dark by default, light when co.logoLight (dark lettering).
+  // co.logoTall keeps the chip stretching full height (a tall product shot
+  // like Lyte's, not a small mark that looks lost in a tall empty box).
   // Companies with real photography (co.img) show that instead; falls back
   // to the recreation-hub render only if neither is set.
   const media = co.logo
-    ? `<figure class="rec-intro__media rec-intro__media--logo${co.logoLight ? " rec-intro__media--logo-light" : ""} rv"><img src="assets/img/${co.logo}.webp" alt="${esc(co.name)} logo"></figure>`
+    ? `<figure class="rec-intro__media rec-intro__media--logo${co.logoLight ? " rec-intro__media--logo-light" : ""}${co.logoTall ? " rec-intro__media--logo-tall" : ""} rv"><img src="assets/img/${co.logo}.webp" alt="${esc(co.name)} logo"></figure>`
     : `<figure class="rec-intro__media rv">${img(co.img || "recreation-hub", `${co.name}${co.img ? "" : " — coming soon"}`, { sizes: "(min-width:900px) 52vw, 100vw" })}</figure>`;
   return `
 <section class="ch ${dark} pad sister-chapter">
