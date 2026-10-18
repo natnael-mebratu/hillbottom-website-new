@@ -775,14 +775,14 @@ ${pageHero(0, {
 })}
 
 <section class="ch ch--abyss pad-s" id="ceo">
-  <div class="wrap" style="padding-block:clamp(60px,9vw,130px);display:grid;gap:clamp(32px,4vw,56px);grid-template-columns:auto 1fr;align-items:center;max-width:860px">
+  <div class="wrap ceo-spotlight">
     <div class="team-photo team-photo--lg">
       <img src="assets/img/dagmawe-t-abebe-800.webp" srcset="assets/img/dagmawe-t-abebe-800.webp 800w, assets/img/dagmawe-t-abebe-1400.webp 1254w" sizes="200px" alt="Dagmawe T. Abebe, CEO of Hill Bottom Properties">
     </div>
     <div class="rv">
       <p class="mark mark--accent">Chief Executive Officer</p>
       <h2 class="d2" style="margin-top:10px">Dagmawe T. Abebe</h2>
-      <p class="body" style="margin-top:18px;max-width:52ch;color:var(--fg-2)">Placeholder bio — real copy pending. Dagmawe leads Hill Bottom Properties' vision for transparent, on-time delivery across every project, building communities that stand for generations in Addis Ababa.</p>
+      <p class="body" style="margin-top:18px;color:var(--fg-2)">Placeholder bio — real copy pending. Dagmawe leads Hill Bottom Properties' vision for transparent, on-time delivery across every project, building communities that stand for generations in Addis Ababa.</p>
     </div>
   </div>
 </section>
