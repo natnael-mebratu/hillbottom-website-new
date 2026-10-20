@@ -60,18 +60,18 @@ export const NAV = [
     { href: "projects.html#urban-kaza", label: "Urban Kaza" },
     { href: "projects.html#recreation-center", label: "Recreation Center" },
   ] },
-  { href: "construction.html", label: "Construction Updates", note: "" },
+  { href: "construction.html", label: "Progress", note: "" },
   { href: "about.html", label: "About", note: "" },
   { href: "team.html", label: "Team", note: "" },
-  { href: "contact.html", label: "Contact", note: "" },
+  { href: "buying-from-abroad.html", label: "For Diaspora", note: "" },
 ];
 
-/* "More" dropdown in the primary nav — client-confirmed restructure: these
-   pages were hard to find under the old NAV_SECONDARY treatment, so they
-   now live in an explicit, discoverable "More" menu rather than a
-   demoted/overflow list. */
+/* "Explore" dropdown in the primary nav — secondary pages, named for what
+   they actually are rather than a meaningless "More". Contact isn't here
+   or in NAV: the Check Availability button in the header does that job,
+   so a separate Contact nav link would just be a second path to the same
+   page. */
 export const NAV_SECONDARY = [
-  { href: "buying-from-abroad.html", label: "Buying From Abroad" },
   { href: "vr-tours.html", label: "Virtual Tours" },
   { href: "marketing.html", label: "Campaign Feed" },
   { href: "sister-companies.html", label: "Sister Companies" },

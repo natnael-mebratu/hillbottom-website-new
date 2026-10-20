@@ -97,6 +97,18 @@
     hdr.classList.add("is-stuck");
   }
 
+  /* ---- hide the floating contact rail once the footer is in view — it
+     has the same WhatsApp/call/email info already, so the fixed buttons
+     just float in dead space otherwise ---------------------------------- */
+  var rail = $(".rail");
+  var ftr = $(".ftr");
+  if (rail && ftr && "IntersectionObserver" in window) {
+    var railObserver = new IntersectionObserver(function (entries) {
+      rail.classList.toggle("rail--hide", entries[0].isIntersecting);
+    }, { rootMargin: "0px", threshold: 0 });
+    railObserver.observe(ftr);
+  }
+
   /* ---- the hero line arrives word by word — the one orchestrated moment ---- */
   $$("[data-words]").forEach(function (el) {
     var words = el.textContent.trim().split(/\s+/);

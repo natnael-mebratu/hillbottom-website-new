@@ -145,7 +145,7 @@ export const header = (d, current) => `
         </div>
       </div>` : `<a href="${up(d)}${n.href}"${current === n.href ? ' aria-current="page"' : ""}>${esc(n.label)}</a>`).join("")}
       <div class="nav__more" data-nav-more>
-        <button type="button" class="nav__more-btn" aria-expanded="false" aria-haspopup="true" aria-controls="hb-nav-more-menu">More${ICON.chevronDown}</button>
+        <button type="button" class="nav__more-btn" aria-expanded="false" aria-haspopup="true" aria-controls="hb-nav-more-menu">Explore${ICON.chevronDown}</button>
         <div class="nav__more-menu" id="hb-nav-more-menu" role="menu">
           ${NAV_SECONDARY.map((n) => `<a role="menuitem" href="${up(d)}${n.href}"${current === n.href ? ' aria-current="page"' : ""}>${esc(n.label)}</a>`).join("")}
         </div>
@@ -159,7 +159,7 @@ export const header = (d, current) => `
 </header>
 <div class="drawer" id="hb-drawer" aria-hidden="true" inert>
   ${NAV.map((n) => `<a class="dl" href="${up(d)}${n.href}">${esc(n.label)}${n.note ? `<em>${esc(n.note)}</em>` : ""}</a>`).join("")}
-  <p class="dl--more-label">More</p>
+  <p class="dl--more-label">Explore</p>
   ${NAV_SECONDARY.map((n) => `<a class="dl dl--sub" href="${up(d)}${n.href}">${esc(n.label)}</a>`).join("")}
   <div class="btn-row">
     <a class="btn" href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}WhatsApp</a>
@@ -274,7 +274,13 @@ export const footer = (d) => `
         <ul class="ftr__links">
           <li><a href="${up(d)}index.html">Home</a></li>
           ${NAV.map((n) => `<li><a href="${up(d)}${n.href}">${esc(n.label)}</a></li>`).join("")}
+        </ul>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <ul class="ftr__links">
           ${NAV_SECONDARY.map((n) => `<li><a href="${up(d)}${n.href}">${esc(n.label)}</a></li>`).join("")}
+          <li><a href="${up(d)}team.html#careers">Careers</a></li>
         </ul>
       </div>
     </div>

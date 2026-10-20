@@ -180,6 +180,16 @@ p{margin:0}
 
 /* ---------- header ----------------------------------------------------- */
 .hdr{position:fixed;inset:16px 0 auto 0;z-index:90;pointer-events:none}
+/* Always-on scrim behind the nav, independent of scroll state, so white
+   nav text stays legible over any hero image from the very first frame —
+   not a solid bar, just enough of a top-down fade to guarantee contrast.
+   Fades out once .is-stuck's own solid/blurred background takes over. */
+.hdr::before{
+  content:"";position:fixed;inset:0 0 auto 0;height:140px;z-index:-1;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(6,11,20,.6) 0%,rgba(6,11,20,.32) 50%,rgba(6,11,20,0) 100%);
+  transition:opacity .5s var(--ease);
+}
+.hdr.is-stuck::before{opacity:0}
 .hdr__in{
   pointer-events:auto;display:flex;align-items:center;justify-content:space-between;gap:26px;
   height:64px;padding:0 10px 0 22px;border-radius:999px;
@@ -425,7 +435,7 @@ ul.specs{display:grid;gap:0;margin:0;padding:0;grid-template-columns:1fr}
 /* ---------- footer --------------------------------------------------------- */
 .ftr{position:relative;background:var(--abyss);color:#F6F8FB;--fg:#F6F8FB;--fg-2:#A8B7CC;--line:rgba(200,181,127,.14);--accent:var(--gold-lit)}
 .ftr__top{display:grid;gap:clamp(38px,4vw,62px);padding-block:clamp(72px,8vw,120px)}
-@media(min-width:1000px){.ftr__top{grid-template-columns:minmax(0,4fr) repeat(3,minmax(0,3fr))}}
+@media(min-width:1000px){.ftr__top{grid-template-columns:minmax(0,3.5fr) repeat(4,minmax(0,2.2fr))}}
 .ftr h4,.ftr h3{font-family:var(--sans);font-size:.6875rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lit);margin:0 0 22px}
 .ftr__links{display:grid;gap:13px;padding:0;margin:0;list-style:none}
 .ftr__links a,.ftr__links span{font-size:.9375rem;color:#B4C1D2;transition:color .35s var(--ease);line-height:1.5}
@@ -438,8 +448,9 @@ ul.specs{display:grid;gap:0;margin:0;padding:0;grid-template-columns:1fr}
 .social svg{width:16px;height:16px}
 
 /* ---------- contact rail / bar ---------------------------------------------- */
-.rail{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:85;display:none;flex-direction:column;gap:8px}
+.rail{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:85;display:none;flex-direction:column;gap:8px;opacity:1;pointer-events:auto;transition:opacity .4s var(--ease)}
 @media(min-width:940px){.rail{display:flex}}
+.rail--hide{opacity:0;pointer-events:none}
 .rail a{
   display:flex;align-items:center;gap:12px;min-height:48px;padding:14px 18px;border-radius:999px;
   background:rgba(10,18,32,.5);-webkit-backdrop-filter:blur(14px) saturate(1.35);backdrop-filter:blur(14px) saturate(1.35);
