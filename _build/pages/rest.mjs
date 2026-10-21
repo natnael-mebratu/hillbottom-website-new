@@ -782,7 +782,7 @@ ${pageHero(0, {
     <div class="rv">
       <p class="mark mark--accent">Chief Executive Officer</p>
       <h2 class="d2" style="margin-top:10px">Dagmawe T. Abebe</h2>
-      <p class="body" style="margin-top:18px;color:var(--fg-2)">Placeholder bio — real copy pending. Dagmawe leads Hill Bottom Properties' vision for transparent, on-time delivery across every project, building communities that stand for generations in Addis Ababa.</p>
+      <p class="body" style="margin-top:18px;color:var(--fg-2)">With years of experience in real estate development, Dagmawe has established the company as a premier provider of luxury spaces in Addis Ababa. His strategic vision fosters community partnerships that enhance resident experiences.</p>
     </div>
   </div>
 </section>
