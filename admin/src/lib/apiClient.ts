@@ -112,6 +112,16 @@ export type MarketingPost = {
   createdAt: string;
 };
 
+export type Testimonial = {
+  id: number;
+  authorName: string;
+  location: string | null;
+  quote: string;
+  photoUrl: string | null;
+  sortOrder: number;
+  createdAt: string;
+};
+
 export type SisterCompany = {
   id: number;
   name: string;
@@ -234,6 +244,14 @@ export const api = {
     request<TeamMember>(`/api/team/${id}`, { method: "PUT", body: input, auth: true }),
   deleteTeamMember: (id: number) =>
     request<void>(`/api/team/${id}`, { method: "DELETE", auth: true }),
+
+  listTestimonials: () => request<Testimonial[]>("/api/testimonials"),
+  createTestimonial: (input: Omit<Testimonial, "id" | "createdAt">) =>
+    request<Testimonial>("/api/testimonials", { method: "POST", body: input, auth: true }),
+  updateTestimonial: (id: number, input: Partial<Omit<Testimonial, "id" | "createdAt">>) =>
+    request<Testimonial>(`/api/testimonials/${id}`, { method: "PUT", body: input, auth: true }),
+  deleteTestimonial: (id: number) =>
+    request<void>(`/api/testimonials/${id}`, { method: "DELETE", auth: true }),
 
   listSisterCompanies: () => request<SisterCompany[]>("/api/sister-companies"),
   createSisterCompany: (input: Omit<SisterCompany, "id" | "createdAt">) =>

@@ -5,6 +5,7 @@ import { projectsRouter } from "./routes/projects.js";
 import { progressRouter } from "./routes/progress.js";
 import { pricingRouter } from "./routes/pricing.js";
 import { teamRouter } from "./routes/team.js";
+import { testimonialsRouter } from "./routes/testimonials.js";
 import { blogRouter } from "./routes/blog.js";
 import { marketingRouter } from "./routes/marketing.js";
 import { siteMediaRouter } from "./routes/site-media.js";
@@ -29,6 +30,7 @@ export function createApp() {
   app.use("/api/progress", progressRouter);
   app.use("/api/pricing", pricingRouter);
   app.use("/api/team", teamRouter);
+  app.use("/api/testimonials", testimonialsRouter);
   app.use("/api/blog", blogRouter);
   app.use("/api/marketing", marketingRouter);
   app.use("/api/site-media", siteMediaRouter);

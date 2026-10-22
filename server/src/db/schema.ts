@@ -170,6 +170,18 @@ export const siteMedia = pgTable("site_media", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
+// Resident testimonials shown in the "What Our Residents Say" marquee on
+// the home page — admin-managed the same way team_members is.
+export const testimonials = pgTable("testimonials", {
+  id: serial("id").primaryKey(),
+  authorName: varchar("author_name", { length: 255 }).notNull(),
+  location: varchar("location", { length: 255 }),
+  quote: text("quote").notNull(),
+  photoUrl: text("photo_url"),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 // Sister/affiliate companies shown on their own page — logo, blurb, link out.
 export const sisterCompanies = pgTable("sister_companies", {
   id: serial("id").primaryKey(),

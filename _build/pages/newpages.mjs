@@ -39,15 +39,9 @@ const iconGrid = (items, icons = REMOTE_ICONS, className = "") => `<ol class="pr
    PROJECTS_LIVE (progress_updates in Postgres) — see data.mjs CONSTRUCTION. */
 const constructionProgressFrames = (photos, hidden = false) => `<div class="delivery-marquee__group"${hidden ? ' aria-hidden="true"' : ""}>${photos.map((p) => `<figure><img src="${esc(p.url)}" alt="${hidden ? "" : esc(p.caption || "")}" loading="lazy" decoding="async"></figure>`).join("")}</div>`;
 const constructionProgress = (c) => {
-  if (!c.finalRenderUrl && !(c.progressPhotos && c.progressPhotos.length)) return "";
+  if (!(c.progressPhotos && c.progressPhotos.length)) return "";
   return `
   <div class="construction-progress-wrap">
-    ${c.finalRenderUrl ? `
-    <figure class="construction-render">
-      <img src="${esc(c.finalRenderUrl)}" alt="${esc(c.name)} — final architectural render" loading="lazy" decoding="async">
-      <figcaption>Final render — architectural vision</figcaption>
-    </figure>` : ""}
-    ${c.progressPhotos && c.progressPhotos.length ? `
     <div class="construction-marquee">
       <p class="mark mark--accent">Progress Photos · Dated, Oldest to Newest</p>
       <div class="delivery-marquee" data-marquee>
@@ -56,7 +50,7 @@ const constructionProgress = (c) => {
           ${constructionProgressFrames(c.progressPhotos, true)}
         </div>
       </div>
-    </div>` : ""}
+    </div>
   </div>`;
 };
 
@@ -193,7 +187,7 @@ ${pageHero(0, {
     </div>
 
     ${CONSTRUCTION.map((c, i) => `
-    <article class="proj construction-card ${i % 2 ? "proj--flip" : ""} rv"${i ? ' style="margin-top:clamp(70px,9vw,140px)"' : ""}>
+    <article class="proj construction-card ${i % 2 ? "proj--flip" : ""} rv" id="${esc(c.key)}"${i ? ' style="margin-top:clamp(70px,9vw,140px)"' : ""}>
       <div class="proj__media zoom">
         <a href="${c.href}" aria-label="${esc(c.name)}">${plate(c.img, `${c.name} — ${c.stage}`, { ar: "ar", sizes: "(min-width:1020px) 56vw, 100vw", par: true })}</a>
       </div>
@@ -212,9 +206,9 @@ ${pageHero(0, {
           ${alt(c.pct, `${c.pct}% complete`, c.milestone)}
         </div>` : ""}
         <p class="story__d" style="max-width:44ch">Dated photo and video updates for this development are issued directly to buyers at each milestone. Request the latest pack or a live video walkthrough at any time.</p>
-        ${btn("Request Latest Update", "contact.html", { kind: "btn--gold" })}
       </div>
       ${constructionProgress(c)}
+      <div class="construction-card__cta">${btn("Request Site Visit", "contact.html", { kind: "btn--gold" })}</div>
     </article>`).join("")}
   </div>
 </section>

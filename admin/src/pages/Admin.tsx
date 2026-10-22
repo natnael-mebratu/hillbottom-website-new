@@ -13,6 +13,7 @@ import {
   type BlogPost,
   type MarketingPost,
   type TeamMember,
+  type Testimonial,
   type SisterCompany,
 } from "@/lib/apiClient";
 import { VideoEmbed, isVideoUrl } from "@/components/VideoEmbed";
@@ -25,6 +26,7 @@ const sections = [
   { id: "progress", label: "Progress Updates" },
   { id: "pricing", label: "Pricing & Plans" },
   { id: "team", label: "Team" },
+  { id: "testimonials", label: "Testimonials" },
   { id: "blog", label: "Blog" },
   { id: "marketing", label: "Marketing Feed" },
   { id: "sister-companies", label: "Sister Companies" },
@@ -111,12 +113,14 @@ function DashboardSection() {
   const projects = useAuthedQuery(["admin-projects"], () => api.listProjects());
   const leads = useAuthedQuery(["admin-leads"], api.listLeads);
   const team = useAuthedQuery(["admin-team"], api.listTeam);
+  const testimonials = useAuthedQuery(["admin-testimonials"], api.listTestimonials);
   const sisterCompanies = useAuthedQuery(["admin-sister-companies"], api.listSisterCompanies);
 
   const stats = [
     { label: "Projects", value: projects.data?.length ?? "—" },
     { label: "Leads captured", value: leads.data?.length ?? "—" },
     { label: "Team members", value: team.data?.length ?? "—" },
+    { label: "Testimonials", value: testimonials.data?.length ?? "—" },
     { label: "Sister companies", value: sisterCompanies.data?.length ?? "—" },
   ];
 
@@ -1007,6 +1011,172 @@ function TeamSection() {
   );
 }
 
+const emptyTestimonialDraft = {
+  authorName: "",
+  location: "",
+  quote: "",
+  photoUrl: "",
+  sortOrder: 0,
+};
+
+function TestimonialsSection() {
+  const queryClient = useQueryClient();
+  const testimonials = useAuthedQuery(["admin-testimonials"], api.listTestimonials);
+  const [draft, setDraft] = useState(emptyTestimonialDraft);
+  const [editingId, setEditingId] = useState<number | null>(null);
+
+  function invalidate() {
+    queryClient.invalidateQueries({ queryKey: ["admin-testimonials"] });
+    queryClient.invalidateQueries({ queryKey: ["testimonials"] });
+  }
+
+  const createTestimonial = useMutation({
+    mutationFn: () => api.createTestimonial(draft),
+    onSuccess: () => {
+      setDraft(emptyTestimonialDraft);
+      invalidate();
+    },
+  });
+
+  const updateTestimonial = useMutation({
+    mutationFn: (id: number) => api.updateTestimonial(id, draft),
+    onSuccess: () => {
+      setDraft(emptyTestimonialDraft);
+      setEditingId(null);
+      invalidate();
+    },
+  });
+
+  const deleteTestimonial = useMutation({
+    mutationFn: (id: number) => api.deleteTestimonial(id),
+    onSuccess: invalidate,
+  });
+
+  function startEdit(testimonial: Testimonial) {
+    setEditingId(testimonial.id);
+    setDraft({
+      authorName: testimonial.authorName,
+      location: testimonial.location ?? "",
+      quote: testimonial.quote,
+      photoUrl: testimonial.photoUrl ?? "",
+      sortOrder: testimonial.sortOrder,
+    });
+  }
+
+  function submit(event: React.FormEvent) {
+    event.preventDefault();
+    if (!draft.authorName.trim() || !draft.quote.trim()) return;
+    if (editingId) updateTestimonial.mutate(editingId);
+    else createTestimonial.mutate();
+  }
+
+  return (
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
+      <section>
+        <div className="mb-5">
+          <p className="text-xs uppercase tracking-[0.25em] text-white/40">Social proof</p>
+          <h2 className="mt-2 text-3xl font-semibold">Testimonials</h2>
+          <p className="mt-1 text-sm text-white/45">Shown in "What Our Residents Say" on the home page.</p>
+        </div>
+        <div className="space-y-3">
+          {testimonials.data?.length === 0 && (
+            <div className="border border-white/10 bg-[#0d1b2d] p-8 text-white/45">
+              No testimonials yet.
+            </div>
+          )}
+          {testimonials.data?.map((testimonial) => (
+            <article key={testimonial.id} className="border border-white/10 bg-[#0d1b2d] p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h3 className="text-lg font-semibold">{testimonial.authorName}</h3>
+                  {testimonial.location && (
+                    <p className="text-xs text-white/45 mt-1">{testimonial.location}</p>
+                  )}
+                </div>
+              </div>
+              <p className="mt-3 text-sm text-white/70">&ldquo;{testimonial.quote}&rdquo;</p>
+              <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-white/35">
+                <button onClick={() => startEdit(testimonial)} className="text-white/60 hover:text-white">
+                  Edit
+                </button>
+                <button
+                  onClick={() => deleteTestimonial.mutate(testimonial.id)}
+                  className="text-red-300/70 hover:text-red-300"
+                >
+                  Delete
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <aside>
+        <form onSubmit={submit} className="border border-white/10 bg-[#0d1b2d] p-6">
+          <p className="text-xs uppercase tracking-[0.25em] text-[#c09a60]">
+            {editingId ? "Edit testimonial" : "New testimonial"}
+          </p>
+          <div className="mt-5 space-y-4">
+            <input
+              required
+              value={draft.authorName}
+              onChange={(e) => setDraft((d) => ({ ...d, authorName: e.target.value }))}
+              placeholder="Author name"
+              className="admin-input"
+            />
+            <input
+              value={draft.location}
+              onChange={(e) => setDraft((d) => ({ ...d, location: e.target.value }))}
+              placeholder="Location (e.g. Addis Ababa, or London, UK)"
+              className="admin-input"
+            />
+            <textarea
+              required
+              value={draft.quote}
+              onChange={(e) => setDraft((d) => ({ ...d, quote: e.target.value }))}
+              placeholder="Quote"
+              rows={4}
+              className="admin-input resize-none"
+            />
+            <input
+              value={draft.photoUrl}
+              onChange={(e) => setDraft((d) => ({ ...d, photoUrl: e.target.value }))}
+              placeholder="Photo URL"
+              className="admin-input"
+            />
+            <input
+              type="number"
+              value={draft.sortOrder}
+              onChange={(e) => setDraft((d) => ({ ...d, sortOrder: Number(e.target.value) }))}
+              placeholder="Sort order"
+              className="admin-input"
+            />
+            <button
+              type="submit"
+              disabled={createTestimonial.isPending || updateTestimonial.isPending}
+              className="w-full bg-[#c09a60] px-4 py-3 text-sm font-semibold text-[#07111f] hover:bg-[#d2b277] disabled:opacity-60"
+            >
+              {editingId ? "Save changes" : "Add testimonial"}
+            </button>
+            {editingId && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingId(null);
+                  setDraft(emptyTestimonialDraft);
+                }}
+                className="w-full border border-white/15 px-4 py-2 text-xs uppercase tracking-widest text-white/50 hover:text-white"
+              >
+                Cancel edit
+              </button>
+            )}
+          </div>
+        </form>
+      </aside>
+    </div>
+  );
+}
+
 const emptyBlogDraft = {
   slug: "",
   title: "",
@@ -1672,6 +1842,7 @@ export default function Admin() {
           {section === "progress" && <ProgressSection />}
           {section === "pricing" && <PricingSection />}
           {section === "team" && <TeamSection />}
+          {section === "testimonials" && <TestimonialsSection />}
           {section === "blog" && <BlogSection />}
           {section === "marketing" && <MarketingSection />}
           {section === "sister-companies" && <SisterCompaniesSection />}

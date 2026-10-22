@@ -36,6 +36,13 @@
       "when": 1791366517993,
       "tag": "0004_black_grey_gargoyle",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1792700912763,
+      "tag": "0005_thankful_strong_guy",
+      "breakpoints": true
     }
   ]
 }

@@ -505,20 +505,27 @@ body:not(.home-editorial) .facts{--card-gap:clamp(22px,3vw,46px)}
 .construction-card.in .construction-card__infographic .uicon path{animation:uk-icon-draw 760ms var(--ease) both}
 .construction-card__infographic small{font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
 .construction-card__infographic strong{font-size:.82rem;font-weight:400;line-height:1.45}
-.construction-card .btn--gold{margin-top:24px;width:max-content}
 
-/* Construction progress: full-width hero render + real photo marquee,
-   appended per project when data exists (constructionProgress() in
-   newpages.mjs). The marquee reuses the .delivery-marquee/__track/__group
-   rules defined in assets/css/home-feedback.css — only the new wrapper's
-   own layout lives here. */
-.construction-progress-wrap{grid-column:1/-1;grid-template-columns:minmax(0,1fr);margin-top:clamp(36px,4vw,56px);display:grid;gap:clamp(28px,3vw,42px)}
-.construction-render{margin:0 auto;max-width:720px;width:100%;text-align:center}
-.construction-render img{width:100%;border-radius:4px;display:block}
-.construction-render figcaption{margin-top:12px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
+/* Construction progress: real photo marquee, appended per project when
+   data exists (constructionProgress() in newpages.mjs). The marquee reuses
+   the .delivery-marquee/__track/__group rules defined in
+   assets/css/home-feedback.css — only the new wrapper's own layout lives
+   here. The CTA sits in its own full-width row below the marquee (markup
+   order: media+body row, then progress wrap, then CTA), so it reads as
+   one aligned column with the card text above it rather than floating
+   mid-card.
+   `order` is set explicitly on both full-span rows, higher than the 2
+   possible values .proj__media/.proj__body ever take (flip uses order:2
+   on .proj__media) — without it, Grid's auto-placement sorts items by
+   `order` before packing them into cells, so on a flipped card
+   (.proj--flip, odd-indexed) these order:0-by-default rows would be
+   placed into row 1 ahead of the order:2 media column and bump it down
+   into its own row, breaking the media+body pairing. */
+.construction-progress-wrap{grid-column:1/-1;grid-template-columns:minmax(0,1fr);order:3;margin-top:clamp(36px,4vw,56px);display:grid;gap:clamp(28px,3vw,42px)}
 .construction-marquee .mark{margin-bottom:14px}
 .construction-marquee .delivery-marquee{border-radius:4px}
-@media (max-width:720px){.construction-render{max-width:100%}}
+.construction-card__cta{grid-column:1/-1;order:4;margin-top:clamp(28px,3vw,42px)}
+.construction-card__cta .btn--gold{width:max-content}
 
 /* Urban Kaza brand lockup and title system. */
 .urban-kaza-page .uk-hero .hero__in{

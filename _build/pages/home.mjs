@@ -45,12 +45,31 @@ const deliveryFrames = (hidden = false) => `<div class="delivery-marquee__group"
    page (see googleMapEmbed() in rest.mjs/pages). */
 const googleMapEmbed = (lat, lng, title, zoom = 15) => `<iframe title="${esc(title)}" src="https://www.google.com/maps?q=${lat}%2C${lng}&amp;z=${zoom}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
 const SALES_OFFICE_ICON = `<svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><path pathLength="1" d="M12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>`;
+/* Testimonial photos — admin-managed DB content, see fetchData.mjs/
+   TESTIMONIALS_LIVE. A small circular portrait next to each quote, same
+   "no photo yet" initial-letter fallback as the team grid's .team-photo,
+   just smaller and without its rotating gold ring (too ornate for an
+   inline byline). */
+const testimonialPhoto = (t) => `<span class="testimonial-photo" aria-hidden="true">${t.photoUrl
+  ? `<img src="${esc(t.photoUrl)}" alt="" loading="lazy">`
+  : `<span class="testimonial-photo__ph">${esc((t.authorName || "?").trim().charAt(0))}</span>`}</span>`;
 const testimonialSlides = (hidden = false) => `<div class="testimonial-marquee__group"${hidden ? ' aria-hidden="true"' : ''}>${TESTIMONIALS.map((t) => `
   <figure class="testimonial-card">
     <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-    <blockquote${t.am ? ' lang="am"' : ""}><span${t.am ? ' class="am"' : ""}>${esc(t.q)}</span></blockquote>
-    <figcaption>${esc(t.by)} · ${esc(t.at)}</figcaption>
+    <blockquote><span>${esc(t.quote)}</span></blockquote>
+    <figcaption>${testimonialPhoto(t)}<span>${esc(t.authorName)}${t.location ? ` · ${esc(t.location)}` : ""}</span></figcaption>
   </figure>`).join("")}</div>`;
+/* Skipped entirely when empty (a fresh clone, or before anyone's added a
+   real testimonial in admin) — same discipline as teamMemberSection()
+   below, the home page reads fine without this section. */
+const testimonialsSection = () => {
+  if (!TESTIMONIALS.length) return "";
+  return `
+<section class="ch ch--paper pad home-residents">
+  <div class="wrap"><h2 class="d2 rv">What Our Residents Say</h2></div>
+  <div class="testimonial-marquee wrap rv" aria-label="Resident testimonials"><div class="testimonial-marquee__track">${testimonialSlides()}</div></div>
+</section>`;
+};
 
 const projectChapter = (p, i) => `
 <article class="proj ${i % 2 ? "proj--flip" : ""} rv">
@@ -173,7 +192,7 @@ ${welcome(0, WELCOME)}
 <section class="ch ch--paper pad home-intro">
   <div class="intro-editorial">
     <div class="intro-editorial__copy rv">
-      <h2 class="d2">Building more than buildings. <em>Building community.</em></h2>
+      <h2 class="d2">About Us</h2>
       <p class="intro-editorial__lede">A premium Ethiopian real estate developer committed to transparency, timelines, and technical excellence — since day one.</p>
       <p>Hill Bottom Properties was founded on a simple premise: Ethiopia deserves world-class real estate delivered with absolute integrity. We saw a gap between aspiration and reality in the Ethiopian property market, and we set out to close it.</p>
       <p>Our first completed project — Hill Bottom Village in Ayat — became a proof of concept. Buyers watched their homes rise, received progress updates at every milestone, and received their keys on time. We are now applying the same standard to Urban Kaza in the Kazanchis Diplomatic Corridor.</p>
@@ -232,10 +251,7 @@ ${welcome(0, WELCOME)}
   </div>
 </section>
 
-<section class="ch ch--paper pad home-residents">
-  <div class="wrap"><h2 class="d2 rv">What Our Residents Say</h2></div>
-  <div class="testimonial-marquee wrap rv" aria-label="Resident testimonials"><div class="testimonial-marquee__track">${testimonialSlides()}</div></div>
-</section>
+${testimonialsSection()}
 
 <section class="ch ch--paper-2 pad home-stories">
   <div class="wrap">

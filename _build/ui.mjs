@@ -254,9 +254,9 @@ export const footer = (d) => `
         </div>
       </div>
       <div>
-        <h3>Sales Office</h3>
+        <h3>Our Offices</h3>
         <ul class="ftr__links">
-          ${CO.offices.map((o) => `<li><span><b style="color:#F6F8FB;font-weight:600">${esc(o.name)}</b><br>${o.lines.slice(1).map(esc).join("<br>")}</span></li>`).join("")}
+          ${CO.offices.filter((o) => o.footer).map((o) => `<li><span><b style="color:#F6F8FB;font-weight:600">${esc(o.role)}</b><br>${o.lines.slice(1).map(esc).join("<br>")}</span></li>`).join("")}
           <li><span>${esc(CO.hours)}</span></li>
         </ul>
       </div>
@@ -348,7 +348,7 @@ const ORG_JSONLD = () => `<script type="application/ld+json">${JSON.stringify({
   "telephone": CO.tel,
   "email": CO.email,
   "areaServed": ["Ethiopia", "Ethiopian diaspora"],
-  "address": CO.offices.map((o) => ({
+  "address": CO.offices.filter((o) => o.footer).map((o) => ({
     "@type": "PostalAddress",
     "streetAddress": o.lines[0],
     "addressLocality": o.lines[1],

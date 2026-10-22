@@ -4,7 +4,7 @@
    Items flagged `hold:true` are placeholders the client must replace. */
 
 import fs from "fs";
-import { PROJECTS_LIVE, MARKETING_POSTS, TEAM_MEMBERS } from "./generated-content.mjs";
+import { PROJECTS_LIVE, MARKETING_POSTS, TEAM_MEMBERS, TESTIMONIALS_LIVE } from "./generated-content.mjs";
 
 export { MARKETING_POSTS, TEAM_MEMBERS };
 
@@ -30,9 +30,20 @@ export const CO = {
   wa: "+251 99 270 7070",
   waHref: "https://wa.me/251992707070",
   hours: "Mon–Sat · 9:00 AM to 6:00 PM EAT",
+  /* `footer` flags which entries appear in the footer's "Our Offices"
+     column (see ui.mjs footer()) and the exact role label shown there —
+     only the real sales office and the head office belong in that column.
+     Project/construction sites (e.g. Urban Kaza, a site under construction,
+     not a place to transact) are kept here for the per-project "View
+     Location" map links on the home page and for JSON-LD, but are left out
+     of the footer by omitting `footer`.
+     Wollo Sefer address is a placeholder — ("Wollo Sefer, Addis Ababa,
+     Ethiopia") — client gave the area, not a precise street address; swap
+     in the exact address once they provide one. */
   offices: [
-    { name: "Hill Bottom Village", role: "Completed Project — Ayat", lines: ["Hill Bottom Village Apartments", "Ayat Square, Addis Ababa", "Ethiopia"], map: "https://www.google.com/maps/search/?api=1&query=Ayat+Square+Addis+Ababa" },
-    { name: "Urban Kaza", role: "Sales Gallery — Kazanchis", lines: ["Urban Kaza Sales Gallery", "Kazanchis, Diplomatic Corridor", "Addis Ababa, Ethiopia"], map: "https://www.google.com/maps/search/?api=1&query=Kazanchis+Addis+Ababa" },
+    { name: "Hill Bottom Properties Sales Office", role: "Sales Office", footer: true, lines: ["Hill Bottom Properties Sales Office", "Wollo Sefer, Addis Ababa", "Ethiopia"], map: "https://www.google.com/maps/search/?api=1&query=Wollo+Sefer+Addis+Ababa+Ethiopia" },
+    { name: "Hill Bottom Village", role: "Head Office", footer: true, lines: ["Hill Bottom Properties Head Office", "Ayat Square, Addis Ababa", "Ethiopia"], map: "https://www.google.com/maps/search/?api=1&query=Ayat+Square+Addis+Ababa" },
+    { name: "Urban Kaza", role: "Project Site — Kazanchis", lines: ["Urban Kaza Construction Site", "Kazanchis, Diplomatic Corridor", "Addis Ababa, Ethiopia"], map: "https://www.google.com/maps/search/?api=1&query=Kazanchis+Addis+Ababa" },
   ],
   /* Verified against the live site's own footer links. */
   social: [
@@ -60,7 +71,11 @@ export const NAV = [
     { href: "projects.html#urban-kaza", label: "Urban Kaza" },
     { href: "projects.html#recreation-center", label: "Recreation Center" },
   ] },
-  { href: "construction.html", label: "Progress", note: "" },
+  { href: "construction.html", label: "Progress", note: "", sub: [
+    { href: "construction.html#urban-kaza", label: "Urban Kaza" },
+    { href: "construction.html#hillbottom-village", label: "Hill Bottom Village" },
+    { href: "construction.html#recreation-center", label: "Recreation Center" },
+  ] },
   { href: "about.html", label: "About", note: "" },
   { href: "team.html", label: "Team", note: "" },
   { href: "buying-from-abroad.html", label: "For Diaspora", note: "" },
@@ -166,11 +181,10 @@ export const WELCOME = {
   yesHref: "projects/urban-kaza.html",
 };
 
-export const TESTIMONIALS = [
-  { q: "አውቀዋለው አሰማማኝ ድርጅት ነው የገረመኝ: ፍጥነት + Quality መሆኑ ነው። My best choice, Hill Bottom Properties", by: "Abdu R", at: "Addis Ababa", am: true },
-  { q: "Clear updates, floor plans, and responsive agents made it feel safe to buy from the UK.", by: "Selam T.", at: "London, UK" },
-  { q: "The team was always reachable and every milestone was confirmed in writing. Exceptional.", by: "Yonas K.", at: "Washington D.C." },
-];
+// "What Our Residents Say" marquee (home page) — admin-managed DB content,
+// see fetchData.mjs/TESTIMONIALS_LIVE. No merge needed — rendered as-is;
+// home.mjs skips the section entirely when this is empty.
+export const TESTIMONIALS = TESTIMONIALS_LIVE;
 
 /* ---- Urban Kaza ------------------------------------------------------- */
 export const KAZA_FLOORS = [

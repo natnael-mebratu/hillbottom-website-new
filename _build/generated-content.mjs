@@ -132,3 +132,8 @@ export const TEAM_MEMBERS = [
     "sortOrder": 5
   }
 ];
+
+// Home page "What Our Residents Say" marquee, by sortOrder. No merge
+// needed — rendered as-is; the section is skipped on the home page when
+// this is empty.
+export const TESTIMONIALS_LIVE = [];
