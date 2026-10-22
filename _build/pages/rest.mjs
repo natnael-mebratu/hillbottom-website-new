@@ -763,14 +763,14 @@ const teamMemberSection = () => {
 out["team.html"] = page({
   current: "team.html",
   path: "team.html",
-  image: "about-residents-lifestyle",
+  image: "team-group-award",
   title: "Our Team — Hill Bottom Properties",
   desc: "The people behind Hill Bottom Properties: leadership, design and construction, and client relations for local and diaspora buyers.",
   body: `
 ${pageHero(0, {
   title: "Our Team",
   sub: "Experienced real estate professionals with roots in Ethiopia and a global perspective.",
-  imgName: "kaza-members-01", alt: "Members lounge, Urban Kaza",
+  imgName: "team-group-award", alt: "The Hill Bottom Properties team at the Ayat Square office",
   stations: [],
 })}
 
