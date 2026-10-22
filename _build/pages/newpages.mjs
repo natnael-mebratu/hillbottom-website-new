@@ -349,28 +349,6 @@ ${pageHero(0, {
   heroClass: "feed-hero",
 })}
 
-<section class="ch ch--paper pad rec-intro">
-  <div class="wrap rec-intro__layout">
-    <figure class="rec-intro__media rv">${img("urban-kaza-ext-v2", "Hill Bottom Properties, under construction", { sizes: "(min-width:900px) 52vw, 100vw" })}</figure>
-    <div class="rec-intro__copy rv">
-      <p class="mark mark--accent">Campaign Feed</p>
-      <h2 class="d2">Every Launch, Live</h2>
-      <p class="body">The Campaign Feed is where Hill Bottom posts as things happen — new releases, price changes, and milestone photography, straight from the sales and marketing team.</p>
-    </div>
-  </div>
-</section>
-
-<section class="ch ch--abyss pad rec-intro">
-  <div class="wrap rec-intro__layout">
-    <div class="rec-intro__copy rv">
-      <p class="mark mark--accent">How It Works</p>
-      <h2 class="d2">Scroll for What's New</h2>
-      <p class="body">Posts below are ordered newest first. Tap any card to open it full size — photos, video, and the full caption — or message us directly if you want more detail on a specific launch.</p>
-    </div>
-    <figure class="rec-intro__media rv">${img("block-c-10", "Hill Bottom community plaza", { sizes: "(min-width:900px) 52vw, 100vw" })}</figure>
-  </div>
-</section>
-
 <section class="ch ch--abyss pad">
   <div class="wrap">
     ${MARKETING_POSTS.length === 0 ? `
