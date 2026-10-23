@@ -5,6 +5,13 @@
    a subject, and no explicit team/source assignment so Odoo's own
    assignment rules route it exactly as they would for a native submission.
 
+   Fields are mapped to Odoo's own structured columns wherever one exists
+   (country_id, source_id/medium_id/campaign_id, referred, tag_ids) rather
+   than dumped into the description note, so Odoo's own filters/reports
+   on country and campaign attribution work on these leads too. Only what
+   has no native field (the message itself, unit-type interest) goes into
+   description.
+
    Talks to Odoo's standard external API over JSON-RPC (POST /jsonrpc),
    which is the same {common.authenticate, object.execute_kw} surface as
    XML-RPC — no extra XML dependency needed. Configured via env vars; if
@@ -65,19 +72,83 @@ async function authenticate(cfg: NonNullable<ReturnType<typeof config>>): Promis
   return uid;
 }
 
-// Builds the description block the way a human reading the CRM record would
-// want it: the message first, then where the lead came from.
+// Builds the description block for what Odoo has no structured field for —
+// the message itself and which unit type they're interested in (country and
+// UTM attribution now go to real fields instead, see resolveCountryId /
+// resolveUtmId below).
 function describeLead(input: OdooLeadInput): string {
   const lines = [];
   if (input.message) lines.push(input.message, "");
-  lines.push(`Country of residence: ${input.country || "—"}`);
   lines.push(`Interested in: ${input.interestedIn || "—"}`);
-  if (input.utmSource || input.utmMedium || input.utmCampaign) {
-    lines.push(`Campaign: ${[input.utmSource, input.utmMedium, input.utmCampaign].filter(Boolean).join(" / ")}`);
-  }
   if (input.landingPage) lines.push(`Landing page: ${input.landingPage}`);
-  if (input.referrer) lines.push(`Referrer: ${input.referrer}`);
   return lines.join("\n");
+}
+
+// Common short forms the "Country of residence" free-text field collects
+// that don't match Odoo's official res.country names — without this, "USA"
+// or "UK" would silently fail to resolve and the country would be dropped.
+const COUNTRY_ALIASES: Record<string, string> = {
+  usa: "United States",
+  us: "United States",
+  "u.s.a.": "United States",
+  "u.s.": "United States",
+  uk: "United Kingdom",
+  "u.k.": "United Kingdom",
+  uae: "United Arab Emirates",
+};
+
+// res.country is a fixed list in Odoo — look it up, never create one. No
+// match (typo, an unrecognized country) just leaves country_id unset; the
+// visitor's original text isn't lost, it's still on the local lead record.
+async function resolveCountryId(
+  cfg: NonNullable<ReturnType<typeof config>>,
+  uid: number,
+  name: string | undefined,
+): Promise<number | null> {
+  if (!name?.trim()) return null;
+  const query = COUNTRY_ALIASES[name.trim().toLowerCase()] ?? name.trim();
+  const matches = (await jsonRpc(cfg.url, "object", "execute_kw", [
+    cfg.db,
+    uid,
+    cfg.apiKey,
+    "res.country",
+    "search_read",
+    [[["name", "=ilike", query]]],
+    { fields: ["id"], limit: 1 },
+  ])) as { id: number }[];
+  return matches[0]?.id ?? null;
+}
+
+// utm.source/utm.medium/utm.campaign are freely created in Odoo (unlike
+// countries) — find-or-create, same shape as resolveTagIds below.
+async function resolveUtmId(
+  cfg: NonNullable<ReturnType<typeof config>>,
+  uid: number,
+  model: "utm.source" | "utm.medium" | "utm.campaign",
+  name: string | undefined,
+): Promise<number | null> {
+  if (!name?.trim()) return null;
+  const value = name.trim();
+  const matches = (await jsonRpc(cfg.url, "object", "execute_kw", [
+    cfg.db,
+    uid,
+    cfg.apiKey,
+    model,
+    "search_read",
+    [[["name", "=", value]]],
+    { fields: ["id"], limit: 1 },
+  ])) as { id: number }[];
+  if (matches[0]) return matches[0].id;
+
+  const id = await jsonRpc(cfg.url, "object", "execute_kw", [
+    cfg.db,
+    uid,
+    cfg.apiKey,
+    model,
+    "create",
+    [{ name: value }],
+  ]);
+  return typeof id === "number" ? id : null;
 }
 
 // crm.tag has no unique constraint on name, so a plain create() would
@@ -125,6 +196,14 @@ export async function pushLeadToOdoo(input: OdooLeadInput): Promise<number | nul
 
   const uid = await authenticate(cfg);
   const tagIds = await resolveTagIds(cfg, uid, ["Website Lead", ...(input.tags ?? [])]);
+  const countryId = await resolveCountryId(cfg, uid, input.country);
+  // A lead arriving through this integration is, by definition, from the
+  // website — default the medium even when no utm_medium param was present
+  // (a direct/organic visit), so Odoo's own attribution reports still group
+  // it correctly instead of showing blank.
+  const sourceId = await resolveUtmId(cfg, uid, "utm.source", input.utmSource);
+  const mediumId = await resolveUtmId(cfg, uid, "utm.medium", input.utmMedium || "Website");
+  const campaignId = await resolveUtmId(cfg, uid, "utm.campaign", input.utmCampaign);
 
   const leadId = await jsonRpc(cfg.url, "object", "execute_kw", [
     cfg.db,
@@ -140,6 +219,12 @@ export async function pushLeadToOdoo(input: OdooLeadInput): Promise<number | nul
         phone: input.phone || false,
         description: describeLead(input),
         tag_ids: [[6, 0, tagIds]],
+        country_id: countryId || false,
+        source_id: sourceId || false,
+        medium_id: mediumId || false,
+        campaign_id: campaignId || false,
+        referred: input.referrer || false,
+        website: input.landingPage || false,
       },
     ],
   ]);
