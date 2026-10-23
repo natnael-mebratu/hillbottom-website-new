@@ -285,6 +285,7 @@ out["marketing.html"] = page({
   bodyClass: "marketing-page",
   head: `<style>
     .feed-hero{padding-bottom:0}
+    .feed-hero__kicker{display:block;margin-bottom:10px;font-family:var(--sans);font-size:.6875rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lit)}
     /* ---- scroll-pinned stacking deck (Apple-style) ----
        Each .feed-stack__item is a tall track (220vh desktop / 150vh mobile).
        Its .feed-stack__pin child is position:sticky;top:0;height:100vh, so it
@@ -337,7 +338,7 @@ out["marketing.html"] = page({
   body: `
 ${pageHero(0, {
   title: "Campaign Feed",
-  sub: "Live updates from Hill Bottom Properties — launches, milestones, and offers as they happen.",
+  sub: `<span class="feed-hero__kicker">Scroll for what's new</span>Live updates from Hill Bottom Properties — launches, milestones, and offers as they happen.`,
   imgName: "urban-kaza-ext-v2", alt: "Hill Bottom Properties campaign updates",
   stations: [],
   heroClass: "feed-hero",
