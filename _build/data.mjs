@@ -37,11 +37,11 @@ export const CO = {
      not a place to transact) are kept here for the per-project "View
      Location" map links on the home page and for JSON-LD, but are left out
      of the footer by omitting `footer`.
-     Wollo Sefer address is a placeholder — ("Wollo Sefer, Addis Ababa,
-     Ethiopia") — client gave the area, not a precise street address; swap
-     in the exact address once they provide one. */
+     Wollo Sefer is the same real place as SALES_OFFICE above (confirmed
+     by matching Google Place ID) — client-supplied precise address and
+     map link, not a placeholder. */
   offices: [
-    { name: "Hill Bottom Properties Sales Office", role: "Sales Office", footer: true, lines: ["Hill Bottom Properties Sales Office", "Wollo Sefer, Addis Ababa", "Ethiopia"], map: "https://www.google.com/maps/search/?api=1&query=Wollo+Sefer+Addis+Ababa+Ethiopia" },
+    { name: "Hill Bottom Properties Sales Office", role: "Sales Office", footer: true, lines: ["Hill Bottom Properties Sales Office", "Wollo Sefer, in front of Garad Building", "next to Safaricom/Ethio Telecom (ground floor)", "Addis Ababa, Ethiopia"], map: "https://maps.app.goo.gl/mp1fdXKkJUYFHSFW8" },
     { name: "Hill Bottom Village", role: "Head Office", footer: true, lines: ["Hill Bottom Properties Head Office", "Ayat Square, Addis Ababa", "Ethiopia"], map: "https://www.google.com/maps/search/?api=1&query=Ayat+Square+Addis+Ababa" },
     { name: "Urban Kaza", role: "Project Site — Kazanchis", lines: ["Urban Kaza Construction Site", "Kazanchis, Diplomatic Corridor", "Addis Ababa, Ethiopia"], map: "https://www.google.com/maps/search/?api=1&query=Kazanchis+Addis+Ababa" },
   ],
@@ -58,11 +58,11 @@ export const CO = {
    embeds — Hill Bottom Properties' Bole Sales Office, per the client's own
    Google Maps share link (place id 0x164b850045f2696f:0x57d7ad9c91d22b39). */
 export const SALES_OFFICE = {
-  name: "Hill Bottom Properties — Bole Sales Office",
-  role: "Hill Bottom Sales Office — Bole",
-  address: "Bole, Addis Ababa, Ethiopia",
-  lat: 8.993746789543646,
-  lng: 38.77401787314339,
+  name: "Hill Bottom Properties — Wollo Sefer Sales Office",
+  role: "Sales Office — Wollo Sefer",
+  address: "Wollo Sefer, in front of Garad Building, next to Safaricom/Ethio Telecom building (ground floor), Addis Ababa, Ethiopia",
+  lat: 8.993422306143458,
+  lng: 38.775078281467486,
 };
 
 export const NAV = [
