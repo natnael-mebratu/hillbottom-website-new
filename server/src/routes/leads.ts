@@ -38,6 +38,10 @@ const leadInput = z.object({
   utmCampaign: z.string().optional(),
   landingPage: z.string().optional(),
   referrer: z.string().optional(),
+  // Odoo tags beyond the "Website Lead" every submission gets (see
+  // odoo.ts) — e.g. the promo landing page's form also sending "Promo".
+  // Not a DB column: CRM routing only, stripped before the local insert.
+  tags: z.string().optional(),
 });
 
 // The form's own field names (name, interest, utm_source, …) don't match
@@ -57,6 +61,9 @@ function fromFormFields(body: Record<string, unknown>) {
     utmCampaign: body.utm_campaign,
     landingPage: body.landing_page,
     referrer: body.referrer,
+    // Set via a hidden <input name="tags"> on the form itself (comma-
+    // separated), so each page/campaign declares its own extra tags.
+    tags: body.tags,
   };
 }
 
@@ -70,13 +77,17 @@ leadsRouter.post("/", leadLimiter, parseMultipart, async (req, res) => {
     res.status(400).json({ error: parsed.error.flatten() });
     return;
   }
-  const [row] = await db.insert(leads).values(parsed.data).returning();
+  const { tags, ...leadFields } = parsed.data;
+  const [row] = await db.insert(leads).values(leadFields).returning();
 
   // Best-effort: a lead is saved locally regardless of whether Odoo is
   // reachable or even configured — never let the CRM push fail the
   // visitor's submission.
   try {
-    const odooLeadId = await pushLeadToOdoo(parsed.data);
+    const odooLeadId = await pushLeadToOdoo({
+      ...leadFields,
+      tags: tags ? tags.split(",").map((t) => t.trim()).filter(Boolean) : [],
+    });
     if (odooLeadId) {
       await db.update(leads).set({ odooLeadId }).where(eq(leads.id, row.id));
       row.odooLeadId = odooLeadId;

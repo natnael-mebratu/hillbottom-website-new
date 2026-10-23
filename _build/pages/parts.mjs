@@ -17,12 +17,15 @@ export const storyCard = (p, d = 0, prefix = "") => `
   <p class="story__d">${esc(p.excerpt)}</p>
 </a>`;
 
-/* The inquiry form. Client-side validation only — there is no endpoint yet.
-   Wire submitInquiry() in assets/js/hb.js to the real handler. */
-export const inquiryForm = (d = 0, id = "inquiry") => `
+/* The inquiry form. Submits to the real /api/leads endpoint (see
+   submitInquiry() in assets/js/hb.js), which always tags the Odoo lead
+   "Website Lead" — pass extra `tags` here for a specific page/campaign
+   (e.g. the promo landing page's own form also tagging "Promo"). */
+export const inquiryForm = (d = 0, id = "inquiry", tags = []) => `
 <form class="form rv" data-inquiry novalidate id="${id}">
   <div class="form__ok" role="status" tabindex="-1"><div><b>Inquiry received</b><p>Our sales team will contact you shortly. For the fastest reply, message us on WhatsApp at ${esc(CO.wa)}.</p></div></div>
-  <div class="form__fail" role="status"><div><b>Your inquiry has not been sent</b><p>Online delivery is not connected yet. Your details remain below. Please <a href="${CO.waHref}" target="_blank" rel="noreferrer">contact our sales team on WhatsApp</a> at ${esc(CO.wa)}.</p></div></div>
+  <div class="form__fail" role="status"><div><b>Your inquiry has not been sent</b><p>Online delivery is not connected yet. Your details remain below. Please <a href="${CO.waHref}" target="_blank" rel="noreferrer">contact our sales team on WhatsApp</a> at ${esc(CO.wa)}.</p></div></div>${tags.length ? `
+  <input type="hidden" name="tags" value="${esc(tags.join(","))}">` : ""}
   <div class="form__grid">
     <p class="field"><label for="${id}-name">Full Name</label><input id="${id}-name" name="name" type="text" autocomplete="name" placeholder="Your full name" required><span class="field__err"></span></p>
     <p class="field"><label for="${id}-email">Email</label><input id="${id}-email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required><span class="field__err"></span></p>

@@ -23,6 +23,9 @@ type OdooLeadInput = {
   utmCampaign?: string;
   landingPage?: string;
   referrer?: string;
+  // Every lead gets "Website Lead"; a specific page/campaign can add more
+  // (e.g. the promo landing page also tagging "Promo") — see leads.ts.
+  tags?: string[];
 };
 
 let uidCache: number | null = null;
@@ -77,6 +80,43 @@ function describeLead(input: OdooLeadInput): string {
   return lines.join("\n");
 }
 
+// crm.tag has no unique constraint on name, so a plain create() would
+// duplicate a tag on every lead — search first, create only what's missing,
+// one search_read covering every requested name rather than one per tag.
+async function resolveTagIds(
+  cfg: NonNullable<ReturnType<typeof config>>,
+  uid: number,
+  names: string[],
+): Promise<number[]> {
+  const unique = [...new Set(names.map((n) => n.trim()).filter(Boolean))];
+  if (!unique.length) return [];
+
+  const existing = (await jsonRpc(cfg.url, "object", "execute_kw", [
+    cfg.db,
+    uid,
+    cfg.apiKey,
+    "crm.tag",
+    "search_read",
+    [[["name", "in", unique]]],
+    { fields: ["id", "name"] },
+  ])) as { id: number; name: string }[];
+
+  const ids = existing.map((t) => t.id);
+  const missing = unique.filter((n) => !existing.some((t) => t.name === n));
+  for (const name of missing) {
+    const id = await jsonRpc(cfg.url, "object", "execute_kw", [
+      cfg.db,
+      uid,
+      cfg.apiKey,
+      "crm.tag",
+      "create",
+      [{ name }],
+    ]);
+    if (typeof id === "number") ids.push(id);
+  }
+  return ids;
+}
+
 // Returns the new crm.lead's id, or null if Odoo isn't configured —
 // callers treat null as "skipped", not an error.
 export async function pushLeadToOdoo(input: OdooLeadInput): Promise<number | null> {
@@ -84,6 +124,8 @@ export async function pushLeadToOdoo(input: OdooLeadInput): Promise<number | nul
   if (!cfg) return null;
 
   const uid = await authenticate(cfg);
+  const tagIds = await resolveTagIds(cfg, uid, ["Website Lead", ...(input.tags ?? [])]);
+
   const leadId = await jsonRpc(cfg.url, "object", "execute_kw", [
     cfg.db,
     uid,
@@ -97,6 +139,7 @@ export async function pushLeadToOdoo(input: OdooLeadInput): Promise<number | nul
         email_from: input.email,
         phone: input.phone || false,
         description: describeLead(input),
+        tag_ids: [[6, 0, tagIds]],
       },
     ],
   ]);
