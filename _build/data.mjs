@@ -314,7 +314,7 @@ export const TEAMS = [
 
 export const CTA = {
   home: "Explore Residences",
-  project: "Check Availability",
+  project: "Contact Us",
   plan: "Ask About This Residence",
   diaspora: "Book Video Consultation",
   delivered: "Schedule Site Visit",
