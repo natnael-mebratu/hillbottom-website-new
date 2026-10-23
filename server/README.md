@@ -30,6 +30,13 @@ writes require `Authorization: Bearer <token>` from `POST /api/auth/login`.
 - `GET/POST/PUT/DELETE /api/blog`
 - `GET/POST/DELETE /api/marketing` — cumulative marketing campaign feed
 - `GET/PUT /api/site-media` — hero/featured video URLs, virtual tour provider config
+- `POST /api/uploads` — multipart image upload (field name `file`, JPEG/PNG/WebP/GIF, max 10MB); returns `{ url }` under `/uploads/...`, served statically, to paste into any `*Url` field above
+
+`/uploads` is local disk storage under the server's own folder — fine for a
+single persistent host, but it will NOT survive a redeploy on an ephemeral
+host (e.g. most containerized PaaS without a mounted volume). If the
+production host doesn't guarantee persistent disk, point this at object
+storage (S3-compatible bucket) before relying on it in prod.
 
 Contact Us and Book a Visit are intentionally not part of this API — those
 pages live on the client's Odoo site (CRM + Calendar) per project decision.

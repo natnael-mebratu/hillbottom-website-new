@@ -179,7 +179,31 @@ async function request<T>(
   return response.json() as Promise<T>;
 }
 
+// Multipart upload, so it bypasses request()'s JSON body handling.
+// Returns the public URL to paste into any *Url field.
+async function uploadImage(file: File): Promise<{ url: string }> {
+  const token = getAdminToken();
+  const headers: Record<string, string> = {};
+  if (token) headers.Authorization = `Bearer ${token}`;
+
+  const body = new FormData();
+  body.append("file", file);
+
+  const response = await fetch(`${API_BASE}/api/uploads`, { method: "POST", headers, body });
+  if (!response.ok) {
+    const parsed = await response.json().catch(() => ({}));
+    throw new Error(parsed?.error?.toString?.() ?? `Upload failed: ${response.status}`);
+  }
+  const { url } = await response.json();
+  // The server returns a path relative to itself (/uploads/...); store the
+  // absolute URL so it still resolves once the static site, a different
+  // origin from the API, renders it.
+  return { url: `${API_BASE}${url}` };
+}
+
 export const api = {
+  uploadImage,
+
   login: (email: string, password: string) =>
     request<{ token: string; admin: { id: number; email: string; role: string } }>(
       "/api/auth/login",

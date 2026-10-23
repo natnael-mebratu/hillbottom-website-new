@@ -25,7 +25,7 @@ const youtubeIdFrom = (url) => {
 const YOUTUBE_ID = youtubeIdFrom(PROMO.videoUrl) || "6gNt0DWdpWk";
 const GIFT_TITLE = PROMO.giftTitle || "Free Flight";
 const GIFT_BODY = PROMO.giftBody || "Hill Bottom is giving away a free flight for two to Seychelles, in partnership with";
-const PARTNER_URL = PROMO.partnerUrl || "https://instagram.com/travelsultan"; // TODO: confirm real handle until admin sets one
+const PARTNER_URL = PROMO.partnerUrl || "https://instagram.com/travelsultan"; // fallback until set in Admin → Site Media
 
 const SEAL = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="9" r="5.5"/><path d="m8 13.5-2 7 6-3 6 3-2-7"/></svg>`;
 const PALM = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><path d="M12 22V11"/><path d="M12 11c0-4 2-7 6-8-1 4-3 6-6 8Z"/><path d="M12 11c0-4-2-7-6-8 1 4 3 6 6 8Z"/><path d="M12 11c1.5-3 4-4.5 7-4-2 3-4.5 4.3-7 4Z"/><path d="M12 11c-1.5-3-4-4.5-7-4 2 3 4.5 4.3 7 4Z"/></svg>`;

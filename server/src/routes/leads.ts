@@ -1,5 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
+import rateLimit from "express-rate-limit";
 import { z } from "zod";
 import { eq, desc } from "drizzle-orm";
 import { db } from "../db/client.js";
@@ -13,6 +14,16 @@ export const leadsRouter = Router();
 // body, not JSON — no files, just text fields, so upload.none() is enough
 // to get multer to populate req.body from a multipart request.
 const parseMultipart = multer().none();
+
+// Caps form-spam: this endpoint is public and unauthenticated by design,
+// so it needs its own limiter (same shape as auth.ts's login limiter).
+const leadLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many submissions. Please try again later." },
+});
 
 const leadInput = z.object({
   fullName: z.string().min(1),
@@ -52,7 +63,7 @@ function fromFormFields(body: Record<string, unknown>) {
 // Public: the site's inquiry form (and any future "Register Interest"
 // widget) submits here. Accepts either the form's multipart/form-data body
 // or a plain JSON body with our own field names (for direct API use).
-leadsRouter.post("/", parseMultipart, async (req, res) => {
+leadsRouter.post("/", leadLimiter, parseMultipart, async (req, res) => {
   const isFormSubmit = "name" in req.body || "interest" in req.body;
   const parsed = leadInput.safeParse(isFormSubmit ? fromFormFields(req.body) : req.body);
   if (!parsed.success) {

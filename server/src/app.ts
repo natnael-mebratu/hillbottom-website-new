@@ -12,6 +12,7 @@ import { siteMediaRouter } from "./routes/site-media.js";
 import { leadsRouter } from "./routes/leads.js";
 import { sisterCompaniesRouter } from "./routes/sister-companies.js";
 import { publishRouter } from "./routes/publish.js";
+import { uploadsRouter, UPLOADS_DIR } from "./routes/uploads.js";
 
 export function createApp() {
   const app = express();
@@ -22,6 +23,7 @@ export function createApp() {
     }),
   );
   app.use(express.json({ limit: "2mb" }));
+  app.use("/uploads", express.static(UPLOADS_DIR));
 
   app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 
@@ -37,6 +39,7 @@ export function createApp() {
   app.use("/api/leads", leadsRouter);
   app.use("/api/sister-companies", sisterCompaniesRouter);
   app.use("/api/publish", publishRouter);
+  app.use("/api/uploads", uploadsRouter);
 
   return app;
 }

@@ -17,6 +17,7 @@ import {
   type SisterCompany,
 } from "@/lib/apiClient";
 import { VideoEmbed, isVideoUrl } from "@/components/VideoEmbed";
+import { ImageUrlField } from "@/components/ImageUrlField";
 
 const SITE_URL = import.meta.env.VITE_SITE_URL ?? "https://hillbottomproperties.com";
 
@@ -264,12 +265,10 @@ function ProgressSection() {
               <option value="dream">Dream (original render/visual)</option>
               <option value="actual">Actual (live site photo/video)</option>
             </select>
-            <input
-              required
+            <ImageUrlField
               value={draft.mediaUrl}
-              onChange={(e) => setDraft((d) => ({ ...d, mediaUrl: e.target.value }))}
+              onChange={(url) => setDraft((d) => ({ ...d, mediaUrl: url }))}
               placeholder="Image or video URL (YouTube, Vimeo, or direct file)"
-              className="admin-input"
             />
             {draft.mediaUrl && isVideoUrl(draft.mediaUrl) && (
               <div className="border border-white/10 p-1">
@@ -645,11 +644,10 @@ function ProjectsSection() {
               rows={3}
               className="admin-input resize-none"
             />
-            <input
+            <ImageUrlField
               value={draft.heroImageUrl}
-              onChange={(e) => setDraft((d) => ({ ...d, heroImageUrl: e.target.value }))}
+              onChange={(url) => setDraft((d) => ({ ...d, heroImageUrl: url }))}
               placeholder="Hero image URL"
-              className="admin-input"
             />
             <input
               type="number"
@@ -972,11 +970,10 @@ function TeamSection() {
               rows={3}
               className="admin-input resize-none"
             />
-            <input
+            <ImageUrlField
               value={draft.photoUrl}
-              onChange={(e) => setDraft((d) => ({ ...d, photoUrl: e.target.value }))}
+              onChange={(url) => setDraft((d) => ({ ...d, photoUrl: url }))}
               placeholder="Photo URL"
-              className="admin-input"
             />
             <input
               type="number"
@@ -1138,11 +1135,10 @@ function TestimonialsSection() {
               rows={4}
               className="admin-input resize-none"
             />
-            <input
+            <ImageUrlField
               value={draft.photoUrl}
-              onChange={(e) => setDraft((d) => ({ ...d, photoUrl: e.target.value }))}
+              onChange={(url) => setDraft((d) => ({ ...d, photoUrl: url }))}
               placeholder="Photo URL"
-              className="admin-input"
             />
             <input
               type="number"
@@ -1318,11 +1314,10 @@ function BlogSection() {
               rows={6}
               className="admin-input resize-none"
             />
-            <input
+            <ImageUrlField
               value={draft.coverImageUrl}
-              onChange={(e) => setDraft((d) => ({ ...d, coverImageUrl: e.target.value }))}
+              onChange={(url) => setDraft((d) => ({ ...d, coverImageUrl: url }))}
               placeholder="Cover image URL"
-              className="admin-input"
             />
             <input
               value={draft.author}
@@ -1453,11 +1448,10 @@ function MarketingSection() {
               rows={4}
               className="admin-input resize-none"
             />
-            <input
+            <ImageUrlField
               value={draft.mediaUrl}
-              onChange={(e) => setDraft((d) => ({ ...d, mediaUrl: e.target.value }))}
+              onChange={(url) => setDraft((d) => ({ ...d, mediaUrl: url }))}
               placeholder="Image or video URL"
-              className="admin-input"
             />
             {draft.mediaUrl && isVideoUrl(draft.mediaUrl) && (
               <div className="border border-white/10 p-1">
@@ -1604,11 +1598,10 @@ function SisterCompaniesSection() {
               rows={3}
               className="admin-input resize-none"
             />
-            <input
+            <ImageUrlField
               value={draft.logoUrl}
-              onChange={(e) => setDraft((d) => ({ ...d, logoUrl: e.target.value }))}
+              onChange={(url) => setDraft((d) => ({ ...d, logoUrl: url }))}
               placeholder="Logo URL"
-              className="admin-input"
             />
             <input
               value={draft.websiteUrl}
