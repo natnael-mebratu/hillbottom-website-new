@@ -21,17 +21,24 @@ export const PROJECTS_LIVE = [
     "completionPercent": null,
     "currentStage": null,
     "nextMilestone": null,
-    "finalRenderUrl": null,
-    "progressPhotos": []
-  },
-  {
-    "slug": "recreation-center",
-    "status": "upcoming",
-    "completionPercent": null,
-    "currentStage": null,
-    "nextMilestone": null,
-    "finalRenderUrl": null,
-    "progressPhotos": []
+    "finalRenderUrl": "assets/img/hillbottom-aerial-hero-1400.webp",
+    "progressPhotos": [
+      {
+        "url": "assets/img/hero-hillbottom-1400.webp",
+        "caption": "Site progress — Block A exterior",
+        "postedAt": "2026-09-23T13:04:18.612Z"
+      },
+      {
+        "url": "assets/img/hillbottom-interior-1400.webp",
+        "caption": "Site progress — Block A interior fit-out",
+        "postedAt": "2026-10-05T13:04:18.612Z"
+      },
+      {
+        "url": "assets/img/hillbottom-aerial-hero.webp",
+        "caption": "Site progress — latest aerial update",
+        "postedAt": "2026-10-18T13:04:18.612Z"
+      }
+    ]
   },
   {
     "slug": "urban-kaza",
@@ -43,13 +50,43 @@ export const PROJECTS_LIVE = [
     "progressPhotos": [
       {
         "url": "assets/img/kaza-building-1400.webp",
-        "caption": "Site progress — placeholder photo 2",
-        "postedAt": "2026-10-02T11:27:38.104Z"
+        "caption": "Site progress — exterior structure",
+        "postedAt": "2026-09-25T13:04:18.879Z"
       },
       {
         "url": "assets/img/urban-kaza-dusk-v2.webp",
-        "caption": "Site progress — placeholder photo 3",
-        "postedAt": "2026-10-12T11:27:38.104Z"
+        "caption": "Site progress — evening site view",
+        "postedAt": "2026-10-07T13:04:18.879Z"
+      },
+      {
+        "url": "assets/img/urban-kaza-ext-v2-1400.webp",
+        "caption": "Site progress — latest update",
+        "postedAt": "2026-10-19T13:04:18.879Z"
+      }
+    ]
+  },
+  {
+    "slug": "recreation-center",
+    "status": "upcoming",
+    "completionPercent": null,
+    "currentStage": null,
+    "nextMilestone": null,
+    "finalRenderUrl": "assets/img/recreation-hub-1400.webp",
+    "progressPhotos": [
+      {
+        "url": "assets/img/recreation-gym-1400.webp",
+        "caption": "Site progress — gym area under construction",
+        "postedAt": "2026-09-29T13:04:18.878Z"
+      },
+      {
+        "url": "assets/img/recreation-spa-1400.webp",
+        "caption": "Site progress — spa wing structural work",
+        "postedAt": "2026-10-11T13:04:18.878Z"
+      },
+      {
+        "url": "assets/img/recreation-cafe-1400.webp",
+        "caption": "Site progress — cafe area latest update",
+        "postedAt": "2026-10-20T13:04:18.878Z"
       }
     ]
   }
@@ -58,28 +95,28 @@ export const PROJECTS_LIVE = [
 // marketing.html's feed, newest first. No merge needed — rendered as-is.
 export const MARKETING_POSTS = [
   {
-    "id": 8,
+    "id": 1,
     "title": "Urban Kaza — Now Reserving",
     "body": "Reserve your residence at Addis Ababa's diplomatic corridor before the next price release.",
     "mediaUrl": "assets/img/urban-kaza-ext-v2-1400.webp",
     "campaignTag": "Launch",
-    "publishedAt": "2026-10-10T11:45:13.743Z"
+    "publishedAt": "2026-10-10T13:04:52.255Z"
   },
   {
-    "id": 9,
+    "id": 2,
     "title": "Block B Progress Update",
     "body": "Superstructure complete at Hill Bottom Village Block B — finishes now underway, handover October 2026.",
     "mediaUrl": "assets/img/block-c-10-1400.webp",
     "campaignTag": "Progress",
-    "publishedAt": "2026-10-06T11:45:13.743Z"
+    "publishedAt": "2026-10-06T13:04:52.255Z"
   },
   {
-    "id": 10,
+    "id": 3,
     "title": "Phase 3 — Commercial & Recreation",
     "body": "A first look at the Commercial + Recreation Center coming to Ayat Square in January 2027.",
     "mediaUrl": "assets/img/recreation-hub-1400.webp",
     "campaignTag": "Preview",
-    "publishedAt": "2026-10-02T11:45:13.743Z"
+    "publishedAt": "2026-10-02T13:04:52.255Z"
   }
 ];
 
@@ -87,7 +124,7 @@ export const MARKETING_POSTS = [
 // team.html falls back to generic hero/stats copy when this is empty.
 export const TEAM_MEMBERS = [
   {
-    "id": 4,
+    "id": 1,
     "name": "Hanna Demessie",
     "role": "Finance Director",
     "department": "Executive Team",
@@ -96,7 +133,7 @@ export const TEAM_MEMBERS = [
     "sortOrder": 1
   },
   {
-    "id": 5,
+    "id": 2,
     "name": "Lemma Moges",
     "role": "Project Director",
     "department": "Technical Team",
@@ -105,7 +142,7 @@ export const TEAM_MEMBERS = [
     "sortOrder": 2
   },
   {
-    "id": 6,
+    "id": 3,
     "name": "Emebet Tsehay",
     "role": "Sales Manager",
     "department": "Client Relations",
@@ -114,7 +151,7 @@ export const TEAM_MEMBERS = [
     "sortOrder": 3
   },
   {
-    "id": 7,
+    "id": 4,
     "name": "Fasika Getachew",
     "role": "Sales Supervisor",
     "department": "Client Relations",
@@ -123,7 +160,7 @@ export const TEAM_MEMBERS = [
     "sortOrder": 4
   },
   {
-    "id": 8,
+    "id": 5,
     "name": "Anna Charles",
     "role": "Marketing Supervisor",
     "department": "Marketing",

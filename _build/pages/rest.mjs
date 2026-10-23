@@ -751,9 +751,8 @@ const teamMemberSection = () => {
   return `
 <section class="ch ch--paper pad">
   <div class="wrap">
-    <div class="head head--split rv" style="margin-bottom:clamp(36px,4vw,60px)">
+    <div class="head rv" style="margin-bottom:clamp(36px,4vw,60px)">
       <h2 class="d2">Meet the Team</h2>
-      <div class="head__side"><p>The named people behind every project, every milestone update, and every buyer conversation.</p></div>
     </div>
     <div class="grid grid--3 team-grid">${TEAM_MEMBERS.map(teamCard).join("")}</div>
   </div>
