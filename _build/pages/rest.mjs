@@ -162,6 +162,14 @@ ${pageHero(0, {
   imgName: "urban-kaza-ext-v2",
   alt: "Urban Kaza exterior, Kazanchis",
   stations: [],
+  // The hero's bottom divider has to match whichever STAGES group renders
+  // first below it (dark "Newly Launched"/"Completed" vs. light) — same
+  // dark/list.length logic as the .map() below, just run early.
+  cut: (() => {
+    const first = STAGES.find((s) => PROJECTS.some((p) => p.stage === s.key));
+    const dark = first && (first.key === "Newly Launched" || first.key === "Completed");
+    return dark ? "var(--abyss)" : "var(--paper)";
+  })(),
 })}
 
 ${STAGES.map((stage) => {
@@ -257,6 +265,7 @@ ${ukIntro()}
       { k: "Status", v: "In Progress", n: "Reserve now" },
     ], { d: 1 })}</div>
   </div>
+  ${ridge("bottom", "var(--paper)")}
 </section>
 
 <section class="ch ch--paper pad uk-manifesto">
@@ -663,6 +672,7 @@ ${pageHero(0, {
     { k: "Now selling", v: "Urban Kaza", n: "98 residences, Kazanchis" },
     { k: "Brand promise", v: CO.promise, n: "" },
   ],
+  cut: "var(--abyss)",
 })}
 
 <section class="ch ch--abyss pad about-community">
@@ -771,6 +781,7 @@ ${pageHero(0, {
   sub: "Experienced real estate professionals with roots in Ethiopia and a global perspective.",
   imgName: "team-group-award", alt: "The Hill Bottom Properties team at the Ayat Square office",
   stations: [],
+  cut: "var(--abyss)",
 })}
 
 <section class="ch ch--abyss pad-s" id="ceo">
@@ -951,6 +962,7 @@ ${pageHero(0, {
   sub: "Whether you're local or abroad, we're ready to help you find your perfect unit. Fastest response via WhatsApp.",
   imgName: "kaza-cafe-02", alt: "Urban Kaza reception lounge",
   stations: [],
+  cut: "var(--abyss)",
 })}
 
 <section class="ch ch--abyss pad contact-sales">

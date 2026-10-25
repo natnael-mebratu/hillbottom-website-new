@@ -45,7 +45,6 @@ input,textarea{caret-color:var(--accent)}
 .hero__in{padding-top:130px;padding-bottom:80px}
 .hero--short{min-height:74svh}
 .hero--short .hero__stage{max-width:1000px}
-.hero .ridge,.band .ridge{display:none}
 .hero__sub{color:#F1F3F6;max-width:42ch}
 .home-editorial .hero{min-height:92svh}
 .home-editorial .hero__in{padding-bottom:clamp(54px,8vh,92px)}
