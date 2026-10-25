@@ -1,5 +1,5 @@
 import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, PROCESS, MARKETING_POSTS, SISTER_COMPANIES } from "../data.mjs";
-import { page, facts, alt, plate, img, btn, link, esc, ICON } from "../ui.mjs";
+import { page, facts, alt, plate, img, btn, link, esc, jsonScript, ICON } from "../ui.mjs";
 import { pageHero, ctaBand, inquiryForm } from "./parts.mjs";
 
 const out = {};
@@ -377,7 +377,7 @@ ${ctaBand(0, {
 </div>
 `,
   scripts: MARKETING_POSTS.length ? `<script>(function(){
-  var posts = ${JSON.stringify(MARKETING_POSTS.map((p) => ({ title: p.title, body: p.body, campaignTag: p.campaignTag, media: feedLightboxMedia(p) })))};
+  var posts = ${jsonScript(MARKETING_POSTS.map((p) => ({ title: p.title, body: p.body, campaignTag: p.campaignTag, media: feedLightboxMedia(p) })))};
   var lb = document.getElementById("feed-lb");
   if (!lb) return;
   var mediaEl = lb.querySelector("[data-feed-lb-media]");

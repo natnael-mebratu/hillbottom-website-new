@@ -6,6 +6,14 @@ const IMAGES = JSON.parse(fs.readFileSync(new URL("./images.json", import.meta.u
 export const HAS_HERO_VIDEO = fs.existsSync(new URL("../assets/video/hillbottom-hero.mp4", import.meta.url));
 
 export const esc = (s) => String(s).replace(/&(?![a-z#0-9]+;)/gi, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+// For data embedded as `var x = ${jsonScript(data)};` inside an inline
+// <script> tag: JSON.stringify alone doesn't escape "<", so admin-entered
+// content (a marketing post title/body, say) containing the literal text
+// "</script>" would close the tag early and let whatever follows run as
+// markup/script on every visitor's page. Escaping "<" to < keeps the
+// JSON valid (the browser's JSON parser reads the escape fine) while making
+// that breakout impossible.
+export const jsonScript = (data) => JSON.stringify(data).replace(/</g, "\\u003c");
 const up = (depth) => "../".repeat(depth);
 /* Internal hrefs are written relative to the site root and get the page's depth
    prefix. An href starting with ./ or ../ is a deliberate sibling link, kept. */
