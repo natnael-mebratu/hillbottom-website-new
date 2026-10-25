@@ -342,7 +342,6 @@ ${pageHero(0, {
   imgName: "urban-kaza-ext-v2", alt: "Hill Bottom Properties campaign updates",
   stations: [],
   heroClass: "feed-hero",
-  cut: "var(--abyss)",
 })}
 
 <section class="ch ch--abyss pad">

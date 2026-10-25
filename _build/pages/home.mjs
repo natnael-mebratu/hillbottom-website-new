@@ -119,7 +119,6 @@ ${welcome(0, WELCOME)}
       ${btn("Book a Virtual Tour", "vr-tours.html", { icon: "cube" })}
     </div>
   </div>
-  ${ridge("bottom", "var(--paper)")}
   <div class="herocards">
     <a class="herocard" href="projects/urban-kaza.html"><b>Now Selling</b><span>Urban Kaza, Kazanchis</span></a>
     <a class="herocard" href="projects/hillbottom-village.html"><b>Delivered</b><span>Hill Bottom Village</span></a>
@@ -217,7 +216,6 @@ ${welcome(0, WELCOME)}
 </section>
 
 <section class="home-tours">
-  ${ridge("top", "var(--abyss)")}
   <div class="home-tours__media">
     <img src="assets/img/feedback-team.webp" alt="Urban Kaza living space" loading="lazy" decoding="async">
     <video data-loop-video muted loop playsinline preload="metadata" poster="assets/img/feedback-team.webp" aria-hidden="true"><source src="assets/video/urban-kaza-showcase-v2.mp4" type="video/mp4"></video>
@@ -237,7 +235,6 @@ ${welcome(0, WELCOME)}
       </a>
     </div>
   </div>
-  ${ridge("bottom", TESTIMONIALS.length ? "var(--paper)" : "var(--paper-2)")}
 </section>
 
 ${testimonialsSection()}
