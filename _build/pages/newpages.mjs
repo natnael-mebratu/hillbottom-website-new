@@ -43,7 +43,7 @@ const constructionProgress = (c) => {
   return `
   <div class="construction-progress-wrap">
     <div class="construction-marquee">
-      <p class="mark mark--accent">Progress Photos · Dated, Oldest to Newest</p>
+      <p class="mark mark--accent">${esc(c.name)} · Current Construction Progress</p>
       <div class="delivery-marquee" data-marquee>
         <div class="delivery-marquee__track">
           ${constructionProgressFrames(c.progressPhotos)}
@@ -187,7 +187,7 @@ ${pageHero(0, {
     </div>
 
     ${CONSTRUCTION.map((c, i) => `
-    <article class="proj construction-card ${i % 2 ? "proj--flip" : ""} rv" id="${esc(c.key)}"${i ? ' style="margin-top:clamp(70px,9vw,140px)"' : ""}>
+    <article class="proj construction-card construction-card--panel ${i === 1 ? "construction-card--alt" : ""} ${i % 2 ? "proj--flip" : ""} rv" id="${esc(c.key)}"${i ? ' style="margin-top:clamp(70px,9vw,140px)"' : ""}>
       <div class="proj__media zoom">
         <a href="${c.href}" aria-label="${esc(c.name)}">${plate(c.img, `${c.name} — ${c.stage}`, { ar: "ar", sizes: "(min-width:1020px) 56vw, 100vw", par: true })}</a>
       </div>
@@ -205,7 +205,7 @@ ${pageHero(0, {
           <span class="live-badge"><i></i> Live progress</span>
           ${alt(c.pct, `${c.pct}% complete`, c.milestone)}
         </div>` : ""}
-        <p class="story__d" style="max-width:44ch">Dated photo and video updates for this development are issued directly to buyers at each milestone. Request the latest pack or a live video walkthrough at any time.</p>
+        <p class="story__d" style="max-width:44ch">See how things are shaping up. We post fresh photo and video updates right here at every major construction milestone.</p>
       </div>
       ${constructionProgress(c)}
       <div class="construction-card__cta">${btn("Request Site Visit", "contact.html", { kind: "btn--gold" })}</div>

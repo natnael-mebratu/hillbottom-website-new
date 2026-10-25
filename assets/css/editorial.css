@@ -124,6 +124,10 @@ body.js .portfolio-index.in .status-facts .fact:nth-child(4){transition-delay:21
 .home-inquiry .head{display:block}
 .home-inquiry .head__side{margin-top:28px}
 .home-inquiry .form__grid{grid-template-columns:1fr 1fr}
+.home-inquiry__contact-links .btn{min-height:40px;padding:10px 18px;font-size:.78rem}
+.home-inquiry__layout{display:flex;flex-direction:column;gap:36px}
+.home-inquiry__map.project-location{grid-template-columns:1fr;min-height:0}
+.home-inquiry__map .project-location__map{min-height:300px}
 .field > label{color:var(--fg);font-size:.75rem;letter-spacing:.08em}
 .field input,.field select,.field textarea{border-radius:3px;transition:border-color 160ms ease,background 160ms ease}
 .field input::placeholder,.field textarea::placeholder{opacity:1}

@@ -47,7 +47,7 @@ export const CO = {
   ],
   /* Verified against the live site's own footer links. */
   social: [
-    { name: "LinkedIn", href: "https://www.linkedin.com/company/hill-bottom-properties/", icon: "linkedin" },
+    { name: "LinkedIn", href: "https://www.linkedin.com/company/hillbottomproperties/", icon: "linkedin" },
     { name: "Instagram", href: "https://www.instagram.com/hillbottomproperties", icon: "instagram" },
     { name: "Facebook", href: "https://www.facebook.com/hillbottomproperties", icon: "facebook" },
   ],

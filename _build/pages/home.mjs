@@ -146,6 +146,19 @@ ${welcome(0, WELCOME)}
   </div>
 </section>
 
+<section class="ch ch--paper pad home-intro">
+  <div class="intro-editorial">
+    <div class="intro-editorial__copy rv">
+      <h2 class="d2">About Us</h2>
+      <p class="intro-editorial__lede">A premium Ethiopian real estate developer committed to transparency, timelines, and technical excellence — since day one.</p>
+      <p>Hill Bottom Properties was founded on a simple premise: Ethiopia deserves world-class real estate delivered with absolute integrity. We saw a gap between aspiration and reality in the Ethiopian property market, and we set out to close it.</p>
+      <p>Our first completed project — Hill Bottom Village in Ayat — became a proof of concept. Buyers watched their homes rise, received progress updates at every milestone, and received their keys on time. We are now applying the same standard to Urban Kaza in the Kazanchis Diplomatic Corridor.</p>
+      <a class="outlined-action outlined-action--dark" href="about.html">About Hill Bottom<span>${ICON.arrow}</span></a>
+    </div>
+    <figure class="intro-editorial__media rv"><img src="assets/img/feedback-village.webp" alt="Hill Bottom Village at Ayat" loading="lazy" decoding="async"></figure>
+  </div>
+</section>
+
 <section class="ch ch--paper pad home-values" id="why">
   <div class="wrap">
     <div class="head head--split rv" style="margin-bottom:clamp(44px,5vw,72px)">
@@ -189,19 +202,6 @@ ${welcome(0, WELCOME)}
   </div>
 </section>
 
-<section class="ch ch--paper pad home-intro">
-  <div class="intro-editorial">
-    <div class="intro-editorial__copy rv">
-      <h2 class="d2">About Us</h2>
-      <p class="intro-editorial__lede">A premium Ethiopian real estate developer committed to transparency, timelines, and technical excellence — since day one.</p>
-      <p>Hill Bottom Properties was founded on a simple premise: Ethiopia deserves world-class real estate delivered with absolute integrity. We saw a gap between aspiration and reality in the Ethiopian property market, and we set out to close it.</p>
-      <p>Our first completed project — Hill Bottom Village in Ayat — became a proof of concept. Buyers watched their homes rise, received progress updates at every milestone, and received their keys on time. We are now applying the same standard to Urban Kaza in the Kazanchis Diplomatic Corridor.</p>
-      <a class="outlined-action outlined-action--dark" href="about.html">About Hill Bottom<span>${ICON.arrow}</span></a>
-    </div>
-    <figure class="intro-editorial__media rv"><img src="assets/img/feedback-village.webp" alt="Hill Bottom Village at Ayat" loading="lazy" decoding="async"></figure>
-  </div>
-</section>
-
 <section class="ch ch--abyss pad home-projects" id="projects">
   <div class="wrap">
     <div class="head head--split rv" style="margin-bottom:clamp(56px,7vw,110px)">
@@ -215,20 +215,6 @@ ${welcome(0, WELCOME)}
   </div>
 </section>
 
-<section class="home-abroad">
-  <img class="home-abroad__media" src="assets/img/feedback-abroad.webp" alt="Hill Bottom development in Addis Ababa" loading="lazy" decoding="async">
-  <span class="home-abroad__veil"></span>
-  <div class="wrap home-abroad__content rv">
-    <p class="mark">Buying from abroad</p>
-    <h2 class="d2">Your next home is in Addis. <em>Your control stays with you.</em></h2>
-    <p>Review your residence remotely, speak with the sales team in your timezone, verify documentation, follow construction progress and complete each stage with written confirmation.</p>
-    <div class="btn-row">
-      ${btn(CTA.diaspora, "buying-from-abroad.html", { kind: "btn--gold" })}
-      <a class="btn btn--ghost" href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}WhatsApp International Sales</a>
-    </div>
-  </div>
-</section>
-
 <section class="home-tours">
   <div class="home-tours__media">
     <img src="assets/img/feedback-team.webp" alt="Urban Kaza living space" loading="lazy" decoding="async">
@@ -236,7 +222,7 @@ ${welcome(0, WELCOME)}
   </div>
   <span class="home-tours__veil"></span>
   <div class="wrap home-tours__content rv">
-    <h2 class="d2">Step Inside Your Future Home</h2>
+    <h2 class="d2">Virtual Tour of Your Future Home</h2>
     <p>Explore our signature developments from the comfort of your screen. Virtual tours available for diaspora buyers worldwide.</p>
     <div class="tour-portals">
       <a class="tour-portal" href="vr-tours.html" aria-label="View Hill Bottom virtual tour">
@@ -270,32 +256,21 @@ ${testimonialsSection()}
       <h2 class="d2">Ready to Find <em>Your Home</em>?</h2>
       <div class="head__side">
         <p>Whether you're buying from Ethiopia or abroad, our team is here to guide you every step of the way.</p>
-        <div class="btn-row" style="margin-top:26px">
+        <div class="btn-row home-inquiry__contact-links" style="margin-top:26px">
           <a class="btn" href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}WhatsApp Us</a>
           <a class="btn btn--ghost" href="${CO.telHref}">${ICON.phone}${esc(CO.tel)}</a>
         </div>
       </div>
     </div>
-    ${inquiryForm(0, "home-inquiry")}
-  </div>
-</section>
-
-<!-- ===== Sales office map (isolated section — see item 1 of the SEO/maps
-     work): a real Google Maps embed pinned to the Urban Kaza Sales
-     Gallery, styled with the same dark navy + gold .project-location
-     card pattern used on the project pages' own "Find Us" sections. ===== -->
-<section class="ch ch--paper pad home-sales-office">
-  <div class="wrap">
-    <div class="head head--split rv" style="margin-bottom:clamp(30px,3.5vw,48px)">
-      <h2 class="d2">Visit Our Sales Office</h2>
-      <div class="head__side"><p>Speak to our team in person at the Urban Kaza Sales Gallery in the Kazanchis Diplomatic Corridor.</p></div>
-    </div>
-    <div class="project-location rv">
-      <div class="project-location__map">${googleMapEmbed(SALES_OFFICE.lat, SALES_OFFICE.lng, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}</div>
-      <div class="project-location__card">
-        <span class="contact-location__icon">${SALES_OFFICE_ICON}</span>
-        <div class="contact-location__copy"><i>Sales Office</i><b>${esc(SALES_OFFICE.name)}</b><small>${esc(SALES_OFFICE.role)}</small><em>${esc(SALES_OFFICE.address)}</em></div>
-        <a class="contact-map__open-link" href="https://www.google.com/maps/search/?api=1&amp;query=${SALES_OFFICE.lat}%2C${SALES_OFFICE.lng}" target="_blank" rel="noreferrer">Open in Google Maps ${ICON.arrow}</a>
+    <div class="home-inquiry__layout">
+      ${inquiryForm(0, "home-inquiry")}
+      <div class="home-inquiry__map project-location rv">
+        <div class="project-location__map">${googleMapEmbed(SALES_OFFICE.lat, SALES_OFFICE.lng, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}</div>
+        <div class="project-location__card">
+          <span class="contact-location__icon">${SALES_OFFICE_ICON}</span>
+          <div class="contact-location__copy"><i>Sales Office</i><b>${esc(SALES_OFFICE.name)}</b><small>${esc(SALES_OFFICE.role)}</small><em>${esc(SALES_OFFICE.address)}</em></div>
+          <a class="contact-map__open-link" href="https://www.google.com/maps/search/?api=1&amp;query=${SALES_OFFICE.lat}%2C${SALES_OFFICE.lng}" target="_blank" rel="noreferrer">Open in Google Maps ${ICON.arrow}</a>
+        </div>
       </div>
     </div>
   </div>

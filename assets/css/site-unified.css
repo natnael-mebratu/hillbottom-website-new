@@ -488,6 +488,13 @@ body:not(.home-editorial) .facts{--card-gap:clamp(22px,3vw,46px)}
 /* Construction: compact status narrative plus three visual facts. */
 .construction-page .hero__media img{object-position:center 54%}
 .construction-card .proj__body{align-content:center}
+/* Each project is its own panel so the boundary between them reads clearly
+   (they used to share one continuous background) — the middle project gets
+   a distinct tint from its neighbors so it's unmistakably a different card,
+   which matters most stacked on mobile where there's no side-by-side cue. */
+.construction-card--panel{background:#fff;padding:clamp(28px,4vw,48px);border-radius:6px;box-shadow:0 1px 0 var(--line)}
+.construction-card--panel.construction-card--alt{background:var(--paper-2)}
+.construction-card--panel .construction-card__infographic>div{background:inherit}
 .construction-card__status{
   display:inline-flex;width:max-content;padding:10px 16px;margin-bottom:20px;border-radius:999px;
   background:linear-gradient(135deg,#C6B27C,#907B46);color:#09111F;
@@ -525,7 +532,7 @@ body:not(.home-editorial) .facts{--card-gap:clamp(22px,3vw,46px)}
 .construction-marquee .mark{margin-bottom:14px}
 .construction-marquee .delivery-marquee{border-radius:4px}
 .construction-card__cta{grid-column:1/-1;order:4;margin-top:clamp(28px,3vw,42px)}
-.construction-card__cta .btn--gold{width:max-content}
+.construction-card__cta .btn--gold{width:max-content;min-height:40px;padding:10px 20px;font-size:.78rem}
 
 /* Urban Kaza brand lockup and title system. */
 .urban-kaza-page .uk-hero .hero__in{
