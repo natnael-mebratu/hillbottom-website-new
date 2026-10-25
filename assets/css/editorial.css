@@ -46,6 +46,10 @@ input,textarea{caret-color:var(--accent)}
 .hero--short{min-height:74svh}
 .hero--short .hero__stage{max-width:1000px}
 .hero .ridge,.band .ridge{display:none}
+/* Plain seam between a full-bleed hero/media section and whatever follows —
+   a hairline, not a shape, so it can never collide with content like the
+   mountain-cut ridge did. */
+.hero{border-bottom:1px solid rgba(255,255,255,.16)}
 .hero__sub{color:#F1F3F6;max-width:42ch}
 .home-editorial .hero{min-height:92svh}
 .home-editorial .hero__in{padding-bottom:clamp(54px,8vh,92px)}
