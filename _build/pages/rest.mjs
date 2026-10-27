@@ -989,7 +989,7 @@ ${pageHero(0, {
     </div>
     <div class="contact-map rv" data-contact-map>
       <div class="contact-map__canvas">
-        <iframe title="Google Maps view of the ${esc(SALES_OFFICE.name)}, Addis Ababa" src="https://www.google.com/maps?q=place_id:${SALES_OFFICE.placeId}&amp;z=15&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        ${googleMapEmbed(SALES_OFFICE.lat, SALES_OFFICE.lng, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}
       </div>
       <div class="contact-map__locations contact-map__locations--single" aria-label="Hill Bottom sales office">
         <div class="contact-location is-active">

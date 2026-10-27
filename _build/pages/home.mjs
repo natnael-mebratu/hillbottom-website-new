@@ -265,7 +265,7 @@ ${testimonialsSection()}
     <div class="home-inquiry__layout">
       ${inquiryForm(0, "home-inquiry")}
       <div class="home-inquiry__map project-location rv">
-        <div class="project-location__map"><iframe title="Google Maps view of the ${esc(SALES_OFFICE.name)}, Addis Ababa" src="https://www.google.com/maps?q=place_id:${SALES_OFFICE.placeId}&amp;z=15&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        <div class="project-location__map">${googleMapEmbed(SALES_OFFICE.lat, SALES_OFFICE.lng, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}</div>
         <div class="project-location__card">
           <span class="contact-location__icon">${SALES_OFFICE_ICON}</span>
           <div class="contact-location__copy"><i>Sales Office</i><b>${esc(SALES_OFFICE.name)}</b><small>${esc(SALES_OFFICE.role)}</small><em>${esc(SALES_OFFICE.address)}</em></div>
