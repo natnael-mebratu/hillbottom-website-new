@@ -63,6 +63,12 @@ export const SALES_OFFICE = {
   address: "Wollo Sefer, in front of Garad Building, next to Safaricom/Ethio Telecom building (ground floor), Addis Ababa, Ethiopia",
   lat: 8.993422306143458,
   lng: 38.775078281467486,
+  // The verified Google Business Profile listing for this office ("Hill
+  // Bottom Properties — Bole Sales Office" — same physical place, matching
+  // Place ID confirmed against the Wollo Sefer address). Lets "Open in
+  // Google Maps" open the real business listing (name, reviews, hours)
+  // instead of a bare coordinate pin.
+  placeId: "ChIJb2nyRQCFSxYROSvSkZyt11c",
 };
 
 export const NAV = [

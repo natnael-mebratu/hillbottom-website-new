@@ -989,14 +989,14 @@ ${pageHero(0, {
     </div>
     <div class="contact-map rv" data-contact-map>
       <div class="contact-map__canvas">
-        ${googleMapEmbed(SALES_OFFICE.lat, SALES_OFFICE.lng, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}
+        <iframe title="Google Maps view of the ${esc(SALES_OFFICE.name)}, Addis Ababa" src="https://www.google.com/maps?q=place_id:${SALES_OFFICE.placeId}&amp;z=15&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
       <div class="contact-map__locations contact-map__locations--single" aria-label="Hill Bottom sales office">
         <div class="contact-location is-active">
           <span class="contact-location__icon">${UK_CONTEXT_ICONS[2]}</span>
           <span class="contact-location__copy"><i>Office</i><b>${esc(SALES_OFFICE.name)}</b><small>${esc(SALES_OFFICE.role)}</small><em>${esc(SALES_OFFICE.address)}</em></span>
         </div>
-        <a class="contact-map__open-link" href="https://www.google.com/maps/search/?api=1&amp;query=${SALES_OFFICE.lat}%2C${SALES_OFFICE.lng}" target="_blank" rel="noreferrer">Open in Google Maps ${ICON.arrow}</a>
+        <a class="contact-map__open-link" href="https://www.google.com/maps/place/?q=place_id:${SALES_OFFICE.placeId}" target="_blank" rel="noreferrer">Open in Google Maps ${ICON.arrow}</a>
       </div>
     </div>
   </div>
