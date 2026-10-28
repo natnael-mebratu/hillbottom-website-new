@@ -44,6 +44,12 @@ const deliveryFrames = (hidden = false) => `<div class="delivery-marquee__group"
    below — same pattern as Urban Kaza's neighbourhood map and the Contact
    page (see googleMapEmbed() in rest.mjs/pages). */
 const googleMapEmbed = (lat, lng, title, zoom = 15) => `<iframe title="${esc(title)}" src="https://www.google.com/maps?q=${lat}%2C${lng}&amp;z=${zoom}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+// Keyless embed by name+address text rather than raw coordinates — a text
+// query that matches a real listing lets Google resolve it to that actual
+// place, so the embed's own built-in "Open in Maps" button links to the
+// real business page too, not just a coordinate drop (q=place_id: breaks
+// the embed's zoom entirely — see googleMapEmbed above, kept for that).
+const googleMapEmbedByQuery = (query, title, zoom = 15) => `<iframe title="${esc(title)}" src="https://www.google.com/maps?q=${encodeURIComponent(query)}&amp;z=${zoom}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
 const SALES_OFFICE_ICON = `<svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><path pathLength="1" d="M12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>`;
 /* Testimonial photos — admin-managed DB content, see fetchData.mjs/
    TESTIMONIALS_LIVE. A small circular portrait next to each quote, same
@@ -265,7 +271,7 @@ ${testimonialsSection()}
     <div class="home-inquiry__layout">
       ${inquiryForm(0, "home-inquiry")}
       <div class="home-inquiry__map project-location rv">
-        <div class="project-location__map">${googleMapEmbed(SALES_OFFICE.lat, SALES_OFFICE.lng, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}</div>
+        <div class="project-location__map">${googleMapEmbedByQuery(SALES_OFFICE.mapQuery, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}</div>
         <div class="project-location__card">
           <span class="contact-location__icon">${SALES_OFFICE_ICON}</span>
           <div class="contact-location__copy"><i>Sales Office</i><b>${esc(SALES_OFFICE.name)}</b><small>${esc(SALES_OFFICE.role)}</small><em>${esc(SALES_OFFICE.address)}</em></div>

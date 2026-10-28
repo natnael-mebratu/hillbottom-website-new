@@ -69,6 +69,11 @@ export const SALES_OFFICE = {
   // Google Maps" open the real business listing (name, reviews, hours)
   // instead of a bare coordinate pin.
   placeId: "ChIJb2nyRQCFSxYROSvSkZyt11c",
+  // The exact name Google's listing is registered under — used as the
+  // keyless map embed's search text (not `name` above, which is our own
+  // display copy) so Google actually resolves it to the real place instead
+  // of just dropping a pin at a text match that happens not to exist.
+  mapQuery: "Hill Bottom Properties - Bole Sales Office, Airport Road, Addis Ababa",
 };
 
 export const NAV = [

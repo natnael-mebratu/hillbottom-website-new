@@ -90,6 +90,12 @@ const CONTACT_LOCATIONS = [
    neighbourhood map above (q=<lat>,<lng>&z=<zoom>&output=embed) — used for
    the Contact page sales-office pin and each project page's own site map. */
 const googleMapEmbed = (lat, lng, title, zoom = 15) => `<iframe title="${esc(title)}" src="https://www.google.com/maps?q=${lat}%2C${lng}&amp;z=${zoom}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+// Keyless embed by name+address text rather than raw coordinates — a text
+// query that matches a real listing lets Google resolve it to that actual
+// place, so the embed's own built-in "Open in Maps" button links to the
+// real business page too, not just a coordinate drop (q=place_id: breaks
+// the embed's zoom entirely — see googleMapEmbed above, kept for that).
+const googleMapEmbedByQuery = (query, title, zoom = 15) => `<iframe title="${esc(title)}" src="https://www.google.com/maps?q=${encodeURIComponent(query)}&amp;z=${zoom}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
 const projectFeatureGrid = (items, className = "") => `<ol class="project-feature-grid ${className} rv">
   ${items.map((item, i) => `<li class="project-feature-card" style="--feature-i:${i}">
     <span class="project-feature-card__icon">${PROJECT_FEATURE_ICONS[i % PROJECT_FEATURE_ICONS.length]}</span>
@@ -989,7 +995,7 @@ ${pageHero(0, {
     </div>
     <div class="contact-map rv" data-contact-map>
       <div class="contact-map__canvas">
-        ${googleMapEmbed(SALES_OFFICE.lat, SALES_OFFICE.lng, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}
+        ${googleMapEmbedByQuery(SALES_OFFICE.mapQuery, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}
       </div>
       <div class="contact-map__locations contact-map__locations--single" aria-label="Hill Bottom sales office">
         <div class="contact-location is-active">
