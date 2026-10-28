@@ -129,6 +129,44 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   <span class="ridge ridge--bottom" style="--ridge-fill:var(--paper)"></span>
 </section>
 
+<section class="ch ch--ink pad" id="book">
+  <div class="wrap">
+    <div class="head head--split rv" style="margin-bottom:clamp(36px,4vw,56px)">
+      <h2 class="d2">Book a Visit</h2>
+      <div class="head__side">
+        <p>Fill out the form to request a callback, video consultation, or site visit. We respond within 24 hours on business days.</p>
+      </div>
+    </div>
+    
+<form class="form rv" data-inquiry novalidate id="book-form">
+  <div class="form__ok" role="status" tabindex="-1"><div><b>Inquiry received</b><p>Our sales team will contact you shortly. For the fastest reply, message us on WhatsApp at +251 99 270 7070.</p></div></div>
+  <div class="form__fail" role="status"><div><b>Your inquiry has not been sent</b><p>Online delivery is not connected yet. Your details remain below. Please <a href="https://wa.me/251992707070" target="_blank" rel="noreferrer">contact our sales team on WhatsApp</a> at +251 99 270 7070.</p></div></div>
+  <div class="form__grid">
+    <p class="field"><label for="book-form-name">Full Name</label><input id="book-form-name" name="name" type="text" autocomplete="name" placeholder="Your full name" required><span class="field__err"></span></p>
+    <p class="field"><label for="book-form-email">Email</label><input id="book-form-email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required><span class="field__err"></span></p>
+  </div>
+  <div class="form__grid">
+    <p class="field"><label for="book-form-phone">Phone Number</label><input id="book-form-phone" name="phone" type="tel" autocomplete="tel" placeholder="+251 …" required><span class="field__err"></span></p>
+    <p class="field"><label for="book-form-country">Country of Residence</label><input id="book-form-country" name="country" type="text" autocomplete="country-name" placeholder="USA, UK, Ethiopia…"><span class="field__err"></span></p>
+  </div>
+  <div class="form__grid">
+    <p class="field"><label for="book-form-interest">Interested In</label>
+      <select id="book-form-interest" name="interest">
+        <option value="">Select interest</option>
+        <option>1 Bedroom Residence</option><option>2 Bedroom Residence</option><option>Investment Opportunity</option><option>General Inquiry</option>
+      </select><span class="field__err"></span></p>
+    <div aria-hidden="true"></div>
+  </div>
+  <p class="field"><label for="book-form-msg">Message (Optional)</label><textarea id="book-form-msg" name="message" placeholder="Any specific requirements or questions?"></textarea><span class="field__err"></span></p>
+  <div class="btn-row" style="align-items:center;gap:22px">
+    <button class="btn btn--gold" type="submit" disabled>Send Inquiry</button>
+    <span class="form__note">We respond within 24 hours on business days. Fastest response via WhatsApp.</span>
+  </div>
+  <noscript><p>Please enable JavaScript to use this form, or contact our sales team on <a href="https://wa.me/251992707070">WhatsApp</a>.</p></noscript>
+</form>
+  </div>
+</section>
+
 <section class="ch ch--abyss pad contact-sales">
   <div class="wrap contact-sales__layout rv">
     <div class="contact-sales__intro">
@@ -188,44 +226,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <a class="contact-map__open-link" href="https://www.google.com/maps/place/?q=place_id:ChIJb2nyRQCFSxYROSvSkZyt11c" target="_blank" rel="noreferrer">Open in Google Maps <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="ch ch--ink pad" id="book">
-  <div class="wrap">
-    <div class="head head--split rv" style="margin-bottom:clamp(36px,4vw,56px)">
-      <h2 class="d2">Book a Visit</h2>
-      <div class="head__side">
-        <p>Fill out the form to request a callback, video consultation, or site visit. We respond within 24 hours on business days.</p>
-      </div>
-    </div>
-    
-<form class="form rv" data-inquiry novalidate id="book-form">
-  <div class="form__ok" role="status" tabindex="-1"><div><b>Inquiry received</b><p>Our sales team will contact you shortly. For the fastest reply, message us on WhatsApp at +251 99 270 7070.</p></div></div>
-  <div class="form__fail" role="status"><div><b>Your inquiry has not been sent</b><p>Online delivery is not connected yet. Your details remain below. Please <a href="https://wa.me/251992707070" target="_blank" rel="noreferrer">contact our sales team on WhatsApp</a> at +251 99 270 7070.</p></div></div>
-  <div class="form__grid">
-    <p class="field"><label for="book-form-name">Full Name</label><input id="book-form-name" name="name" type="text" autocomplete="name" placeholder="Your full name" required><span class="field__err"></span></p>
-    <p class="field"><label for="book-form-email">Email</label><input id="book-form-email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required><span class="field__err"></span></p>
-  </div>
-  <div class="form__grid">
-    <p class="field"><label for="book-form-phone">Phone Number</label><input id="book-form-phone" name="phone" type="tel" autocomplete="tel" placeholder="+251 …" required><span class="field__err"></span></p>
-    <p class="field"><label for="book-form-country">Country of Residence</label><input id="book-form-country" name="country" type="text" autocomplete="country-name" placeholder="USA, UK, Ethiopia…"><span class="field__err"></span></p>
-  </div>
-  <div class="form__grid">
-    <p class="field"><label for="book-form-interest">Interested In</label>
-      <select id="book-form-interest" name="interest">
-        <option value="">Select interest</option>
-        <option>1 Bedroom Residence</option><option>2 Bedroom Residence</option><option>Investment Opportunity</option><option>General Inquiry</option>
-      </select><span class="field__err"></span></p>
-    <div aria-hidden="true"></div>
-  </div>
-  <p class="field"><label for="book-form-msg">Message (Optional)</label><textarea id="book-form-msg" name="message" placeholder="Any specific requirements or questions?"></textarea><span class="field__err"></span></p>
-  <div class="btn-row" style="align-items:center;gap:22px">
-    <button class="btn btn--gold" type="submit" disabled>Send Inquiry</button>
-    <span class="form__note">We respond within 24 hours on business days. Fastest response via WhatsApp.</span>
-  </div>
-  <noscript><p>Please enable JavaScript to use this form, or contact our sales team on <a href="https://wa.me/251992707070">WhatsApp</a>.</p></noscript>
-</form>
   </div>
 </section>
 

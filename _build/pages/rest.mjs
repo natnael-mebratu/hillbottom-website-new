@@ -959,6 +959,18 @@ ${pageHero(0, {
   stations: [],
 })}
 
+<section class="ch ch--ink pad" id="book">
+  <div class="wrap">
+    <div class="head head--split rv" style="margin-bottom:clamp(36px,4vw,56px)">
+      <h2 class="d2">Book a Visit</h2>
+      <div class="head__side">
+        <p>Fill out the form to request a callback, video consultation, or site visit. We respond within 24 hours on business days.</p>
+      </div>
+    </div>
+    ${inquiryForm(0, "book-form")}
+  </div>
+</section>
+
 <section class="ch ch--abyss pad contact-sales">
   <div class="wrap contact-sales__layout rv">
     <div class="contact-sales__intro">
@@ -1005,18 +1017,6 @@ ${pageHero(0, {
         <a class="contact-map__open-link" href="https://www.google.com/maps/place/?q=place_id:${SALES_OFFICE.placeId}" target="_blank" rel="noreferrer">Open in Google Maps ${ICON.arrow}</a>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="ch ch--ink pad" id="book">
-  <div class="wrap">
-    <div class="head head--split rv" style="margin-bottom:clamp(36px,4vw,56px)">
-      <h2 class="d2">Book a Visit</h2>
-      <div class="head__side">
-        <p>Fill out the form to request a callback, video consultation, or site visit. We respond within 24 hours on business days.</p>
-      </div>
-    </div>
-    ${inquiryForm(0, "book-form")}
   </div>
 </section>
 `,
