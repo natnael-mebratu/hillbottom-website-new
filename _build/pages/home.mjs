@@ -123,7 +123,9 @@ ${welcome(0, WELCOME)}
     <div class="btn-row" style="margin-top:38px">
       ${btn(CTA.home, "projects.html", { kind: "btn--gold" })}
       ${btn("Book a Virtual Tour", "vr-tours.html", { icon: "cube" })}
-      ${btn("Price Calculator", "price-calculator.html", { icon: "calculator" })}
+      <!-- Price Calculator button pulled per client ("not accurate" /
+           feature on hold) — restore with: btn("Price Calculator",
+           "price-calculator.html", { icon: "calculator" }) -->
     </div>
   </div>
   <div class="herocards">

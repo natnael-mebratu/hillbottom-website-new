@@ -99,7 +99,10 @@ export const NAV = [
    page. */
 export const NAV_SECONDARY = [
   { href: "vr-tours.html", label: "Virtual Tours" },
-  { href: "price-calculator.html", label: "Price Calculator" },
+  // Price Calculator pulled from nav/hero per client ("not accurate" /
+  // feature on hold) — price-calculator.html itself stays built, just
+  // unlinked, so it's a one-line restore (add this entry + the home.mjs
+  // hero button back) if they ask for it again.
   { href: "marketing.html", label: "Campaign Feed" },
   { href: "sister-companies.html", label: "Sister Companies" },
   { href: "news.html", label: "Insights" },

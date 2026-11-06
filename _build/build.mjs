@@ -12,6 +12,14 @@ const pages = { "index.html": home, ...rest, ...newpages };
    of sitemap.xml/llms.txt — a billboard-QR landing page nobody should find
    by browsing or search, only by scanning the code. */
 const unlisted = { "promo.html": promo };
+/* Price Calculator pulled from nav/hero per client ("not accurate" / on
+   hold) — still built and reachable by direct URL, just not advertised to
+   search engines or AI crawlers while it's unlinked. Restore by deleting
+   this block once the feature's back on. */
+if (pages["price-calculator.html"]) {
+  unlisted["price-calculator.html"] = pages["price-calculator.html"];
+  delete pages["price-calculator.html"];
+}
 
 let bytes = 0;
 for (const [rel, html] of Object.entries({ ...pages, ...unlisted })) {
