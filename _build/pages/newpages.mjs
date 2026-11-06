@@ -564,4 +564,47 @@ ${ctaBand(0, {
 `,
 });
 
+/* ===================== PRICE CALCULATOR (placeholder) =====================
+   Nav + home hero now link here (client request: a third hero button).
+   The real self-serve calculator depends on financing terms and unit
+   inventory not yet confirmed — see the client's own reference file — so
+   this holds the slot with the same "Coming Soon" pattern used elsewhere
+   (sister-companies.html's hold:true entries) rather than a dead link or a
+   half-built tool quoting numbers nobody's approved yet. */
+out["price-calculator.html"] = page({
+  current: "",
+  path: "price-calculator.html",
+  image: "kaza-apt-01-v2",
+  title: "Price Calculator — Hill Bottom Properties",
+  desc: "A self-serve way to estimate your payment plan across Hill Bottom developments. Coming soon — contact our sales team for a personalized quote today.",
+  bodyClass: "price-calculator-page",
+  body: `
+${pageHero(0, {
+  title: "Price Calculator",
+  sub: "Estimate your downpayment and installment schedule across our developments — coming soon.",
+  imgName: "kaza-apt-01-v2", alt: "Urban Kaza apartment interior",
+  stations: [],
+})}
+
+<section class="ch ch--paper pad">
+  <div class="wrap" style="text-align:center;max-width:720px;margin-inline:auto">
+    <p class="mark mark--accent">Coming Soon</p>
+    <h2 class="d2">A clearer way to plan your purchase.</h2>
+    <p class="body" style="margin-top:18px">We're building a self-serve calculator so you can model your downpayment, installment schedule, and total cost across our developments right here on the site. While it's in the works, our sales team can walk you through the real numbers for any unit today.</p>
+    <div class="btn-row" style="justify-content:center;margin-top:30px">
+      ${btn("Message on WhatsApp", CO.waHref, { kind: "btn--gold", icon: "wa", ext: true })}
+      ${btn("Contact Sales", "contact.html", {})}
+    </div>
+  </div>
+</section>
+
+${ctaBand(0, {
+  title: "Explore what's available now.",
+  body: "See current developments, unit types, and status while the calculator is being built.",
+  primary: "View Residences", primaryHref: "projects.html",
+  secondary: "Contact Us", secondaryHref: "contact.html",
+})}
+`,
+});
+
 export default out;
