@@ -328,7 +328,7 @@ ${ukIntro()}
       <h2 class="d2">Floor Plans</h2>
       <div class="head__side">
         <p>Seven complete residence configurations — one and two bedroom layouts across floors 2F–15F. Every published area is visible below.</p>
-        <div style="margin-top:22px">${btn("Request Full Floor Plans", "contact.html", { d: 1, icon: "doc" })}</div>
+        <div style="margin-top:22px">${btn("Request Full Floor Plans", "contact.html#book", { d: 1, icon: "doc" })}</div>
       </div>
     </div>
     <div class="uk-unit-grid rv" aria-label="Urban Kaza residence configurations">
@@ -354,8 +354,8 @@ ${ukIntro()}
   <span class="uk-commitment__veil" aria-hidden="true"></span>
   <div class="wrap">
     <div class="head head--split rv" style="margin-bottom:clamp(30px,3.5vw,48px)">
-      <h2 class="d2">Transparency. Timelines. Technical excellence.</h2>
-      <div class="head__side"><p>We don't sell renders. We sell execution. Urban Kaza is backed by Hill Bottom Properties — a name synonymous with premium delivery and unmatched velocity in Ethiopia.</p></div>
+      <h2 class="d2">We don't sell renders. We sell execution.</h2>
+      <div class="head__side"><p>Urban Kaza is backed by Hill Bottom Properties — a name synonymous with premium delivery and unmatched velocity in Ethiopia.</p></div>
     </div>
     ${facts([
       { k: "Price", v: "From 135,000 ETB/sqm", n: "Flexible payment plans. Diaspora-friendly process." },
@@ -459,12 +459,17 @@ ${pageHero(1, {
   </div>
 </section>
 
-${ctaBand(1, {
-  title: "Secure Your Phase 2 Unit",
-  body: "With Phase 1 fully sold and occupied, Phase 2 availability is limited. Contact our sales team to discuss pricing, floor plans, and payment plans.",
-  primary: "Request Phase 2 Info", primaryHref: "contact.html",
-  secondary: "WhatsApp Sales", secondaryHref: CO.waHref,
-})}
+<section class="ch ch--ink pad" id="phase2-inquiry">
+  <div class="wrap">
+    <div class="head head--split rv" style="margin-bottom:clamp(36px,4vw,56px)">
+      <h2 class="d2">Request Phase 2 Info</h2>
+      <div class="head__side">
+        <p>With Phase 1 fully sold and occupied, Phase 2 availability is limited. Fill out the form and our sales team will reach out with pricing, floor plans, and payment options.</p>
+      </div>
+    </div>
+    ${inquiryForm(1, "village-phase2")}
+  </div>
+</section>
 `,
 });
 
@@ -667,7 +672,6 @@ ${pageHero(0, {
     { k: "Delivered", v: "Block A, Ayat", n: "Complete and fully occupied" },
     { k: "In construction", v: "2 projects", n: "Block B · Phase 3" },
     { k: "Now selling", v: "Urban Kaza", n: "98 residences, Kazanchis" },
-    { k: "Brand promise", v: CO.promise, n: "" },
   ],
 })}
 

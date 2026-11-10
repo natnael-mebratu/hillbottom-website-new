@@ -257,7 +257,7 @@ export const footer = (d) => `
     <div class="ftr__top">
       <div>
         ${lockup(d)}
-        <p class="body" style="margin-top:24px;max-width:34ch">${esc(CO.line)} ${esc(CO.promise)}</p>
+        <p class="body" style="margin-top:24px;max-width:34ch">${esc(CO.line)}</p>
         <div class="social" style="margin-top:30px">
           ${CO.social.map((s) => `<a href="${s.href}" target="_blank" rel="noreferrer" aria-label="${esc(s.name)}">${ICON[s.icon]}</a>`).join("")}
         </div>

@@ -1,4 +1,4 @@
-import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, PROCESS, MARKETING_POSTS, SISTER_COMPANIES } from "../data.mjs";
+import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, MARKETING_POSTS, SISTER_COMPANIES } from "../data.mjs";
 import { page, facts, alt, plate, img, btn, link, esc, jsonScript, ICON } from "../ui.mjs";
 import { pageHero, ctaBand, inquiryForm } from "./parts.mjs";
 
@@ -78,14 +78,10 @@ out["buying-from-abroad.html"] = page({
   body: `
 ${pageHero(0, {
   title: "Buying from Abroad",
-  sub: "You don't need to be in Addis to secure your piece of it. End-to-end support for the Ethiopian diaspora with absolute transparency, legal protection, and peace of mind.",
+  sub: "You don't need to be in Addis to secure your piece of it. Floor plan review, virtual tours, and WhatsApp communication throughout — many of our buyers purchase from the US, UK, and Europe without an in-person visit prior to handover.",
   imgName: "kaza-members-01", alt: "Members lounge, Urban Kaza",
   stations: [],
 })}
-
-<section class="ch ch--paper pad" style="padding-bottom:0">
-  <div class="wrap"><p class="body" style="max-width:66ch">${esc(REMOTE_FAQ[0].a)}</p></div>
-</section>
 
 <section class="ch ch--paper pad">
   <div class="wrap">
@@ -133,16 +129,6 @@ ${pageHero(0, {
   </div>
 </section>
 
-<section class="ch ch--paper pad">
-  <div class="wrap">
-    <div class="head head--split rv" style="margin-bottom:clamp(38px,4.5vw,60px)">
-      <h2 class="d2">The Full Buying Process</h2>
-      <div class="head__side"><p>From first inquiry to key handover — a clear, transparent process designed to reduce uncertainty and build trust at every stage.</p></div>
-    </div>
-    ${iconGrid(PROCESS)}
-  </div>
-</section>
-
 <section class="ch ch--abyss pad" id="enquire">
   <div class="wrap">
     <div class="head head--split rv" style="margin-bottom:clamp(44px,5vw,72px)">
@@ -178,14 +164,6 @@ ${pageHero(0, {
 
 <section class="ch ch--paper pad">
   <div class="wrap">
-    <div class="head head--split rv" style="margin-bottom:clamp(44px,5vw,76px)">
-      <h2 class="d2">Every project, every stage.</h2>
-      <div class="head__side">
-        <p>Payment milestones are tied to verified construction progress — not arbitrary dates. Buyers receive dated photography and video at each one.</p>
-        <div style="margin-top:26px">${btn(CTA.construction, "contact.html", { kind: "btn--gold" })}</div>
-      </div>
-    </div>
-
     ${CONSTRUCTION.map((c, i) => `
     <article class="proj construction-card construction-card--panel ${i === 1 ? "construction-card--alt" : ""} ${i % 2 ? "proj--flip" : ""} rv" id="${esc(c.key)}"${i ? ' style="margin-top:clamp(70px,9vw,140px)"' : ""}>
       <div class="proj__media zoom">

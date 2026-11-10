@@ -62,7 +62,7 @@ console.log("sitemap.xml + robots.txt written for " + Object.keys(pages).length 
    as the rest of the site so it can't drift out of sync. */
 const llmsTxt = `# ${CO.name}
 
-> ${CO.line} ${CO.promise}
+> ${CO.line}
 
 Hill Bottom Properties is a real estate developer based in Addis Ababa, Ethiopia,
 serving buyers both in Ethiopia and the Ethiopian diaspora (US, UK, Europe).

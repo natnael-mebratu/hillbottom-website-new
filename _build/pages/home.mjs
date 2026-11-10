@@ -172,7 +172,6 @@ ${welcome(0, WELCOME)}
   <div class="wrap">
     <div class="head head--split rv" style="margin-bottom:clamp(44px,5vw,72px)">
       <h2 class="d2">Why Hillbottom?</h2>
-      <div class="head__side"><p>${esc(CO.promise)}</p></div>
     </div>
     <ul class="ledger rv">
       ${PILLARS.map((p) => `
@@ -251,8 +250,7 @@ ${testimonialsSection()}
 <section class="ch ch--paper-2 pad home-stories">
   <div class="wrap">
     <div class="stories-head rv">
-      <div><h2 class="d2">Latest Updates and Insights</h2>
-      <p>Expert guides, investment analysis, and market insights — written for buyers, investors, and the Ethiopian diaspora.</p></div>
+      <div><h2 class="d2">Latest Updates and Insights</h2></div>
       ${link("All Articles", "news.html")}
     </div>
     <div class="grid grid--3">${POSTS.slice(0, 3).map((p) => storyCard(p, 0, "news/").replace('<p class="mark">', STORY_ICON + '<p class="mark">')).join("")}</div>
@@ -270,9 +268,6 @@ ${testimonialsSection()}
           <a class="btn btn--ghost" href="${CO.telHref}">${ICON.phone}${esc(CO.tel)}</a>
         </div>
       </div>
-    </div>
-    <div class="home-inquiry__layout">
-      ${inquiryForm(0, "home-inquiry")}
       <div class="home-inquiry__map project-location rv">
         <div class="project-location__map">${googleMapEmbedByQuery(SALES_OFFICE.mapQuery, `Google Maps view of the ${SALES_OFFICE.name}, Addis Ababa`)}</div>
         <div class="project-location__card">
@@ -281,6 +276,9 @@ ${testimonialsSection()}
           <a class="contact-map__open-link" href="https://www.google.com/maps/place/?q=place_id:${SALES_OFFICE.placeId}" target="_blank" rel="noreferrer">Open in Google Maps ${ICON.arrow}</a>
         </div>
       </div>
+    </div>
+    <div class="home-inquiry__layout">
+      ${inquiryForm(0, "home-inquiry")}
     </div>
   </div>
 </section>

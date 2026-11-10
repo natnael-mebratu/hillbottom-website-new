@@ -21,7 +21,6 @@ const mergeLiveProject = (key) => liveProjectBySlug[key] ?? null;
 export const CO = {
   name: "Hill Bottom Properties",
   line: "Luxury Homes and Vibrant Communities in the Heart of Addis Ababa.",
-  promise: "Transparency. Timelines. Technical Excellence.",
   email: "info@hillbottomproperties.com",
   tel: "+251 116 390 420",
   telHref: "tel:+251116390420",
@@ -227,10 +226,10 @@ export const KAZA_NOTE = [
 ];
 
 export const KAZA_CONTEXT = [
-  { t: "UN Headquarters", d: "The global nerve center of Africa." },
+  { t: "UNECA", d: "The global nerve center of Africa." },
   { t: "Addis Sport Park", d: "6 Hectares — 25+ World-Class Facilities." },
-  { t: "Sheraton Addis", d: "A landmark of hospitality and prestige. Entertainment, restaurants, and rooftop experiences at your reach." },
-  { t: "Kazanchis Park", d: "Urban greenery and open-air leisure in one of the city's most established green zones." },
+  { t: "International Hotels", d: "7 international hotels within 400 meters, including Radisson Blu and InterContinental." },
+  { t: "Kazanchis Aquarium", d: "A nearby family attraction in the Kazanchis area." },
 ];
 
 export const KAZA_GALLERY = [
