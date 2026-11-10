@@ -156,7 +156,7 @@ export const header = (d, current) => `
       <div class="nav__more" data-nav-more>
         <button type="button" class="nav__more-btn" aria-expanded="false" aria-haspopup="true" aria-controls="hb-nav-more-menu">Explore${ICON.chevronDown}</button>
         <div class="nav__more-menu" id="hb-nav-more-menu" role="menu">
-          ${NAV_SECONDARY.map((n) => `<a role="menuitem" href="${up(d)}${n.href}"${current === n.href ? ' aria-current="page"' : ""}>${esc(n.label)}</a>`).join("")}
+          ${NAV_SECONDARY.map((n) => `<a role="menuitem" href="${up(d)}${n.href}"${current === n.href ? ' aria-current="page"' : ""}>${esc(n.label)}${n.note ? `<em>${esc(n.note)}</em>` : ""}</a>`).join("")}
         </div>
       </div>
     </nav>
@@ -169,7 +169,7 @@ export const header = (d, current) => `
 <div class="drawer" id="hb-drawer" aria-hidden="true" inert>
   ${NAV.map((n) => `<a class="dl" href="${up(d)}${n.href}">${esc(n.label)}${n.note ? `<em>${esc(n.note)}</em>` : ""}</a>`).join("")}
   <p class="dl--more-label">Explore</p>
-  ${NAV_SECONDARY.map((n) => `<a class="dl dl--sub" href="${up(d)}${n.href}">${esc(n.label)}</a>`).join("")}
+  ${NAV_SECONDARY.map((n) => `<a class="dl dl--sub" href="${up(d)}${n.href}">${esc(n.label)}${n.note ? `<em>${esc(n.note)}</em>` : ""}</a>`).join("")}
   <div class="btn-row">
     <a class="btn" href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}WhatsApp</a>
     <a class="btn btn--gold" href="${up(d)}contact.html">${CTA.project}</a>

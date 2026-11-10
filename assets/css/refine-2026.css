@@ -365,3 +365,11 @@
 .chatw__foot p{margin:0;font-family:var(--sans);font-size:.72rem;color:rgba(255,255,255,.4)}
 .chatw__foot .btn{width:100%;justify-content:center;font-size:.76rem;padding:.85em 1em}
 @media(prefers-reduced-motion:reduce){.chatw__panel,.chatw__fab,.chatw__fab-icon{transition:none}.chatw__fab{animation:none}}
+
+/* ---------- 6. Section-to-section breathing room ---------------------------
+   Urban Kaza and Recreation Center stack several full-bleed sections back to
+   back; each one's own top/bottom padding reads as interior whitespace, not
+   as a seam between sections, so adjacent sections visually run together.
+   Add a visible gap at every section boundary on these two pages only. */
+.urban-kaza-page .ch + .ch,
+.recreation-page .ch + .ch{margin-top:clamp(28px,4vw,56px)}
