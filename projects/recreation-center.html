@@ -158,6 +158,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     <div class="rec-zones rv" data-zones>
       <div class="rec-zones__tabs" role="tablist" aria-label="Interior zones">
         <button type="button" role="tab" id="tab-arrival" aria-controls="zone-arrival" aria-selected="true" tabindex="0"><span>Arrival</span><small>02</small></button><button type="button" role="tab" id="tab-beauty" aria-controls="zone-beauty" aria-selected="false" tabindex="-1"><span>Salon &amp; Beauty</span><small>07</small></button><button type="button" role="tab" id="tab-wellness" aria-controls="zone-wellness" aria-selected="false" tabindex="-1"><span>Spa &amp; Wellness</span><small>03</small></button><button type="button" role="tab" id="tab-fitness" aria-controls="zone-fitness" aria-selected="false" tabindex="-1"><span>Fitness</span><small>03</small></button><button type="button" role="tab" id="tab-pool" aria-controls="zone-pool" aria-selected="false" tabindex="-1"><span>Pool Deck</span><small>01</small></button>
+        <button type="button" role="tab" id="tab-inside-amenities" aria-controls="zone-inside-amenities" aria-selected="false" tabindex="-1"><span>What's Inside</span><small>11</small></button>
       </div>
       <button class="rec-stage" type="button" data-stage aria-label="View this render full screen">
         <img class="rec-stage__bg" src="../assets/img/rec-reception-02-800.webp" alt="" aria-hidden="true">
@@ -203,70 +204,61 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
           <li><a href="../assets/img/rec-pool-1400.webp" data-full="../assets/img/rec-pool-1400.webp" data-thumb="../assets/img/rec-pool-800.webp" data-cap="Swimming pool deck" aria-label="Show Swimming pool deck"><img src="../assets/img/rec-pool-800.webp" alt="" width="1280" height="720" loading="lazy" decoding="async"></a></li>
         </ul>
       </div>
+      <div class="rec-zone rec-zone--amenities" role="tabpanel" id="zone-inside-amenities" aria-labelledby="tab-inside-amenities" hidden>
+        <ol class="rec-amenity-grid rv">
+          <li class="rec-amenity-card" style="--amenity-i:0">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M5 20h14M7 20v-7a5 5 0 0 1 10 0v7"/><path pathLength="1" d="M9 7h6M10 4h4"/></svg></span>
+            <span class="rec-amenity-card__number">01</span>
+            <h3>Hair Salon</h3>
+          </li><li class="rec-amenity-card" style="--amenity-i:1">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M7 20h10M8 16h8M9 12h6"/><path pathLength="1" d="M8 3c0 2 2 2 2 4s-2 2-2 4M13 3c0 2 2 2 2 4s-2 2-2 4"/></svg></span>
+            <span class="rec-amenity-card__number">02</span>
+            <h3>Steam Sauna</h3>
+          </li><li class="rec-amenity-card" style="--amenity-i:2">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M4 18h16M6 18l2-9h8l2 9"/><path pathLength="1" d="M9 6h6M12 3v3"/></svg></span>
+            <span class="rec-amenity-card__number">03</span>
+            <h3>Morocco Bath (Hammam)</h3>
+          </li><li class="rec-amenity-card" style="--amenity-i:3">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M3 15c2 2 4 2 6 0s4-2 6 0 4 2 6 0"/><path pathLength="1" d="M3 19c2 2 4 2 6 0s4-2 6 0 4 2 6 0"/><path pathLength="1" d="M5 11h14"/></svg></span>
+            <span class="rec-amenity-card__number">04</span>
+            <h3>Swimming Pool</h3>
+          </li><li class="rec-amenity-card" style="--amenity-i:4">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M4 21V5h16v16M8 9h2M14 9h2M8 13h2M14 13h2M9 21v-4h6v4"/></svg></span>
+            <span class="rec-amenity-card__number">05</span>
+            <h3>Rental Office Space</h3>
+          </li><li class="rec-amenity-card" style="--amenity-i:5">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M5 8h12v7a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V8ZM17 10h2a2 2 0 0 1 0 4h-2"/><path pathLength="1" d="M8 4v2M12 4v2"/></svg></span>
+            <span class="rec-amenity-card__number">06</span>
+            <h3>Restaurant (Club House)</h3>
+          </li><li class="rec-amenity-card" style="--amenity-i:6">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M5 19c2-4 4-6 7-6s5 2 7 6"/><path pathLength="1" d="M8 8a4 4 0 1 1 8 0"/><path pathLength="1" d="M4 21h16"/></svg></span>
+            <span class="rec-amenity-card__number">07</span>
+            <h3>Children Playground</h3>
+          </li><li class="rec-amenity-card" style="--amenity-i:7">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M5 8h12v7a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V8"/><path pathLength="1" d="M17 10h2a2 2 0 0 1 0 4h-2"/></svg></span>
+            <span class="rec-amenity-card__number">08</span>
+            <h3>Café</h3>
+          </li><li class="rec-amenity-card" style="--amenity-i:8">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M4 18h16M6 18V8l6-4 6 4v10"/><path pathLength="1" d="M9 12h6"/></svg></span>
+            <span class="rec-amenity-card__number">09</span>
+            <h3>Event Space</h3>
+          </li><li class="rec-amenity-card" style="--amenity-i:9">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M3 18h18M5 18v-7l7-5 7 5v7"/><path pathLength="1" d="M8 14h8"/></svg></span>
+            <span class="rec-amenity-card__number">10</span>
+            <h3>Community Roof Terrace</h3>
+          </li><li class="rec-amenity-card" style="--amenity-i:10">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M4 10v4M7 8v8M17 8v8M20 10v4M7 12h10"/></svg></span>
+            <span class="rec-amenity-card__number">11</span>
+            <h3>In-building Recreation Facilities</h3>
+          </li>
+          <li class="rec-amenity-card rec-amenity-card--summary" style="--amenity-i:11">
+            <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M8 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z"/><path pathLength="1" d="M2 12h2M20 12h2M12 2v2M12 20v2M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></span>
+            <span class="rec-amenity-card__number">11</span>
+            <h3>Curated experiences. One destination.</h3>
+          </li>
+        </ol>
+      </div>
     </div>
-  </div>
-</section>
-
-<section class="ch ch--abyss pad rec-amenities">
-  <img class="rec-amenities__media" src="../assets/img/block-c-08-1400.webp" srcset="../assets/img/block-c-08-800.webp 800w, ../assets/img/block-c-08-1400.webp 1400w" sizes="100vw" alt="" loading="lazy" decoding="async">
-  <span class="rec-amenities__veil" aria-hidden="true"></span>
-  <div class="wrap">
-    <div class="head head--split rv rec-amenities__head">
-      <h2 class="d2">What's Inside</h2>
-      <div class="head__side"><p>Eleven curated facilities covering wellness, dining, business, and leisure — all under one roof.</p></div>
-    </div>
-    <ol class="rec-amenity-grid rv">
-      <li class="rec-amenity-card" style="--amenity-i:0">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M5 20h14M7 20v-7a5 5 0 0 1 10 0v7"/><path pathLength="1" d="M9 7h6M10 4h4"/></svg></span>
-        <span class="rec-amenity-card__number">01</span>
-        <h3>Hair Salon</h3>
-      </li><li class="rec-amenity-card" style="--amenity-i:1">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M7 20h10M8 16h8M9 12h6"/><path pathLength="1" d="M8 3c0 2 2 2 2 4s-2 2-2 4M13 3c0 2 2 2 2 4s-2 2-2 4"/></svg></span>
-        <span class="rec-amenity-card__number">02</span>
-        <h3>Steam Sauna</h3>
-      </li><li class="rec-amenity-card" style="--amenity-i:2">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M4 18h16M6 18l2-9h8l2 9"/><path pathLength="1" d="M9 6h6M12 3v3"/></svg></span>
-        <span class="rec-amenity-card__number">03</span>
-        <h3>Morocco Bath (Hammam)</h3>
-      </li><li class="rec-amenity-card" style="--amenity-i:3">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M3 15c2 2 4 2 6 0s4-2 6 0 4 2 6 0"/><path pathLength="1" d="M3 19c2 2 4 2 6 0s4-2 6 0 4 2 6 0"/><path pathLength="1" d="M5 11h14"/></svg></span>
-        <span class="rec-amenity-card__number">04</span>
-        <h3>Swimming Pool</h3>
-      </li><li class="rec-amenity-card" style="--amenity-i:4">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M4 21V5h16v16M8 9h2M14 9h2M8 13h2M14 13h2M9 21v-4h6v4"/></svg></span>
-        <span class="rec-amenity-card__number">05</span>
-        <h3>Rental Office Space</h3>
-      </li><li class="rec-amenity-card" style="--amenity-i:5">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M5 8h12v7a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V8ZM17 10h2a2 2 0 0 1 0 4h-2"/><path pathLength="1" d="M8 4v2M12 4v2"/></svg></span>
-        <span class="rec-amenity-card__number">06</span>
-        <h3>Restaurant (Club House)</h3>
-      </li><li class="rec-amenity-card" style="--amenity-i:6">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M5 19c2-4 4-6 7-6s5 2 7 6"/><path pathLength="1" d="M8 8a4 4 0 1 1 8 0"/><path pathLength="1" d="M4 21h16"/></svg></span>
-        <span class="rec-amenity-card__number">07</span>
-        <h3>Children Playground</h3>
-      </li><li class="rec-amenity-card" style="--amenity-i:7">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M5 8h12v7a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V8"/><path pathLength="1" d="M17 10h2a2 2 0 0 1 0 4h-2"/></svg></span>
-        <span class="rec-amenity-card__number">08</span>
-        <h3>Café</h3>
-      </li><li class="rec-amenity-card" style="--amenity-i:8">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M4 18h16M6 18V8l6-4 6 4v10"/><path pathLength="1" d="M9 12h6"/></svg></span>
-        <span class="rec-amenity-card__number">09</span>
-        <h3>Event Space</h3>
-      </li><li class="rec-amenity-card" style="--amenity-i:9">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M3 18h18M5 18v-7l7-5 7 5v7"/><path pathLength="1" d="M8 14h8"/></svg></span>
-        <span class="rec-amenity-card__number">10</span>
-        <h3>Community Roof Terrace</h3>
-      </li><li class="rec-amenity-card" style="--amenity-i:10">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M4 10v4M7 8v8M17 8v8M20 10v4M7 12h10"/></svg></span>
-        <span class="rec-amenity-card__number">11</span>
-        <h3>In-building Recreation Facilities</h3>
-      </li>
-      <li class="rec-amenity-card rec-amenity-card--summary" style="--amenity-i:11">
-        <span class="rec-amenity-card__icon"><svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M8 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z"/><path pathLength="1" d="M2 12h2M20 12h2M12 2v2M12 20v2M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></span>
-        <span class="rec-amenity-card__number">11</span>
-        <h3>Curated experiences. One destination.</h3>
-      </li>
-    </ol>
   </div>
 </section>
 
@@ -318,19 +310,41 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 </div></div>
 </section>
 
-
-<section class="ch ch--abyss pad">
+<section class="ch ch--abyss pad" id="rec-inquiry">
   <div class="wrap">
-    <div class="head head--split rv">
+    <div class="head head--split rv" style="margin-bottom:clamp(36px,4vw,56px)">
       <h2 class="d2">Register your interest early</h2>
       <div class="head__side">
         <p>Priority access for Hill Bottom Village residents and early registrants. Commercial leasing enquiries also welcome.</p>
-        <div class="btn-row" style="margin-top:28px">
-          <a class="btn btn--gold" href="../contact.html">Register Interest</a>
-          <a class="btn " href="https://wa.me/251992707070" target="_blank" rel="noreferrer">WhatsApp Us</a>
-        </div>
       </div>
     </div>
+    
+<form class="form rv" data-inquiry novalidate id="rec-inquiry">
+  <div class="form__ok" role="status" tabindex="-1"><div><b>Inquiry received</b><p>Our sales team will contact you shortly. For the fastest reply, message us on WhatsApp at +251 99 270 7070.</p></div></div>
+  <div class="form__fail" role="status"><div><b>Your inquiry has not been sent</b><p>Online delivery is not connected yet. Your details remain below. Please <a href="https://wa.me/251992707070" target="_blank" rel="noreferrer">contact our sales team on WhatsApp</a> at +251 99 270 7070.</p></div></div>
+  <div class="form__grid">
+    <p class="field"><label for="rec-inquiry-name">Full Name</label><input id="rec-inquiry-name" name="name" type="text" autocomplete="name" placeholder="Your full name" required><span class="field__err"></span></p>
+    <p class="field"><label for="rec-inquiry-email">Email</label><input id="rec-inquiry-email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required><span class="field__err"></span></p>
+  </div>
+  <div class="form__grid">
+    <p class="field"><label for="rec-inquiry-phone">Phone Number</label><input id="rec-inquiry-phone" name="phone" type="tel" autocomplete="tel" placeholder="+251 …" required><span class="field__err"></span></p>
+    <p class="field"><label for="rec-inquiry-country">Country of Residence</label><input id="rec-inquiry-country" name="country" type="text" autocomplete="country-name" placeholder="USA, UK, Ethiopia…"><span class="field__err"></span></p>
+  </div>
+  <div class="form__grid">
+    <p class="field"><label for="rec-inquiry-interest">Interested In</label>
+      <select id="rec-inquiry-interest" name="interest">
+        <option value="">Select interest</option>
+        <option>1 Bedroom Residence</option><option>2 Bedroom Residence</option><option>Investment Opportunity</option><option>General Inquiry</option>
+      </select><span class="field__err"></span></p>
+    <div aria-hidden="true"></div>
+  </div>
+  <p class="field"><label for="rec-inquiry-msg">Message (Optional)</label><textarea id="rec-inquiry-msg" name="message" placeholder="Any specific requirements or questions?"></textarea><span class="field__err"></span></p>
+  <div class="btn-row" style="align-items:center;gap:22px">
+    <button class="btn btn--gold" type="submit" disabled>Send Inquiry</button>
+    <span class="form__note">We respond within 24 hours on business days. Fastest response via WhatsApp.</span>
+  </div>
+  <noscript><p>Please enable JavaScript to use this form, or contact our sales team on <a href="https://wa.me/251992707070">WhatsApp</a>.</p></noscript>
+</form>
   </div>
 </section>
 

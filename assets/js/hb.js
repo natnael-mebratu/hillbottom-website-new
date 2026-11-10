@@ -383,8 +383,29 @@
     all.forEach(function (a, i) {
       a.addEventListener("click", function (e) { e.preventDefault(); paint(i); });
     });
+    // A tab's panel may hold no photos at all (e.g. a "What's Inside"
+    // facilities tab folded in alongside the photo zones) — paint() assumes
+    // every panel has at least one [data-full], so route those through a
+    // plain show/hide instead of the stage/filmstrip machinery.
+    var showPanel = function (panel, tab) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (p) { p.hidden = p !== panel; });
+      box.classList.add("is-text-zone");
+    };
     tabs.forEach(function (t, ti) {
-      t.addEventListener("click", function () { paint(all.indexOf($("[data-full]", doc.getElementById(t.getAttribute("aria-controls"))))); });
+      t.addEventListener("click", function () {
+        var panel = doc.getElementById(t.getAttribute("aria-controls"));
+        var firstShot = $("[data-full]", panel);
+        if (firstShot) {
+          box.classList.remove("is-text-zone");
+          paint(all.indexOf(firstShot));
+        } else {
+          showPanel(panel, t);
+        }
+      });
       t.addEventListener("keydown", function (e) {
         var k = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
         if (!k) return;

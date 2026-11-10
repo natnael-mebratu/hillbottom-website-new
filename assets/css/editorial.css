@@ -43,7 +43,7 @@ input,textarea{caret-color:var(--accent)}
 .hero::before,.band::before,.ch::before,.ftr::before{display:none}
 .hero__media{inset:0}
 .hero__in{padding-top:130px;padding-bottom:80px}
-.hero--short{min-height:74svh}
+.hero--short{min-height:56svh}
 .hero--short .hero__stage{max-width:1000px}
 .hero .ridge,.band .ridge{display:none}
 /* Plain seam between a full-bleed hero/media section and whatever follows —
@@ -160,7 +160,7 @@ body.js.ready .rv,body.js.ready .alt{transition:opacity 700ms var(--ease-ui),tra
   :root{--gut:24px}
   .hdr{top:10px}.hdr .wrap{padding-inline:12px}.hdr__in{padding-inline:16px 8px}
   .lockup__mark{width:27px;height:27px}.lockup__type b{font-size:.8rem}
-  .hero__in{padding-top:130px;padding-bottom:64px}.hero--short{min-height:76svh}
+  .hero__in{padding-top:130px;padding-bottom:64px}.hero--short{min-height:58svh}
   .home-editorial .hero{min-height:calc(100svh - 56px)}
   .home-editorial .hero .d1{font-size:clamp(3.1rem,12vw,5.4rem);max-width:10ch}
   .home-editorial .hero__media img{object-position:38% center}

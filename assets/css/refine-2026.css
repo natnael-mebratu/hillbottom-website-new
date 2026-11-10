@@ -169,6 +169,10 @@
 .rec-stage__zoom svg{width:13px;height:13px}
 .rec-stage:hover .rec-stage__zoom,.rec-stage:focus-visible .rec-stage__zoom{opacity:1;transform:none}
 .rec-stage__bar{display:flex;align-items:center;gap:20px;padding:18px 0 22px;border-bottom:1px solid rgba(246,248,251,.1)}
+/* The "What's Inside" tab holds facility cards, not photos — hide the
+   shared image stage/filmstrip bar while that tab is active rather than
+   showing an empty or stale photo viewer above its content. */
+.rec-zones.is-text-zone [data-stage],.rec-zones.is-text-zone .rec-stage__bar{display:none}
 .rec-stage__bar p{margin:0;flex:1;color:#F6F8FB;font-size:1rem;font-weight:300}
 .rec-stage__count{color:#8C9CB3;font-size:.72rem;letter-spacing:.16em;font-variant-numeric:tabular-nums}
 .rec-stage__nav{display:flex;gap:6px}

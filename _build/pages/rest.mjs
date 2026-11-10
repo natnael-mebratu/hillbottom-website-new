@@ -495,6 +495,7 @@ const recInside = (d) => {
     <div class="rec-zones rv" data-zones>
       <div class="rec-zones__tabs" role="tablist" aria-label="Interior zones">
         ${REC_ZONES.map((z, i) => `<button type="button" role="tab" id="tab-${z.id}" aria-controls="zone-${z.id}" aria-selected="${i === 0}" tabindex="${i ? -1 : 0}"><span>${esc(z.name)}</span><small>${String(z.shots.length).padStart(2, "0")}</small></button>`).join("")}
+        <button type="button" role="tab" id="tab-inside-amenities" aria-controls="zone-inside-amenities" aria-selected="false" tabindex="-1"><span>What's Inside</span><small>${String(REC_FACILITIES.length).padStart(2, "0")}</small></button>
       </div>
       <button class="rec-stage" type="button" data-stage aria-label="View this render full screen">
         <img class="rec-stage__bg" src="${u}${first[0]}-800.webp" alt="" aria-hidden="true">
@@ -519,6 +520,20 @@ const recInside = (d) => {
           }).join("")}
         </ul>
       </div>`).join("")}
+      <div class="rec-zone rec-zone--amenities" role="tabpanel" id="zone-inside-amenities" aria-labelledby="tab-inside-amenities" hidden>
+        <ol class="rec-amenity-grid rv">
+          ${REC_FACILITIES.map((facility, i) => `<li class="rec-amenity-card" style="--amenity-i:${i}">
+            <span class="rec-amenity-card__icon">${REC_ICONS[i]}</span>
+            <span class="rec-amenity-card__number">${String(i + 1).padStart(2, "0")}</span>
+            <h3>${esc(facility)}</h3>
+          </li>`).join("")}
+          <li class="rec-amenity-card rec-amenity-card--summary" style="--amenity-i:11">
+            <span class="rec-amenity-card__icon">${FEATURE_ICONS[5]}</span>
+            <span class="rec-amenity-card__number">11</span>
+            <h3>Curated experiences. One destination.</h3>
+          </li>
+        </ol>
+      </div>
     </div>
   </div>
 </section>`;
@@ -561,29 +576,6 @@ ${pageHero(1, {
 
 ${recInside(1)}
 
-<section class="ch ch--abyss pad rec-amenities">
-  <img class="rec-amenities__media" src="../assets/img/block-c-08-1400.webp" srcset="../assets/img/block-c-08-800.webp 800w, ../assets/img/block-c-08-1400.webp 1400w" sizes="100vw" alt="" loading="lazy" decoding="async">
-  <span class="rec-amenities__veil" aria-hidden="true"></span>
-  <div class="wrap">
-    <div class="head head--split rv rec-amenities__head">
-      <h2 class="d2">What's Inside</h2>
-      <div class="head__side"><p>Eleven curated facilities covering wellness, dining, business, and leisure — all under one roof.</p></div>
-    </div>
-    <ol class="rec-amenity-grid rv">
-      ${REC_FACILITIES.map((facility, i) => `<li class="rec-amenity-card" style="--amenity-i:${i}">
-        <span class="rec-amenity-card__icon">${REC_ICONS[i]}</span>
-        <span class="rec-amenity-card__number">${String(i + 1).padStart(2, "0")}</span>
-        <h3>${esc(facility)}</h3>
-      </li>`).join("")}
-      <li class="rec-amenity-card rec-amenity-card--summary" style="--amenity-i:11">
-        <span class="rec-amenity-card__icon">${FEATURE_ICONS[5]}</span>
-        <span class="rec-amenity-card__number">11</span>
-        <h3>Curated experiences. One destination.</h3>
-      </li>
-    </ol>
-  </div>
-</section>
-
 <section class="ch ch--paper pad rec-gallery">
   <div class="wrap rec-gallery__head">
     <div class="head rv">
@@ -593,12 +585,17 @@ ${recInside(1)}
   <div class="rec-gallery__wall">${galleryGrid(REC_GALLERY, 1)}</div>
 </section>
 
-${ctaBand(1, {
-  title: "Register your interest early",
-  body: "Priority access for Hill Bottom Village residents and early registrants. Commercial leasing enquiries also welcome.",
-  primary: "Register Interest", primaryHref: "contact.html",
-  secondary: "WhatsApp Us", secondaryHref: CO.waHref,
-})}
+<section class="ch ch--abyss pad" id="rec-inquiry">
+  <div class="wrap">
+    <div class="head head--split rv" style="margin-bottom:clamp(36px,4vw,56px)">
+      <h2 class="d2">Register your interest early</h2>
+      <div class="head__side">
+        <p>Priority access for Hill Bottom Village residents and early registrants. Commercial leasing enquiries also welcome.</p>
+      </div>
+    </div>
+    ${inquiryForm(1, "rec-inquiry")}
+  </div>
+</section>
 ${lightbox()}
 `,
 });
