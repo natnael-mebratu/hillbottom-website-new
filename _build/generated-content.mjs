@@ -167,6 +167,15 @@ export const TEAM_MEMBERS = [
     "bio": "Leads campaign strategy and brand presence across Hill Bottom's developments.",
     "photoUrl": "assets/img/anna-charles-1400.webp",
     "sortOrder": 5
+  },
+  {
+    "id": 6,
+    "name": "Rewina Berhane",
+    "role": "Planning, Monitoring and Coordination Manager",
+    "department": "Executive Team",
+    "bio": "Coordinates planning and monitoring across every Hill Bottom development, keeping delivery on track end to end.",
+    "photoUrl": "assets/img/rewina-berhane-1400.webp",
+    "sortOrder": 6
   }
 ];
 
