@@ -98,7 +98,7 @@ export const NAV = [
    page. */
 export const NAV_SECONDARY = [
   { href: "vr-tours.html", label: "Virtual Tours" },
-  { href: "price-calculator.html", label: "Price Calculator", note: "Coming Soon" },
+  { href: "price-calculator.html", label: "Price Calculator" },
   { href: "careers.html", label: "Careers" },
   { href: "marketing.html", label: "Campaign Feed" },
   { href: "sister-companies.html", label: "Sister Companies" },
