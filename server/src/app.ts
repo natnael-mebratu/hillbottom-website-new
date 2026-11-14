@@ -13,6 +13,7 @@ import { leadsRouter } from "./routes/leads.js";
 import { sisterCompaniesRouter } from "./routes/sister-companies.js";
 import { publishRouter } from "./routes/publish.js";
 import { uploadsRouter, UPLOADS_DIR } from "./routes/uploads.js";
+import { jobsRouter } from "./routes/jobs.js";
 
 export function createApp() {
   const app = express();
@@ -40,6 +41,7 @@ export function createApp() {
   app.use("/api/sister-companies", sisterCompaniesRouter);
   app.use("/api/publish", publishRouter);
   app.use("/api/uploads", uploadsRouter);
+  app.use("/api/jobs", jobsRouter);
 
   return app;
 }

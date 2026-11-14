@@ -183,3 +183,8 @@ export const TEAM_MEMBERS = [
 // needed — rendered as-is; the section is skipped on the home page when
 // this is empty.
 export const TESTIMONIALS_LIVE = [];
+
+// careers.html's open-roles list, by sortOrder. No merge needed — rendered
+// as-is; careers.html falls back to a "no open roles right now" message
+// when this is empty.
+export const JOBS = [];

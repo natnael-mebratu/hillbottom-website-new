@@ -1,6 +1,6 @@
-import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, MARKETING_POSTS, SISTER_COMPANIES } from "../data.mjs";
+import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, MARKETING_POSTS, SISTER_COMPANIES, JOBS, UK_PRICE_LIST } from "../data.mjs";
 import { page, facts, alt, plate, img, btn, link, esc, jsonScript, ICON } from "../ui.mjs";
-import { pageHero, ctaBand, inquiryForm } from "./parts.mjs";
+import { pageHero, ctaBand, inquiryForm, jobApplyForm } from "./parts.mjs";
 
 const out = {};
 
@@ -542,44 +542,167 @@ ${ctaBand(0, {
 `,
 });
 
-/* ===================== PRICE CALCULATOR (placeholder) =====================
-   Nav + home hero now link here (client request: a third hero button).
-   The real self-serve calculator depends on financing terms and unit
-   inventory not yet confirmed — see the client's own reference file — so
-   this holds the slot with the same "Coming Soon" pattern used elsewhere
-   (sister-companies.html's hold:true entries) rather than a dead link or a
-   half-built tool quoting numbers nobody's approved yet. */
+/* ===================== PRICE CALCULATOR ===================================
+   Urban Kaza only — it's the only project with a published price list
+   (client-supplied sheet, see UK_PRICE_LIST in data.mjs). No installment
+   schedule yet: the client hasn't finalized financing terms, so this
+   shows total price + the 15% down-payment and points to Contact for a
+   payment plan rather than inventing one. Village/Recreation Center have
+   no price list yet, so they're simply not offered here (not even a
+   "coming soon" placeholder per unit — the client asked to stay quiet on
+   those for now). */
 out["price-calculator.html"] = page({
   current: "",
   path: "price-calculator.html",
   image: "kaza-apt-01-v2",
   title: "Price Calculator — Hill Bottom Properties",
-  desc: "A self-serve way to estimate your payment plan across Hill Bottom developments. Coming soon — contact our sales team for a personalized quote today.",
+  desc: "Estimate the total price and down-payment for an Urban Kaza residence by unit type and floor.",
   bodyClass: "price-calculator-page",
+  head: `<style>
+    .calc-box{max-width:620px;margin:0 auto;padding:clamp(28px,4vw,44px);border:1px solid var(--line);border-radius:4px}
+    .calc-box .form__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .calc-result{margin-top:28px;padding-top:24px;border-top:1px solid var(--line);display:none}
+    .calc-result.is-on{display:block}
+    .calc-result dl{display:grid;grid-template-columns:1fr auto;gap:10px 16px;margin:0}
+    .calc-result dt{font-family:var(--sans);font-size:.78rem;letter-spacing:.04em;color:var(--fg-2)}
+    .calc-result dd{margin:0;font-family:var(--sans);font-weight:600;font-size:1rem;color:var(--fg);text-align:right}
+    .calc-result dd.is-big{font-size:1.3rem;color:var(--accent)}
+    .calc-note{margin-top:18px;font-family:var(--sans);font-size:.8rem;line-height:1.6;color:var(--fg-2)}
+    @media(max-width:600px){.calc-box .form__grid{grid-template-columns:1fr}}
+  </style>`,
   body: `
 ${pageHero(0, {
   title: "Price Calculator",
-  sub: "Estimate your downpayment and installment schedule across our developments — coming soon.",
+  sub: "Estimate the total price and down-payment for an Urban Kaza residence.",
   imgName: "kaza-apt-01-v2", alt: "Urban Kaza apartment interior",
   stations: [],
 })}
 
 <section class="ch ch--paper pad">
-  <div class="wrap" style="text-align:center;max-width:720px;margin-inline:auto">
-    <p class="mark mark--accent">Coming Soon</p>
-    <h2 class="d2">A clearer way to plan your purchase.</h2>
-    <p class="body" style="margin-top:18px">We're building a self-serve calculator so you can model your downpayment, installment schedule, and total cost across our developments right here on the site. While it's in the works, our sales team can walk you through the real numbers for any unit today.</p>
-    <div class="btn-row" style="justify-content:center;margin-top:30px">
-      ${btn("Message on WhatsApp", CO.waHref, { kind: "btn--gold", icon: "wa", ext: true })}
-      ${btn("Contact Sales", "contact.html", {})}
+  <div class="wrap">
+    <div class="calc-box">
+      <p class="mark mark--accent">Urban Kaza</p>
+      <h2 class="d2" style="margin-top:6px">Select a unit and floor.</h2>
+      <div class="form__grid" style="margin-top:24px">
+        <p class="field"><label for="calc-unit">Unit</label>
+          <select id="calc-unit">
+            ${UK_PRICE_LIST.map((u, i) => `<option value="${i}">${esc(u.id)} — ${esc(u.type)} (${u.area} m²)</option>`).join("")}
+          </select>
+        </p>
+        <p class="field"><label for="calc-floor">Floor</label>
+          <select id="calc-floor"></select>
+        </p>
+      </div>
+      <div class="calc-result" id="calc-result">
+        <dl>
+          <dt>Total Area</dt><dd id="calc-area"></dd>
+          <dt>Price per m²</dt><dd id="calc-ppm"></dd>
+          <dt>Total Price</dt><dd id="calc-total" class="is-big"></dd>
+          <dt>Down-Payment (15%)</dt><dd id="calc-down" class="is-big"></dd>
+        </dl>
+      </div>
+      <p class="calc-note">Prices are in ETB and current as of our latest published price list. An installment plan is available — <a href="contact.html">contact our sales team</a> for current financing terms. Village and Recreation Center pricing isn't published yet.</p>
     </div>
   </div>
 </section>
 
 ${ctaBand(0, {
-  title: "Explore what's available now.",
-  body: "See current developments, unit types, and status while the calculator is being built.",
-  primary: "View Residences", primaryHref: "projects.html",
+  title: "Ready to talk numbers?",
+  body: "Message our sales team on WhatsApp or book a call to walk through financing and availability for any unit.",
+  primary: "Message on WhatsApp", primaryHref: CO.waHref,
+  secondary: "Contact Us", secondaryHref: "contact.html",
+})}
+`,
+  scripts: `<script>(function(){
+  var DATA = ${jsonScript(UK_PRICE_LIST)};
+  var unitSel = document.getElementById("calc-unit");
+  var floorSel = document.getElementById("calc-floor");
+  var result = document.getElementById("calc-result");
+  var fmt = function (n) { return n.toLocaleString("en-US") + " ETB"; };
+  function fillFloors() {
+    var unit = DATA[unitSel.value];
+    floorSel.innerHTML = unit.bands.map(function (b, i) { return "<option value=\\"" + i + "\\">" + b.floors + "</option>"; }).join("");
+    render();
+  }
+  function render() {
+    var unit = DATA[unitSel.value];
+    var band = unit.bands[floorSel.value];
+    if (!band) return;
+    document.getElementById("calc-area").textContent = unit.area + " m\\u00B2";
+    document.getElementById("calc-ppm").textContent = fmt(band.pricePerM2);
+    document.getElementById("calc-total").textContent = fmt(band.total);
+    document.getElementById("calc-down").textContent = fmt(band.down);
+    result.classList.add("is-on");
+  }
+  unitSel.addEventListener("change", fillFloors);
+  floorSel.addEventListener("change", render);
+  fillFloors();
+})();</script>`,
+});
+
+/* ===================== CAREERS ============================================
+   Open roles, admin-managed (see server/src/routes/jobs.ts + the admin
+   panel's Careers section). JOBS comes from generated-content.mjs, fetched
+   fresh before every publish — empty until an admin posts a role. */
+const jobCard = (job) => `
+<article class="job-card ch--paper rv">
+  <div class="job-card__head">
+    <h3>${esc(job.title)}</h3>
+    <p class="job-card__meta">${[job.department, job.location, job.employmentType].filter(Boolean).map(esc).join(" · ")}</p>
+  </div>
+  <p class="job-card__desc">${esc(job.description)}</p>
+  ${jobApplyForm(job)}
+</article>`;
+
+out["careers.html"] = page({
+  current: "",
+  path: "careers.html",
+  image: "hillbottom-interior",
+  title: "Careers — Hill Bottom Properties",
+  desc: "Open roles at Hill Bottom Properties. Join the team delivering Addis Ababa's next generation of residential and commercial developments.",
+  bodyClass: "careers-page",
+  head: `<style>
+    .job-list{display:grid;gap:22px;margin-top:8px}
+    .job-card{padding:clamp(24px,3.2vw,38px);border:1px solid var(--line);border-radius:4px}
+    .job-card__head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 20px}
+    .job-card__head h3{margin:0;font-family:var(--display);font-weight:300;font-size:clamp(1.25rem,2.4vw,1.6rem);color:var(--fg)}
+    .job-card__meta{margin:0;font-family:var(--sans);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2)}
+    .job-card__desc{margin:16px 0 22px;font-family:var(--sans);font-size:.95rem;line-height:1.7;color:var(--fg-2);max-width:68ch}
+    .job-apply summary{cursor:pointer;list-style:none;display:inline-flex}
+    .job-apply summary::-webkit-details-marker{display:none}
+    .job-apply[open] summary{display:none}
+    .job-apply form{margin-top:24px}
+    .careers-empty{margin-top:24px;padding:clamp(40px,6vw,70px);text-align:center;border:1px dashed var(--line);border-radius:3px;color:var(--fg-2)}
+  </style>`,
+  body: `
+${pageHero(0, {
+  title: "Careers",
+  sub: "Join the team delivering Addis Ababa's next generation of residential and commercial developments.",
+  imgName: "hillbottom-interior", alt: "Hill Bottom Properties interior",
+  stations: [],
+})}
+
+<section class="ch ch--paper pad">
+  <div class="wrap">
+    <div class="head head--split rv" style="margin-bottom:clamp(28px,3vw,44px)">
+      <h2 class="d2">Open Roles</h2>
+      <div class="head__side"><p>We're always looking for people who care about building things well. If a role below fits, apply directly — no account needed.</p></div>
+    </div>
+    ${JOBS.length === 0 ? `
+    <div class="careers-empty">
+      <p class="mark" style="margin-bottom:10px">No open roles right now</p>
+      <p>Check back soon, or message us on WhatsApp if you'd like to introduce yourself for future openings.</p>
+    </div>` : `
+    <div class="job-list">
+      ${JOBS.map(jobCard).join("")}
+    </div>`}
+  </div>
+</section>
+
+${ctaBand(0, {
+  title: "Don't see the right role?",
+  body: "We're growing fast. Message us on WhatsApp and tell us what you do — we'll keep you in mind as new roles open.",
+  primary: "Message on WhatsApp", primaryHref: CO.waHref,
   secondary: "Contact Us", secondaryHref: "contact.html",
 })}
 `,

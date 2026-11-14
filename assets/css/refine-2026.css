@@ -373,3 +373,19 @@
    Add a visible gap at every section boundary on these two pages only. */
 .urban-kaza-page .ch + .ch,
 .recreation-page .ch + .ch{margin-top:clamp(28px,4vw,56px)}
+
+/* ---------- 7. Cinematic auto-fade gallery ---------------------------------
+   Replaces the plain photo grid on "Life at Urban Kaza" and "Architectural
+   Renders" — one photo fills the space and cross-fades into the next on
+   its own; small dots below show position and let a visitor jump directly.
+   JS (hb.js's [data-gal-fade] block) just toggles .is-active; the fade
+   itself is a CSS transition so it never stutters on the timer tick. */
+.gal-fade__stage{position:relative;width:100%;border-radius:2px;overflow:hidden}
+.gal-fade__slide{position:absolute;inset:0;display:block;width:100%;height:100%;padding:0;border:0;background:none;opacity:0;pointer-events:none;transition:opacity 1.1s ease}
+.gal-fade__slide.is-active{opacity:1;pointer-events:auto;position:relative}
+.gal-fade__slide .plate{height:100%}
+.gal-fade__dots{display:flex;justify-content:center;gap:9px;margin-top:18px}
+.gal-fade__dots button{width:7px;height:7px;padding:0;border-radius:50%;border:1px solid color-mix(in srgb,var(--fg) 35%,transparent);background:transparent;cursor:pointer;transition:background-color .25s,border-color .25s,transform .25s}
+.gal-fade__dots button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);transform:scale(1.25)}
+@media(max-width:600px){.gal-fade__dots{gap:7px}}
+@media(prefers-reduced-motion:reduce){.gal-fade__slide{transition:none}}

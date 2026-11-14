@@ -50,6 +50,36 @@ export const inquiryForm = (d = 0, id = "inquiry", tags = []) => `
   <noscript><p>Please enable JavaScript to use this form, or contact our sales team on <a href="${CO.waHref}">WhatsApp</a>.</p></noscript>
 </form>`;
 
+/* careers.html's per-job "Apply" form. Separate from inquiryForm() because
+   it needs a file field (the CV) — FormData with a file still works with
+   fetch, but it's submitted by its own data-job-apply handler in hb.js
+   rather than the generic data-inquiry one, and posts to
+   window.HB_JOBS_ENDPOINT (set it to "<api base>/api/jobs/apply" once the
+   API is deployed — same deferred-config pattern as HB_FORM_ENDPOINT). */
+export const jobApplyForm = (job) => `
+<details class="job-apply">
+  <summary class="btn btn--gold">Apply for this role</summary>
+  <form class="form rv" data-job-apply novalidate id="apply-${job.id}">
+    <div class="form__ok" role="status" tabindex="-1"><div><b>Application received</b><p>Thank you for applying — our team will review your CV and reach out if it's a match.</p></div></div>
+    <div class="form__fail" role="status"><div><b>Your application has not been sent</b><p>Online delivery is not connected yet. Please email your CV directly to <a href="mailto:${esc(CO.email)}">${esc(CO.email)}</a> with "${esc(job.title)}" in the subject line.</p></div></div>
+    <input type="hidden" name="jobId" value="${job.id}">
+    <div class="form__grid">
+      <p class="field"><label for="apply-${job.id}-name">Full Name</label><input id="apply-${job.id}-name" name="fullName" type="text" autocomplete="name" placeholder="Your full name" required><span class="field__err"></span></p>
+      <p class="field"><label for="apply-${job.id}-email">Email</label><input id="apply-${job.id}-email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required><span class="field__err"></span></p>
+    </div>
+    <div class="form__grid">
+      <p class="field"><label for="apply-${job.id}-phone">Phone Number</label><input id="apply-${job.id}-phone" name="phone" type="tel" autocomplete="tel" placeholder="+251 …"><span class="field__err"></span></p>
+      <p class="field"><label for="apply-${job.id}-cv">CV (PDF or Word)</label><input id="apply-${job.id}-cv" name="cv" type="file" accept=".pdf,.doc,.docx" required><span class="field__err"></span></p>
+    </div>
+    <p class="field"><label for="apply-${job.id}-note">Cover Note (Optional)</label><textarea id="apply-${job.id}-note" name="coverNote" placeholder="Anything you'd like us to know?"></textarea><span class="field__err"></span></p>
+    <div class="btn-row" style="align-items:center;gap:22px">
+      <button class="btn btn--gold" type="submit">Submit Application</button>
+      <span class="form__note">We review every application and respond if it's a fit.</span>
+    </div>
+    <noscript><p>Please enable JavaScript to use this form, or email your CV to <a href="mailto:${esc(CO.email)}">${esc(CO.email)}</a>.</p></noscript>
+  </form>
+</details>`;
+
 /* Every page opens on imagery, cut into the chapter below by the ridge. */
 export const pageHero = (d, { title, sub, imgName, alt: altText, stations = [], tall = false, cut = "var(--paper)", heroClass = "", brand = "" }) => `
 <section class="hero ${tall ? "" : "hero--short"} ${heroClass}">

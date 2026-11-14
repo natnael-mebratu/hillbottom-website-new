@@ -4,9 +4,9 @@
    Items flagged `hold:true` are placeholders the client must replace. */
 
 import fs from "fs";
-import { PROJECTS_LIVE, MARKETING_POSTS, TEAM_MEMBERS, TESTIMONIALS_LIVE } from "./generated-content.mjs";
+import { PROJECTS_LIVE, MARKETING_POSTS, TEAM_MEMBERS, TESTIMONIALS_LIVE, JOBS } from "./generated-content.mjs";
 
-export { MARKETING_POSTS, TEAM_MEMBERS };
+export { MARKETING_POSTS, TEAM_MEMBERS, JOBS };
 
 export const POSTS = JSON.parse(fs.readFileSync(new URL("./blog.json", import.meta.url), "utf8"));
 
@@ -99,6 +99,7 @@ export const NAV = [
 export const NAV_SECONDARY = [
   { href: "vr-tours.html", label: "Virtual Tours" },
   { href: "price-calculator.html", label: "Price Calculator", note: "Coming Soon" },
+  { href: "careers.html", label: "Careers" },
   { href: "marketing.html", label: "Campaign Feed" },
   { href: "sister-companies.html", label: "Sister Companies" },
   { href: "news.html", label: "Insights" },
@@ -220,6 +221,43 @@ export const KAZA_UNITS = [
 export const KAZA_NOTE = [
   "All dimensions are provided by our design architects. Rooms are measured from structural elements' and architectural partitions' external faces and do not include finishes and tolerances.",
   "Drawings are not to scale. Actual suite area may slightly vary. The developer reserves the right to make alterations or revisions. Units are measured at typical floor level; column sizes may vary per floor.",
+];
+
+/* Urban Kaza price list (client-supplied sheet, Nov 2026). Down-payment is
+   always 15% of total. No installment schedule yet — the client hasn't
+   finalized financing terms (months/frequency/interest), so
+   price-calculator.html shows total + down-payment only and says the
+   installment plan is "available on request" rather than inventing one.
+   Urban Kaza only for now; other projects don't have a published price
+   list yet, so the calculator doesn't offer them. */
+export const UK_PRICE_LIST = [
+  { id: "UK 1", type: "Two Bedroom", area: 144.4, bands: [{ floors: "4 – 15 Floor", pricePerM2: 186000, total: 26858400, down: 4028760 }] },
+  { id: "UK 2", type: "Two Bedroom", area: 144.4, bands: [{ floors: "4 – 15 Floor", pricePerM2: 186000, total: 26858400, down: 4028760 }] },
+  { id: "UK 3", type: "Two Bedroom", area: 138.0, bands: [
+    { floors: "4 – 6 Floor", pricePerM2: 145000, total: 20010000, down: 3001500 },
+    { floors: "7 – 10 Floor", pricePerM2: 145915, total: 20136270, down: 3020441 },
+    { floors: "11 – 15 Floor", pricePerM2: 155978, total: 21524964, down: 3228745 },
+  ] },
+  { id: "UK 4", type: "Two Bedroom", area: 138.0, bands: [
+    { floors: "4 – 6 Floor", pricePerM2: 145000, total: 20010000, down: 3001500 },
+    { floors: "7 – 10 Floor", pricePerM2: 145915, total: 20136270, down: 3020441 },
+    { floors: "11 – 15 Floor", pricePerM2: 155978, total: 21524964, down: 3228745 },
+  ] },
+  { id: "UK 5", type: "One Bedroom", area: 103.0, bands: [
+    { floors: "4 – 6 Floor", pricePerM2: 145000, total: 15450000, down: 2317500 },
+    { floors: "7 – 10 Floor", pricePerM2: 145915, total: 15029245, down: 2254387 },
+    { floors: "11 – 15 Floor", pricePerM2: 155978, total: 16065734, down: 2409860 },
+  ] },
+  { id: "UK 6", type: "One Bedroom", area: 102.0, bands: [
+    { floors: "4 – 6 Floor", pricePerM2: 145000, total: 14790000, down: 2218500 },
+    { floors: "7 – 10 Floor", pricePerM2: 145915, total: 14883330, down: 2232500 },
+    { floors: "11 – 15 Floor", pricePerM2: 155978, total: 15909756, down: 2386463 },
+  ] },
+  { id: "UK 7", type: "Two Bedroom", area: 158.6, bands: [
+    { floors: "4 – 6 Floor", pricePerM2: 145000, total: 22997000, down: 3449550 },
+    { floors: "7 – 10 Floor", pricePerM2: 145915, total: 23142119, down: 3471318 },
+    { floors: "11 – 15 Floor", pricePerM2: 159969, total: 25371083, down: 3805663 },
+  ] },
 ];
 
 export const KAZA_CONTEXT = [

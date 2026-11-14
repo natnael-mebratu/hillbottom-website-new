@@ -299,6 +299,32 @@
     });
   }
 
+  /* ---- cinematic auto-fade gallery ----
+     One photo on top at a time (.is-active), cycling on a timer. Dots let a
+     visitor jump directly and restart the timer from there. Clicking the
+     visible photo still opens the normal lightbox — untouched, since each
+     slide keeps its own data-lb. Paused while the tab is hidden so it
+     doesn't run through photos nobody's looking at; skipped entirely under
+     prefers-reduced-motion (dots still work, just no auto-advance). */
+  $$("[data-gal-fade]").forEach(function (box) {
+    var slides = $$(".gal-fade__slide", box), dots = $$(".gal-fade__dots button", box);
+    if (slides.length < 2) return;
+    var i = 0, timer = null;
+    var go = function (n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach(function (s, j) { s.classList.toggle("is-active", j === i); });
+      dots.forEach(function (d, j) { d.setAttribute("aria-selected", String(j === i)); });
+    };
+    var start = function () {
+      if (reduced || timer) return;
+      timer = setInterval(function () { go(i + 1); }, 4800);
+    };
+    var stop = function () { clearInterval(timer); timer = null; };
+    dots.forEach(function (d, j) { d.addEventListener("click", function () { stop(); go(j); start(); }); });
+    doc.addEventListener("visibilitychange", function () { if (doc.hidden) stop(); else start(); });
+    start();
+  });
+
   /* ---- gallery lightbox ---- */
   var lb = $(".lb");
   if (lb) {
@@ -505,6 +531,58 @@
         }
         if (!err) form.reset();
       });
+    });
+  });
+
+  /* ---- careers apply form ----
+     Needs its own submit handler (not submitInquiry's) because it carries
+     a file (the CV) — FormData still works with fetch, just posted to its
+     own endpoint. Same deferred-config pattern: stays inert until
+     window.HB_JOBS_ENDPOINT is set to the deployed API's /api/jobs/apply. */
+  var HB_JOBS_ENDPOINT = window.HB_JOBS_ENDPOINT || "";
+  $$("form[data-job-apply]").forEach(function (form) {
+    var ok = $(".form__ok", form);
+    var failEl = $(".form__fail", form);
+    var btn = $("button[type=submit]", form);
+    var invalidate = function (field, msg) {
+      var wrap = field.closest(".field");
+      wrap.classList.add("is-bad");
+      var err = $(".field__err", wrap);
+      if (err) err.textContent = msg;
+      field.setAttribute("aria-invalid", "true");
+    };
+    var clear = function (field) {
+      field.closest(".field").classList.remove("is-bad");
+      field.removeAttribute("aria-invalid");
+    };
+    $$("input,textarea", form).forEach(function (f) {
+      f.addEventListener("input", function () { clear(f); });
+      f.addEventListener("change", function () { clear(f); });
+    });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var bad = null;
+      var name = $("[name=fullName]", form), email = $("[name=email]", form), cv = $("[name=cv]", form);
+      if (name && name.value.trim().length < 2) { invalidate(name, "Please enter your full name."); bad = bad || name; }
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) { invalidate(email, "Please enter a valid email address, e.g. name@example.com."); bad = bad || email; }
+      if (cv && !cv.files.length) { invalidate(cv, "Please attach your CV."); bad = bad || cv; }
+      if (bad) { bad.focus(); return; }
+
+      if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = "Submitting…"; }
+      var done = function (err) {
+        if (btn) { btn.disabled = false; if (btn.dataset.label) btn.textContent = btn.dataset.label; }
+        var status = err ? failEl : ok;
+        if (status) {
+          status.classList.add("is-on");
+          status.focus({ preventScroll: true });
+          status.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+        }
+        if (!err) form.reset();
+      };
+      if (!HB_JOBS_ENDPOINT) { done(new Error("no-endpoint")); return; }
+      fetch(HB_JOBS_ENDPOINT, { method: "POST", body: new FormData(form) })
+        .then(function (r) { done(r.ok ? null : new Error("http-" + r.status)); })
+        .catch(function () { done(new Error("network")); });
     });
   });
 

@@ -182,6 +182,43 @@ export const testimonials = pgTable("testimonials", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+// Job openings shown on careers.html — admin posts/edits/removes, same
+// pattern as teamMembers. isOpen lets an admin hide a filled role without
+// losing its history (vs. deleting it outright).
+export const jobs = pgTable("jobs", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  department: varchar("department", { length: 255 }),
+  location: varchar("location", { length: 255 }),
+  employmentType: varchar("employment_type", { length: 64 }),
+  description: text("description").notNull(),
+  isOpen: boolean("is_open").notNull().default(true),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+// A candidate's submission against one job posting — careers.html's apply
+// form. The CV itself lands in /uploads (same disk store as any other
+// admin-uploaded file) and cvUrl just points at it; the actual notification
+// to the hiring inbox is a best-effort email send (see routes/jobs.ts),
+// mirroring leads.ts's "save locally regardless of whether the CRM push
+// succeeds" pattern — a submission is never lost just because the email
+// step fails.
+export const jobApplications = pgTable("job_applications", {
+  id: serial("id").primaryKey(),
+  jobId: integer("job_id")
+    .notNull()
+    .references(() => jobs.id, { onDelete: "cascade" }),
+  fullName: varchar("full_name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  phone: varchar("phone", { length: 64 }),
+  coverNote: text("cover_note"),
+  cvUrl: text("cv_url").notNull(),
+  emailedAt: timestamp("emailed_at"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 // Sister/affiliate companies shown on their own page — logo, blurb, link out.
 export const sisterCompanies = pgTable("sister_companies", {
   id: serial("id").primaryKey(),

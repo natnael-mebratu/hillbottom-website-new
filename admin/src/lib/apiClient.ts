@@ -76,6 +76,31 @@ export type TeamMember = {
   createdAt: string;
 };
 
+export type Job = {
+  id: number;
+  title: string;
+  department: string | null;
+  location: string | null;
+  employmentType: string | null;
+  description: string;
+  isOpen: boolean;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type JobApplication = {
+  id: number;
+  jobId: number;
+  fullName: string;
+  email: string;
+  phone: string | null;
+  coverNote: string | null;
+  cvUrl: string;
+  emailedAt: string | null;
+  createdAt: string;
+};
+
 export type PricingPlan = {
   id: number;
   projectId: number;
@@ -268,6 +293,16 @@ export const api = {
     request<TeamMember>(`/api/team/${id}`, { method: "PUT", body: input, auth: true }),
   deleteTeamMember: (id: number) =>
     request<void>(`/api/team/${id}`, { method: "DELETE", auth: true }),
+
+  listJobsAdmin: () => request<Job[]>("/api/jobs/all", { auth: true }),
+  createJob: (input: Omit<Job, "id" | "createdAt" | "updatedAt">) =>
+    request<Job>("/api/jobs", { method: "POST", body: input, auth: true }),
+  updateJob: (id: number, input: Partial<Omit<Job, "id" | "createdAt" | "updatedAt">>) =>
+    request<Job>(`/api/jobs/${id}`, { method: "PUT", body: input, auth: true }),
+  deleteJob: (id: number) =>
+    request<void>(`/api/jobs/${id}`, { method: "DELETE", auth: true }),
+  listJobApplications: (jobId?: number) =>
+    request<JobApplication[]>(`/api/jobs/applications/list${jobId ? `?jobId=${jobId}` : ""}`, { auth: true }),
 
   listTestimonials: () => request<Testimonial[]>("/api/testimonials"),
   createTestimonial: (input: Omit<Testimonial, "id" | "createdAt">) =>

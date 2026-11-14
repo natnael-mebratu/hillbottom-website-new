@@ -289,7 +289,7 @@ export const footer = (d) => `
         <h3>Company</h3>
         <ul class="ftr__links">
           ${NAV_SECONDARY.map((n) => `<li><a href="${up(d)}${n.href}">${esc(n.label)}</a></li>`).join("")}
-          <li><a href="${up(d)}team.html#careers">Careers</a></li>
+          <li><a href="${up(d)}careers.html">Careers</a></li>
         </ul>
       </div>
     </div>

@@ -10,12 +10,23 @@ import { page, facts, alt, ridge, plate, img, btn, link, lightbox, unitSelector,
 import { inquiryForm, pageHero, ctaBand, storyCard, fmtDate, coverFor } from "./parts.mjs";
 
 
-const galleryGrid = (items, d) => `
-<div class="gal rv">
-  ${items.map((g) => `
-  <button type="button" data-lb="${"../".repeat(d)}assets/img/${g.img}-1400.webp" data-lb-cap="${esc(g.cap)}" aria-label="View ${esc(g.cap)} full size">
-    ${plate(g.img, g.cap, { d, ar: "43", sizes: "(min-width:900px) 32vw, 100vw" })}
-  </button>`).join("")}
+/* Cinematic auto-fade gallery (client: the plain grid "feels dead" — wants
+   one big photo that cross-fades into the next on its own, with small dot
+   indicators, like a story viewer). Every photo still carries data-lb so
+   clicking the one on top opens the normal lightbox — this only replaces
+   how the photos are browsed before that click. Auto-advance + its pause
+   live in hb.js's [data-gal-fade] block. */
+const galleryFade = (items, d, id) => `
+<div class="gal-fade rv" data-gal-fade id="${id}">
+  <div class="gal-fade__stage">
+    ${items.map((g, i) => `
+    <button type="button" class="gal-fade__slide${i === 0 ? " is-active" : ""}" data-lb="${"../".repeat(d)}assets/img/${g.img}-1400.webp" data-lb-cap="${esc(g.cap)}" aria-label="View ${esc(g.cap)} full size">
+      ${plate(g.img, g.cap, { d, ar: "full", sizes: "(min-width:900px) 70vw, 100vw" })}
+    </button>`).join("")}
+  </div>
+  <div class="gal-fade__dots" role="tablist" aria-label="${esc(id)} photos">
+    ${items.map((_, i) => `<button type="button" role="tab" aria-selected="${i === 0 ? "true" : "false"}" aria-label="Photo ${i + 1} of ${items.length}"></button>`).join("")}
+  </div>
 </div>`;
 
 const outlineIcon = (...paths) => `<svg class="uicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths.map((path) => `<path pathLength="1" d="${path}"/>`).join("")}</svg>`;
@@ -319,7 +330,7 @@ ${ukIntro()}
       <h2 class="d2">Life at Urban Kaza</h2>
     </div>
   </div>
-  <div class="uk-gallery-grid">${galleryGrid(UK_FEATURED_GALLERY, 1)}</div>
+  <div class="uk-gallery-grid">${galleryFade(UK_FEATURED_GALLERY, 1, "uk-gallery-fade")}</div>
 </section>
 
 <section class="ch ch--paper pad uk-floorplans" id="floor-plans">
@@ -582,7 +593,7 @@ ${recInside(1)}
       <h2 class="d2">Architectural Renders</h2>
     </div>
   </div>
-  <div class="rec-gallery__wall">${galleryGrid(REC_GALLERY, 1)}</div>
+  <div class="rec-gallery__wall">${galleryFade(REC_GALLERY, 1, "rec-gallery-fade")}</div>
 </section>
 
 <section class="ch ch--abyss pad" id="rec-inquiry">

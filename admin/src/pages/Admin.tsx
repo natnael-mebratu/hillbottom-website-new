@@ -15,6 +15,7 @@ import {
   type TeamMember,
   type Testimonial,
   type SisterCompany,
+  type Job,
 } from "@/lib/apiClient";
 import { VideoEmbed, isVideoUrl } from "@/components/VideoEmbed";
 import { ImageUrlField } from "@/components/ImageUrlField";
@@ -27,6 +28,7 @@ const sections = [
   { id: "progress", label: "Progress Updates" },
   { id: "pricing", label: "Pricing & Plans" },
   { id: "team", label: "Team" },
+  { id: "jobs", label: "Careers" },
   { id: "testimonials", label: "Testimonials" },
   { id: "blog", label: "Blog" },
   { id: "marketing", label: "Marketing Feed" },
@@ -1008,6 +1010,243 @@ function TeamSection() {
   );
 }
 
+const emptyJobDraft = {
+  title: "",
+  department: "",
+  location: "",
+  employmentType: "",
+  description: "",
+  isOpen: true,
+  sortOrder: 0,
+};
+
+function JobsSection() {
+  const queryClient = useQueryClient();
+  const jobsQuery = useAuthedQuery(["admin-jobs"], api.listJobsAdmin);
+  const [draft, setDraft] = useState(emptyJobDraft);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [viewingApplicationsFor, setViewingApplicationsFor] = useState<number | null>(null);
+  const applicationsQuery = useAuthedQuery(
+    ["admin-job-applications", viewingApplicationsFor],
+    () => api.listJobApplications(viewingApplicationsFor ?? undefined),
+    viewingApplicationsFor !== null,
+  );
+
+  function invalidate() {
+    queryClient.invalidateQueries({ queryKey: ["admin-jobs"] });
+    queryClient.invalidateQueries({ queryKey: ["jobs"] });
+  }
+
+  const createJob = useMutation({
+    mutationFn: () => api.createJob(draft),
+    onSuccess: () => {
+      setDraft(emptyJobDraft);
+      invalidate();
+    },
+  });
+
+  const updateJob = useMutation({
+    mutationFn: (id: number) => api.updateJob(id, draft),
+    onSuccess: () => {
+      setDraft(emptyJobDraft);
+      setEditingId(null);
+      invalidate();
+    },
+  });
+
+  const deleteJob = useMutation({
+    mutationFn: (id: number) => api.deleteJob(id),
+    onSuccess: invalidate,
+  });
+
+  const toggleOpen = useMutation({
+    mutationFn: (job: Job) => api.updateJob(job.id, { isOpen: !job.isOpen }),
+    onSuccess: invalidate,
+  });
+
+  function startEdit(job: Job) {
+    setEditingId(job.id);
+    setDraft({
+      title: job.title,
+      department: job.department ?? "",
+      location: job.location ?? "",
+      employmentType: job.employmentType ?? "",
+      description: job.description,
+      isOpen: job.isOpen,
+      sortOrder: job.sortOrder,
+    });
+  }
+
+  function submit(event: React.FormEvent) {
+    event.preventDefault();
+    if (!draft.title.trim() || !draft.description.trim()) return;
+    if (editingId) updateJob.mutate(editingId);
+    else createJob.mutate();
+  }
+
+  return (
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
+      <section>
+        <div className="mb-5">
+          <p className="text-xs uppercase tracking-[0.25em] text-white/40">Careers</p>
+          <h2 className="mt-2 text-3xl font-semibold">Job Postings</h2>
+        </div>
+        <div className="space-y-3">
+          {jobsQuery.data?.length === 0 && (
+            <div className="border border-white/10 bg-[#0d1b2d] p-8 text-white/45">
+              No job postings yet.
+            </div>
+          )}
+          {jobsQuery.data?.map((job) => (
+            <article key={job.id} className="border border-white/10 bg-[#0d1b2d] p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h3 className="text-lg font-semibold">{job.title}</h3>
+                  <p className="text-xs text-white/45 mt-1">
+                    {[job.department, job.location, job.employmentType].filter(Boolean).join(" · ")}
+                  </p>
+                </div>
+                <span
+                  className={`text-xs uppercase tracking-widest px-2 py-1 border ${
+                    job.isOpen ? "border-[#c09a60]/50 text-[#c09a60]" : "border-white/15 text-white/35"
+                  }`}
+                >
+                  {job.isOpen ? "Open" : "Closed"}
+                </span>
+              </div>
+              <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-white/35">
+                <button onClick={() => startEdit(job)} className="text-white/60 hover:text-white">
+                  Edit
+                </button>
+                <button onClick={() => toggleOpen.mutate(job)} className="text-white/60 hover:text-white">
+                  {job.isOpen ? "Mark closed" : "Reopen"}
+                </button>
+                <button
+                  onClick={() => setViewingApplicationsFor(job.id)}
+                  className="text-white/60 hover:text-white"
+                >
+                  View applications
+                </button>
+                <button
+                  onClick={() => deleteJob.mutate(job.id)}
+                  className="text-red-300/70 hover:text-red-300"
+                >
+                  Delete
+                </button>
+              </div>
+              {viewingApplicationsFor === job.id && (
+                <div className="mt-4 border-t border-white/10 pt-4 space-y-3">
+                  {applicationsQuery.data?.length === 0 && (
+                    <p className="text-xs text-white/35">No applications yet for this role.</p>
+                  )}
+                  {applicationsQuery.data?.map((app) => (
+                    <div key={app.id} className="text-xs text-white/60">
+                      <p className="font-semibold text-white/80">{app.fullName}</p>
+                      <p>{app.email}{app.phone ? ` · ${app.phone}` : ""}</p>
+                      {app.coverNote && <p className="mt-1 text-white/45">{app.coverNote}</p>}
+                      <a
+                        href={`${SITE_URL}${app.cvUrl}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-1 inline-block text-[#c09a60] hover:underline"
+                      >
+                        Download CV
+                      </a>
+                    </div>
+                  ))}
+                  <button
+                    onClick={() => setViewingApplicationsFor(null)}
+                    className="text-xs text-white/35 hover:text-white/60"
+                  >
+                    Close
+                  </button>
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <aside>
+        <form onSubmit={submit} className="border border-white/10 bg-[#0d1b2d] p-6">
+          <p className="text-xs uppercase tracking-[0.25em] text-[#c09a60]">
+            {editingId ? "Edit job" : "New job"}
+          </p>
+          <div className="mt-5 space-y-4">
+            <input
+              required
+              value={draft.title}
+              onChange={(e) => setDraft((d) => ({ ...d, title: e.target.value }))}
+              placeholder="Job title"
+              className="admin-input"
+            />
+            <input
+              value={draft.department}
+              onChange={(e) => setDraft((d) => ({ ...d, department: e.target.value }))}
+              placeholder="Department"
+              className="admin-input"
+            />
+            <input
+              value={draft.location}
+              onChange={(e) => setDraft((d) => ({ ...d, location: e.target.value }))}
+              placeholder="Location"
+              className="admin-input"
+            />
+            <input
+              value={draft.employmentType}
+              onChange={(e) => setDraft((d) => ({ ...d, employmentType: e.target.value }))}
+              placeholder="Employment type (e.g. Full-time)"
+              className="admin-input"
+            />
+            <textarea
+              required
+              value={draft.description}
+              onChange={(e) => setDraft((d) => ({ ...d, description: e.target.value }))}
+              placeholder="Job description"
+              rows={5}
+              className="admin-input resize-none"
+            />
+            <label className="flex items-center gap-2 text-sm text-white/60">
+              <input
+                type="checkbox"
+                checked={draft.isOpen}
+                onChange={(e) => setDraft((d) => ({ ...d, isOpen: e.target.checked }))}
+              />
+              Open for applications
+            </label>
+            <input
+              type="number"
+              value={draft.sortOrder}
+              onChange={(e) => setDraft((d) => ({ ...d, sortOrder: Number(e.target.value) }))}
+              placeholder="Sort order"
+              className="admin-input"
+            />
+            <button
+              type="submit"
+              disabled={createJob.isPending || updateJob.isPending}
+              className="w-full bg-[#c09a60] px-4 py-3 text-sm font-semibold text-[#07111f] hover:bg-[#d2b277] disabled:opacity-60"
+            >
+              {editingId ? "Save changes" : "Add job"}
+            </button>
+            {editingId && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingId(null);
+                  setDraft(emptyJobDraft);
+                }}
+                className="w-full border border-white/15 px-4 py-2 text-xs uppercase tracking-widest text-white/50 hover:text-white"
+              >
+                Cancel edit
+              </button>
+            )}
+          </div>
+        </form>
+      </aside>
+    </div>
+  );
+}
+
 const emptyTestimonialDraft = {
   authorName: "",
   location: "",
@@ -1835,6 +2074,7 @@ export default function Admin() {
           {section === "progress" && <ProgressSection />}
           {section === "pricing" && <PricingSection />}
           {section === "team" && <TeamSection />}
+          {section === "jobs" && <JobsSection />}
           {section === "testimonials" && <TestimonialsSection />}
           {section === "blog" && <BlogSection />}
           {section === "marketing" && <MarketingSection />}

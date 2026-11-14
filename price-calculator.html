@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Price Calculator — Hill Bottom Properties</title>
-<meta name="description" content="A self-serve way to estimate your payment plan across Hill Bottom developments. Coming soon — contact our sales team for a personalized quote today.">
+<meta name="description" content="Estimate the total price and down-payment for an Urban Kaza residence by unit type and floor.">
 <meta name="theme-color" content="#060B14">
 <link rel="canonical" href="https://hillbottomproperties.com/price-calculator.html">
 <meta property="og:title" content="Price Calculator — Hill Bottom Properties">
-<meta property="og:description" content="A self-serve way to estimate your payment plan across Hill Bottom developments. Coming soon — contact our sales team for a personalized quote today.">
+<meta property="og:description" content="Estimate the total price and down-payment for an Urban Kaza residence by unit type and floor.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hillbottomproperties.com/price-calculator.html">
 <meta property="og:image" content="https://hillbottomproperties.com/assets/img/kaza-apt-01-v2.webp">
 <meta property="og:site_name" content="Hill Bottom Properties">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Price Calculator — Hill Bottom Properties">
-<meta name="twitter:description" content="A self-serve way to estimate your payment plan across Hill Bottom developments. Coming soon — contact our sales team for a personalized quote today.">
+<meta name="twitter:description" content="Estimate the total price and down-payment for an Urban Kaza residence by unit type and floor.">
 <meta name="twitter:image" content="https://hillbottomproperties.com/assets/img/kaza-apt-01-v2.webp">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"RealEstateAgent","name":"Hill Bottom Properties","url":"https://hillbottomproperties.com","logo":"https://hillbottomproperties.com/assets/img/favicon.svg","image":"https://hillbottomproperties.com/assets/img/hero-hillbottom-1400.webp","description":"Luxury real estate developer in Addis Ababa, Ethiopia, serving buyers in Ethiopia and the Ethiopian diaspora.","telephone":"+251 116 390 420","email":"info@hillbottomproperties.com","areaServed":["Ethiopia","Ethiopian diaspora"],"address":[{"@type":"PostalAddress","streetAddress":"Hill Bottom Properties Sales Office","addressLocality":"Wollo Sefer, in front of Garad Building","addressCountry":"ET"},{"@type":"PostalAddress","streetAddress":"Hill Bottom Properties Head Office","addressLocality":"Ayat Square, Addis Ababa","addressCountry":"ET"}],"sameAs":["https://www.linkedin.com/company/hillbottomproperties/","https://www.instagram.com/hillbottomproperties","https://www.facebook.com/hillbottomproperties"]}</script>
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -26,7 +26,18 @@
 <link rel="stylesheet" href="assets/css/premium-2026.css">
 <link rel="stylesheet" href="assets/css/site-unified.css">
 <link rel="stylesheet" href="assets/css/refine-2026.css">
-
+<style>
+    .calc-box{max-width:620px;margin:0 auto;padding:clamp(28px,4vw,44px);border:1px solid var(--line);border-radius:4px}
+    .calc-box .form__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .calc-result{margin-top:28px;padding-top:24px;border-top:1px solid var(--line);display:none}
+    .calc-result.is-on{display:block}
+    .calc-result dl{display:grid;grid-template-columns:1fr auto;gap:10px 16px;margin:0}
+    .calc-result dt{font-family:var(--sans);font-size:.78rem;letter-spacing:.04em;color:var(--fg-2)}
+    .calc-result dd{margin:0;font-family:var(--sans);font-weight:600;font-size:1rem;color:var(--fg);text-align:right}
+    .calc-result dd.is-big{font-size:1.3rem;color:var(--accent)}
+    .calc-note{margin-top:18px;font-family:var(--sans);font-size:.8rem;line-height:1.6;color:var(--fg-2)}
+    @media(max-width:600px){.calc-box .form__grid{grid-template-columns:1fr}}
+  </style>
 <script>try{var c=document.documentElement.classList,s=sessionStorage;if(s.getItem("hb-intro-v3"))c.add("hbi-seen");if(s.getItem("uk-intro-v4"))c.add("uki-seen");if(matchMedia("(prefers-reduced-motion: reduce)").matches)c.add("hbi-seen","uki-seen")}catch(e){}</script>
 <noscript><style>.hbi,.uki{display:none!important}</style></noscript>
 </head>
@@ -91,7 +102,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <div class="nav__more" data-nav-more>
         <button type="button" class="nav__more-btn" aria-expanded="false" aria-haspopup="true" aria-controls="hb-nav-more-menu">Explore<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <div class="nav__more-menu" id="hb-nav-more-menu" role="menu">
-          <a role="menuitem" href="vr-tours.html">Virtual Tours</a><a role="menuitem" href="price-calculator.html">Price Calculator<em>Coming Soon</em></a><a role="menuitem" href="marketing.html">Campaign Feed</a><a role="menuitem" href="sister-companies.html">Sister Companies</a><a role="menuitem" href="news.html">Insights</a>
+          <a role="menuitem" href="vr-tours.html">Virtual Tours</a><a role="menuitem" href="price-calculator.html">Price Calculator<em>Coming Soon</em></a><a role="menuitem" href="careers.html">Careers</a><a role="menuitem" href="marketing.html">Campaign Feed</a><a role="menuitem" href="sister-companies.html">Sister Companies</a><a role="menuitem" href="news.html">Insights</a>
         </div>
       </div>
     </nav>
@@ -104,7 +115,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <div class="drawer" id="hb-drawer" aria-hidden="true" inert>
   <a class="dl" href="projects.html">Projects<em>04</em></a><a class="dl" href="construction.html">Progress</a><a class="dl" href="about.html">About</a><a class="dl" href="team.html">Team</a><a class="dl" href="buying-from-abroad.html">For Diaspora</a>
   <p class="dl--more-label">Explore</p>
-  <a class="dl dl--sub" href="vr-tours.html">Virtual Tours</a><a class="dl dl--sub" href="price-calculator.html">Price Calculator<em>Coming Soon</em></a><a class="dl dl--sub" href="marketing.html">Campaign Feed</a><a class="dl dl--sub" href="sister-companies.html">Sister Companies</a><a class="dl dl--sub" href="news.html">Insights</a>
+  <a class="dl dl--sub" href="vr-tours.html">Virtual Tours</a><a class="dl dl--sub" href="price-calculator.html">Price Calculator<em>Coming Soon</em></a><a class="dl dl--sub" href="careers.html">Careers</a><a class="dl dl--sub" href="marketing.html">Campaign Feed</a><a class="dl dl--sub" href="sister-companies.html">Sister Companies</a><a class="dl dl--sub" href="news.html">Insights</a>
   <div class="btn-row">
     <a class="btn" href="https://wa.me/251992707070" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.14-.17.19-.3.29-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.91-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.7.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.42.25-.69.25-1.28.18-1.41-.08-.12-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26C2.16 6.45 6.6 2.02 12.05 2.02c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.49-8.41z"/></svg>WhatsApp</a>
     <a class="btn btn--gold" href="contact.html">Contact Us</a>
@@ -122,7 +133,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     <div class="hero__stage">
       
       <h1 class="d1" data-words>Price Calculator</h1>
-      <p class="hero__sub">Estimate your downpayment and installment schedule across our developments — coming soon.</p>
+      <p class="hero__sub">Estimate the total price and down-payment for an Urban Kaza residence.</p>
     </div>
     
   </div>
@@ -130,13 +141,29 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 </section>
 
 <section class="ch ch--paper pad">
-  <div class="wrap" style="text-align:center;max-width:720px;margin-inline:auto">
-    <p class="mark mark--accent">Coming Soon</p>
-    <h2 class="d2">A clearer way to plan your purchase.</h2>
-    <p class="body" style="margin-top:18px">We're building a self-serve calculator so you can model your downpayment, installment schedule, and total cost across our developments right here on the site. While it's in the works, our sales team can walk you through the real numbers for any unit today.</p>
-    <div class="btn-row" style="justify-content:center;margin-top:30px">
-      <a class="btn btn--gold" href="https://wa.me/251992707070" target="_blank" rel="noreferrer">Message on WhatsApp<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.14-.17.19-.3.29-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.91-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.7.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.42.25-.69.25-1.28.18-1.41-.08-.12-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26C2.16 6.45 6.6 2.02 12.05 2.02c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.49-8.41z"/></svg></a>
-      <a class="btn " href="contact.html">Contact Sales</a>
+  <div class="wrap">
+    <div class="calc-box">
+      <p class="mark mark--accent">Urban Kaza</p>
+      <h2 class="d2" style="margin-top:6px">Select a unit and floor.</h2>
+      <div class="form__grid" style="margin-top:24px">
+        <p class="field"><label for="calc-unit">Unit</label>
+          <select id="calc-unit">
+            <option value="0">UK 1 — Two Bedroom (144.4 m²)</option><option value="1">UK 2 — Two Bedroom (144.4 m²)</option><option value="2">UK 3 — Two Bedroom (138 m²)</option><option value="3">UK 4 — Two Bedroom (138 m²)</option><option value="4">UK 5 — One Bedroom (103 m²)</option><option value="5">UK 6 — One Bedroom (102 m²)</option><option value="6">UK 7 — Two Bedroom (158.6 m²)</option>
+          </select>
+        </p>
+        <p class="field"><label for="calc-floor">Floor</label>
+          <select id="calc-floor"></select>
+        </p>
+      </div>
+      <div class="calc-result" id="calc-result">
+        <dl>
+          <dt>Total Area</dt><dd id="calc-area"></dd>
+          <dt>Price per m²</dt><dd id="calc-ppm"></dd>
+          <dt>Total Price</dt><dd id="calc-total" class="is-big"></dd>
+          <dt>Down-Payment (15%)</dt><dd id="calc-down" class="is-big"></dd>
+        </dl>
+      </div>
+      <p class="calc-note">Prices are in ETB and current as of our latest published price list. An installment plan is available — <a href="contact.html">contact our sales team</a> for current financing terms. Village and Recreation Center pricing isn't published yet.</p>
     </div>
   </div>
 </section>
@@ -145,11 +172,11 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <section class="ch ch--abyss pad">
   <div class="wrap">
     <div class="head head--split rv">
-      <h2 class="d2">Explore what's available now.</h2>
+      <h2 class="d2">Ready to talk numbers?</h2>
       <div class="head__side">
-        <p>See current developments, unit types, and status while the calculator is being built.</p>
+        <p>Message our sales team on WhatsApp or book a call to walk through financing and availability for any unit.</p>
         <div class="btn-row" style="margin-top:28px">
-          <a class="btn btn--gold" href="projects.html">View Residences</a>
+          <a class="btn btn--gold" href="https://wa.me/251992707070">Message on WhatsApp</a>
           <a class="btn " href="contact.html">Contact Us</a>
         </div>
       </div>
@@ -199,8 +226,8 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <div>
         <h3>Company</h3>
         <ul class="ftr__links">
-          <li><a href="vr-tours.html">Virtual Tours</a></li><li><a href="price-calculator.html">Price Calculator</a></li><li><a href="marketing.html">Campaign Feed</a></li><li><a href="sister-companies.html">Sister Companies</a></li><li><a href="news.html">Insights</a></li>
-          <li><a href="team.html#careers">Careers</a></li>
+          <li><a href="vr-tours.html">Virtual Tours</a></li><li><a href="price-calculator.html">Price Calculator</a></li><li><a href="careers.html">Careers</a></li><li><a href="marketing.html">Campaign Feed</a></li><li><a href="sister-companies.html">Sister Companies</a></li><li><a href="news.html">Insights</a></li>
+          <li><a href="careers.html">Careers</a></li>
         </ul>
       </div>
     </div>
@@ -274,7 +301,31 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     </div>
   </div>
 </div>
-
+<script>(function(){
+  var DATA = [{"id":"UK 1","type":"Two Bedroom","area":144.4,"bands":[{"floors":"4 – 15 Floor","pricePerM2":186000,"total":26858400,"down":4028760}]},{"id":"UK 2","type":"Two Bedroom","area":144.4,"bands":[{"floors":"4 – 15 Floor","pricePerM2":186000,"total":26858400,"down":4028760}]},{"id":"UK 3","type":"Two Bedroom","area":138,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":20010000,"down":3001500},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":20136270,"down":3020441},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":21524964,"down":3228745}]},{"id":"UK 4","type":"Two Bedroom","area":138,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":20010000,"down":3001500},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":20136270,"down":3020441},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":21524964,"down":3228745}]},{"id":"UK 5","type":"One Bedroom","area":103,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":15450000,"down":2317500},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":15029245,"down":2254387},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":16065734,"down":2409860}]},{"id":"UK 6","type":"One Bedroom","area":102,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":14790000,"down":2218500},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":14883330,"down":2232500},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":15909756,"down":2386463}]},{"id":"UK 7","type":"Two Bedroom","area":158.6,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":22997000,"down":3449550},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":23142119,"down":3471318},{"floors":"11 – 15 Floor","pricePerM2":159969,"total":25371083,"down":3805663}]}];
+  var unitSel = document.getElementById("calc-unit");
+  var floorSel = document.getElementById("calc-floor");
+  var result = document.getElementById("calc-result");
+  var fmt = function (n) { return n.toLocaleString("en-US") + " ETB"; };
+  function fillFloors() {
+    var unit = DATA[unitSel.value];
+    floorSel.innerHTML = unit.bands.map(function (b, i) { return "<option value=\"" + i + "\">" + b.floors + "</option>"; }).join("");
+    render();
+  }
+  function render() {
+    var unit = DATA[unitSel.value];
+    var band = unit.bands[floorSel.value];
+    if (!band) return;
+    document.getElementById("calc-area").textContent = unit.area + " m\u00B2";
+    document.getElementById("calc-ppm").textContent = fmt(band.pricePerM2);
+    document.getElementById("calc-total").textContent = fmt(band.total);
+    document.getElementById("calc-down").textContent = fmt(band.down);
+    result.classList.add("is-on");
+  }
+  unitSel.addEventListener("change", fillFloors);
+  floorSel.addEventListener("change", render);
+  fillFloors();
+})();</script>
 <script src="assets/js/hb.js" defer></script>
 </body>
 </html>
