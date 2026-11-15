@@ -513,6 +513,10 @@ body:not(.home-editorial) .facts{--card-gap:clamp(22px,3vw,46px)}
 .construction-card.in .construction-card__infographic .uicon path{animation:uk-icon-draw 760ms var(--ease) both}
 .construction-card__infographic small{font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
 .construction-card__infographic strong{font-size:.82rem;font-weight:400;line-height:1.45}
+/* A 4th box (Amenities) only appears on some projects — give it its own
+   full-width row rather than wrapping into a lopsided 1-column remainder
+   of the 3-column grid. */
+.construction-card__infographic>div:nth-child(4):last-child{grid-column:1/-1}
 
 /* Construction progress: real photo marquee, appended per project when
    data exists (constructionProgress() in newpages.mjs). The marquee reuses

@@ -21,6 +21,7 @@ const INFO_ICONS = [
   outlineIcon("M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"),
   outlineIcon("M5 4h14v16H5Z", "M8 8h8M8 12h8M8 16h5"),
   outlineIcon("M4 12h16M12 4v16", "M6 6h12v12H6Z"),
+  outlineIcon("M12 2 14.6 8.6 22 9.3 16.5 14 18.2 21 12 17.3 5.8 21 7.5 14 2 9.3 9.4 8.6Z"),
 ];
 const iconGrid = (items, icons = REMOTE_ICONS, className = "") => `<ol class="process-icon-grid ${className} rv">
   ${items.map((item, i) => `<li class="process-icon-card" style="--process-i:${i}">
@@ -175,8 +176,9 @@ ${pageHero(0, {
         <h3 class="proj__name"><a href="${c.href}">${esc(c.name)}</a></h3>
         <div class="construction-card__infographic">
           <div><span>${INFO_ICONS[0]}</span><small>Current stage</small><strong>${esc(c.stage)}</strong></div>
-          <div><span>${INFO_ICONS[1]}</span><small>Next milestone</small><strong>${esc(c.milestone)}</strong></div>
+          <div><span>${INFO_ICONS[1]}</span><small>Delivery Date</small><strong>${esc(c.milestone)}</strong></div>
           <div><span>${INFO_ICONS[2]}</span><small>Project status</small><strong>${esc(c.status)}</strong></div>
+          ${c.amenities ? `<div><span>${INFO_ICONS[3]}</span><small>Amenities</small><strong>${esc(c.amenities.join(", "))}</strong></div>` : ""}
         </div>
         ${c.pct != null ? `
         <div class="construction-card__progress">

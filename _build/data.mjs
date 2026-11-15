@@ -459,8 +459,8 @@ export const REMOTE_FAQ = [
    Stage and milestone are the real published states. No progress photography
    or verified completion percentage exists yet, so none is shown. */
 export const CONSTRUCTION = [
-  { key: "urban-kaza", name: "Urban Kaza", where: "Kazanchis, near Addis Sport Park", stage: "Superstructure in progress", milestone: "Reserve now — 98 residences", img: "urban-kaza-ext-v2", href: "projects/urban-kaza.html", status: "In Progress" },
-  { key: "hillbottom-village", name: "Hill Bottom Village — Block B", where: "Ayat Square, Addis Ababa", stage: "In construction", milestone: "Delivery October 2026", img: "block-c-10", href: "projects/hillbottom-village.html", status: "Block A Complete" },
+  { key: "urban-kaza", name: "Urban Kaza", where: "Kazanchis, near Addis Sport Park", stage: "Superstructure in progress", milestone: "3 Years", amenities: ["GYM", "Sora Sky Bar", "Restaurant", "Tona Coffee"], img: "urban-kaza-ext-v2", href: "projects/urban-kaza.html", status: "In Progress" },
+  { key: "hillbottom-village", name: "Hill Bottom Village — Block B", where: "Ayat Square, Addis Ababa", stage: "In construction", milestone: "Jan 2027", amenities: ["Restaurant", "Cafe", "Playground", "Swimming Pool", "GYM", "Sauna"], img: "block-c-10", href: "projects/hillbottom-village.html", status: "Block A Complete" },
   { key: "recreation-center", name: "Commercial + Recreation Centre", where: "Ayat, Addis Ababa — Phase 3", stage: "Begins after Block B handover", milestone: "Opening January 2027", img: "block-c-01", href: "projects/recreation-center.html", status: "Coming Jan 2027" },
 ].map((c) => {
   const live = mergeLiveProject(c.key);
