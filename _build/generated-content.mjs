@@ -9,6 +9,13 @@ export const PROMO = {
   partnerUrl: "",
 };
 
+// price-calculator.html's own promo banner — hidden unless an admin turns
+// it on for an active discount campaign.
+export const PRICE_CALC_PROMO = {
+  active: false,
+  text: "",
+};
+
 // Keyed by project slug, overlaid onto data.mjs's PROJECTS/CONSTRUCTION —
 // see mergeLiveProject() in data.mjs. finalRenderUrl/progressPhotos come
 // from progress_updates ("dream" = final render, "actual" = dated
@@ -188,3 +195,8 @@ export const TESTIMONIALS_LIVE = [];
 // as-is; careers.html falls back to a "no open roles right now" message
 // when this is empty.
 export const JOBS = [];
+
+// Urban Kaza admin price/stock overrides, see note in fetchData.mjs. No
+// merge needed here — the actual overlay onto UK_PRICE_LIST happens in
+// data.mjs.
+export const PRICING_LIVE = [];

@@ -44,6 +44,9 @@ export type SiteMedia = {
   promoGiftTitle: string;
   promoGiftBody: string;
   promoPartnerUrl: string;
+  // price-calculator.html's own promo banner — hidden unless active.
+  priceCalcPromoActive: boolean;
+  priceCalcPromoText: string;
   updatedAt: string;
 };
 
@@ -106,6 +109,7 @@ export type PricingPlan = {
   projectId: number;
   unitType: string;
   price: string;
+  unitsLeft: number | null;
   currency: string;
   installmentPlan: Record<string, unknown>[];
   discountRules: Record<string, unknown>[];
@@ -264,6 +268,8 @@ export const api = {
     request<PricingPlan[]>(`/api/pricing/project/${projectId}`),
   createPricing: (input: Omit<PricingPlan, "id" | "createdAt" | "updatedAt">) =>
     request<PricingPlan>("/api/pricing", { method: "POST", body: input, auth: true }),
+  updatePricing: (id: number, input: Partial<Omit<PricingPlan, "id" | "createdAt" | "updatedAt">>) =>
+    request<PricingPlan>(`/api/pricing/${id}`, { method: "PUT", body: input, auth: true }),
   deletePricing: (id: number) =>
     request<void>(`/api/pricing/${id}`, { method: "DELETE", auth: true }),
 

@@ -451,6 +451,31 @@ function MediaSection() {
         </div>
       </div>
 
+      <div className="border border-white/10 bg-[#0d1b2d] p-6">
+        <p className="text-xs uppercase tracking-[0.25em] text-[#c09a60]">Price Calculator</p>
+        <h2 className="mt-2 text-xl font-semibold">Discount campaign banner</h2>
+        <p className="mt-2 text-xs leading-relaxed text-white/40">
+          Shows a banner at the top of the Price Calculator while a promotional
+          discount campaign is running. Stays hidden the rest of the time.
+        </p>
+        <div className="mt-5 space-y-4">
+          <label className="flex items-center gap-2 text-sm text-white/60">
+            <input
+              type="checkbox"
+              checked={current.priceCalcPromoActive}
+              onChange={(e) => field("priceCalcPromoActive", e.target.checked)}
+            />
+            Show banner on the Price Calculator
+          </label>
+          <input
+            value={current.priceCalcPromoText}
+            onChange={(e) => field("priceCalcPromoText", e.target.value)}
+            placeholder="Banner text (e.g. Limited-time: extra 2% off this month)"
+            className="admin-input"
+          />
+        </div>
+      </div>
+
       <div>
         <button
           disabled={save.isPending}
@@ -709,16 +734,33 @@ function ProjectsSection() {
 const emptyPricingDraft = {
   unitType: "",
   price: "",
+  unitsLeft: "",
   currency: "ETB",
   installmentPlan: [] as Record<string, unknown>[],
   discountRules: [] as Record<string, unknown>[],
 };
+
+// Exact unit/floor-band labels price-calculator.html matches against (see
+// ukBand()/mergeLivePricing() in _build/data.mjs) — a dropdown instead of
+// free text so a typo here can't silently fail to override the static
+// sheet price. Only relevant for Urban Kaza; other projects' pricing rows
+// aren't looked up by the calculator at all, so unitType there is free text.
+const UK_BAND_OPTIONS = [
+  "UK 1 4 – 15 Floor", "UK 2 4 – 15 Floor",
+  "UK 3 4 – 6 Floor", "UK 3 7 – 10 Floor", "UK 3 11 – 15 Floor",
+  "UK 4 4 – 6 Floor", "UK 4 7 – 10 Floor", "UK 4 11 – 15 Floor",
+  "UK 5 4 – 6 Floor", "UK 5 7 – 10 Floor", "UK 5 11 – 15 Floor",
+  "UK 6 4 – 6 Floor", "UK 6 7 – 10 Floor", "UK 6 11 – 15 Floor",
+  "UK 7 4 – 6 Floor", "UK 7 7 – 10 Floor", "UK 7 11 – 15 Floor",
+];
 
 function PricingSection() {
   const queryClient = useQueryClient();
   const projects = useAuthedQuery(["admin-projects"], () => api.listProjects());
   const [projectId, setProjectId] = useState<number | null>(null);
   const activeProjectId = projectId ?? projects.data?.[0]?.id ?? null;
+  const activeProject = projects.data?.find((p) => p.id === activeProjectId);
+  const isUrbanKaza = activeProject?.slug === "urban-kaza";
 
   const plans = useAuthedQuery(
     ["admin-pricing", activeProjectId],
@@ -727,29 +769,63 @@ function PricingSection() {
   );
 
   const [draft, setDraft] = useState(emptyPricingDraft);
+  const [editingId, setEditingId] = useState<number | null>(null);
+
+  function invalidate() {
+    queryClient.invalidateQueries({ queryKey: ["admin-pricing", activeProjectId] });
+    queryClient.invalidateQueries({ queryKey: ["pricing", activeProjectId] });
+  }
+
+  function toPayload() {
+    return {
+      unitType: draft.unitType,
+      price: draft.price,
+      unitsLeft: draft.unitsLeft.trim() === "" ? null : Number(draft.unitsLeft),
+      currency: draft.currency,
+      installmentPlan: draft.installmentPlan,
+      discountRules: draft.discountRules,
+    };
+  }
 
   const createPlan = useMutation({
-    mutationFn: (input: Omit<PricingPlan, "id" | "createdAt" | "updatedAt">) =>
-      api.createPricing(input),
+    mutationFn: () => api.createPricing({ ...toPayload(), projectId: activeProjectId! }),
     onSuccess: () => {
       setDraft(emptyPricingDraft);
-      queryClient.invalidateQueries({ queryKey: ["admin-pricing", activeProjectId] });
-      queryClient.invalidateQueries({ queryKey: ["pricing", activeProjectId] });
+      invalidate();
+    },
+  });
+
+  const updatePlan = useMutation({
+    mutationFn: (id: number) => api.updatePricing(id, toPayload()),
+    onSuccess: () => {
+      setDraft(emptyPricingDraft);
+      setEditingId(null);
+      invalidate();
     },
   });
 
   const deletePlan = useMutation({
     mutationFn: (id: number) => api.deletePricing(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-pricing", activeProjectId] });
-      queryClient.invalidateQueries({ queryKey: ["pricing", activeProjectId] });
-    },
+    onSuccess: invalidate,
   });
+
+  function startEdit(plan: PricingPlan) {
+    setEditingId(plan.id);
+    setDraft({
+      unitType: plan.unitType,
+      price: plan.price,
+      unitsLeft: plan.unitsLeft == null ? "" : String(plan.unitsLeft),
+      currency: plan.currency,
+      installmentPlan: plan.installmentPlan,
+      discountRules: plan.discountRules,
+    });
+  }
 
   function submit(event: React.FormEvent) {
     event.preventDefault();
     if (!activeProjectId || !draft.unitType.trim() || !draft.price.trim()) return;
-    createPlan.mutate({ ...draft, projectId: activeProjectId });
+    if (editingId) updatePlan.mutate(editingId);
+    else createPlan.mutate();
   }
 
   return (
@@ -772,6 +848,14 @@ function PricingSection() {
             ))}
           </select>
         </div>
+        {isUrbanKaza && (
+          <p className="mb-4 text-xs text-white/40">
+            For Urban Kaza, "Unit" below must be one of the exact unit/floor labels the
+            Price Calculator looks for (pick from the dropdown) — a price or units-left
+            here overrides that unit's static sheet value; anything else here is ignored
+            by the calculator.
+          </p>
+        )}
         <div className="space-y-3">
           {plans.data?.length === 0 && (
             <div className="border border-white/10 bg-[#0d1b2d] p-8 text-white/45">
@@ -781,17 +865,27 @@ function PricingSection() {
           {plans.data?.map((plan) => (
             <article key={plan.id} className="border border-white/10 bg-[#0d1b2d] p-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <h3 className="text-lg font-semibold">{plan.unitType}</h3>
+                <div>
+                  <h3 className="text-lg font-semibold">{plan.unitType}</h3>
+                  {plan.unitsLeft != null && (
+                    <p className="text-xs text-white/45 mt-1">{plan.unitsLeft} units left</p>
+                  )}
+                </div>
                 <span className="text-xl font-semibold text-[#c09a60]">
                   {plan.currency} {plan.price}
                 </span>
               </div>
-              <button
-                onClick={() => deletePlan.mutate(plan.id)}
-                className="mt-4 text-xs text-red-300/70 hover:text-red-300"
-              >
-                Delete
-              </button>
+              <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-white/35">
+                <button onClick={() => startEdit(plan)} className="text-white/60 hover:text-white">
+                  Edit
+                </button>
+                <button
+                  onClick={() => deletePlan.mutate(plan.id)}
+                  className="text-red-300/70 hover:text-red-300"
+                >
+                  Delete
+                </button>
+              </div>
             </article>
           ))}
         </div>
@@ -799,16 +893,32 @@ function PricingSection() {
 
       <aside>
         <form onSubmit={submit} className="border border-white/10 bg-[#0d1b2d] p-6">
-          <p className="text-xs uppercase tracking-[0.25em] text-[#c09a60]">New plan</p>
-          <h2 className="mt-2 text-xl font-semibold">Add pricing</h2>
+          <p className="text-xs uppercase tracking-[0.25em] text-[#c09a60]">
+            {editingId ? "Edit plan" : "New plan"}
+          </p>
+          <h2 className="mt-2 text-xl font-semibold">{editingId ? "Edit pricing" : "Add pricing"}</h2>
           <div className="mt-5 space-y-4">
-            <input
-              required
-              value={draft.unitType}
-              onChange={(e) => setDraft((d) => ({ ...d, unitType: e.target.value }))}
-              placeholder="Unit type (e.g. 2BR Apartment)"
-              className="admin-input"
-            />
+            {isUrbanKaza ? (
+              <select
+                required
+                value={draft.unitType}
+                onChange={(e) => setDraft((d) => ({ ...d, unitType: e.target.value }))}
+                className="admin-input"
+              >
+                <option value="">Select unit / floor band</option>
+                {UK_BAND_OPTIONS.map((opt) => (
+                  <option key={opt} value={opt}>{opt}</option>
+                ))}
+              </select>
+            ) : (
+              <input
+                required
+                value={draft.unitType}
+                onChange={(e) => setDraft((d) => ({ ...d, unitType: e.target.value }))}
+                placeholder="Unit type (e.g. 2BR Apartment)"
+                className="admin-input"
+              />
+            )}
             <div className="grid grid-cols-2 gap-3">
               <input
                 required
@@ -824,13 +934,33 @@ function PricingSection() {
                 className="admin-input"
               />
             </div>
+            <input
+              type="number"
+              min={0}
+              value={draft.unitsLeft}
+              onChange={(e) => setDraft((d) => ({ ...d, unitsLeft: e.target.value }))}
+              placeholder="Units left (optional)"
+              className="admin-input"
+            />
             <button
               type="submit"
-              disabled={createPlan.isPending}
+              disabled={createPlan.isPending || updatePlan.isPending}
               className="w-full bg-[#c09a60] px-4 py-3 text-sm font-semibold text-[#07111f] hover:bg-[#d2b277] disabled:opacity-60"
             >
-              Add pricing plan
+              {editingId ? "Save changes" : "Add pricing plan"}
             </button>
+            {editingId && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingId(null);
+                  setDraft(emptyPricingDraft);
+                }}
+                className="w-full border border-white/15 px-4 py-2 text-xs uppercase tracking-widest text-white/50 hover:text-white"
+              >
+                Cancel edit
+              </button>
+            )}
           </div>
         </form>
       </aside>

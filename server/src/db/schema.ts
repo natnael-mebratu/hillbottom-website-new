@@ -80,6 +80,12 @@ export const pricingPlans = pgTable("pricing_plans", {
     .references(() => projects.id, { onDelete: "cascade" }),
   unitType: varchar("unit_type", { length: 255 }).notNull(),
   price: numeric("price", { precision: 14, scale: 2 }).notNull(),
+  // Live stock count for this unit/floor-band ("Units Left" on
+  // price-calculator.html). Null = not admin-managed yet, so the static
+  // sheet value (no badge at all) is used instead — only an explicit
+  // number overrides it, same null-vs-0 distinction projects.completionPercent
+  // already uses for the same reason.
+  unitsLeft: integer("units_left"),
   currency: varchar("currency", { length: 8 }).notNull().default("ETB"),
   installmentPlan: jsonb("installment_plan").notNull().default([]),
   discountRules: jsonb("discount_rules").notNull().default([]),
@@ -167,6 +173,11 @@ export const siteMedia = pgTable("site_media", {
   promoGiftTitle: varchar("promo_gift_title", { length: 255 }).notNull().default(""),
   promoGiftBody: text("promo_gift_body").notNull().default(""),
   promoPartnerUrl: text("promo_partner_url").notNull().default(""),
+  // Price Calculator's own promo banner — on only during an active
+  // discount campaign; empty/false the rest of the time (default), so the
+  // calculator shows nothing extra unless an admin explicitly turns it on.
+  priceCalcPromoActive: boolean("price_calc_promo_active").notNull().default(false),
+  priceCalcPromoText: text("price_calc_promo_text").notNull().default(""),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 

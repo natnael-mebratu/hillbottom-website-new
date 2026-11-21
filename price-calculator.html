@@ -27,16 +27,29 @@
 <link rel="stylesheet" href="assets/css/site-unified.css">
 <link rel="stylesheet" href="assets/css/refine-2026.css">
 <style>
+    .calc-promo{max-width:620px;margin:0 auto 20px;padding:14px 20px;border-radius:4px;background:var(--accent);color:#09111F;font-family:var(--sans);font-size:.85rem;font-weight:600;text-align:center}
     .calc-box{max-width:620px;margin:0 auto;padding:clamp(28px,4vw,44px);border:1px solid var(--line);border-radius:4px}
     .calc-box .form__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .calc-dp{margin-top:18px}
+    .calc-dp__row{display:flex;align-items:center;justify-content:space-between;font-family:var(--sans);font-size:.78rem;letter-spacing:.04em;color:var(--fg-2)}
+    .calc-dp__row strong{color:var(--fg);font-size:.95rem}
     .calc-result{margin-top:28px;padding-top:24px;border-top:1px solid var(--line);display:none}
     .calc-result.is-on{display:block}
     .calc-result dl{display:grid;grid-template-columns:1fr auto;gap:10px 16px;margin:0}
     .calc-result dt{font-family:var(--sans);font-size:.78rem;letter-spacing:.04em;color:var(--fg-2)}
     .calc-result dd{margin:0;font-family:var(--sans);font-weight:600;font-size:1rem;color:var(--fg);text-align:right}
     .calc-result dd.is-big{font-size:1.3rem;color:var(--accent)}
+    .calc-result dd.is-discount{color:#2E8B57}
+    .calc-stock{display:inline-block;margin-top:4px;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--accent) 16%,transparent);font-family:var(--sans);font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
     .calc-note{margin-top:18px;font-family:var(--sans);font-size:.8rem;line-height:1.6;color:var(--fg-2)}
-    @media(max-width:600px){.calc-box .form__grid{grid-template-columns:1fr}}
+    .calc-deposit{max-width:620px;margin:40px auto 0;padding:clamp(24px,3.5vw,36px);border-radius:4px;background:var(--ink);color:#F6F8FB}
+    .calc-deposit h3{margin:0 0 8px;font-family:var(--display);font-weight:300;font-size:1.2rem}
+    .calc-deposit p{margin:0 0 20px;font-family:var(--sans);font-size:.85rem;line-height:1.6;color:rgba(246,248,251,.7)}
+    .calc-deposit .form__grid{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end}
+    .calc-deposit label{color:rgba(246,248,251,.7)}
+    .calc-deposit select{width:100%;background:rgba(246,248,251,.06);color:#F6F8FB;border-color:rgba(246,248,251,.25)}
+    .calc-deposit select option{background:var(--ink);color:#F6F8FB}
+    @media(max-width:600px){.calc-box .form__grid{grid-template-columns:1fr}.calc-deposit .form__grid{grid-template-columns:1fr}}
   </style>
 <script>try{var c=document.documentElement.classList,s=sessionStorage;if(s.getItem("hb-intro-v3"))c.add("hbi-seen");if(s.getItem("uk-intro-v4"))c.add("uki-seen");if(matchMedia("(prefers-reduced-motion: reduce)").matches)c.add("hbi-seen","uki-seen")}catch(e){}</script>
 <noscript><style>.hbi,.uki{display:none!important}</style></noscript>
@@ -142,6 +155,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 <section class="ch ch--paper pad">
   <div class="wrap">
+    
     <div class="calc-box">
       <p class="mark mark--accent">Urban Kaza</p>
       <h2 class="d2" style="margin-top:6px">Select a unit and floor.</h2>
@@ -155,15 +169,37 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
           <select id="calc-floor"></select>
         </p>
       </div>
+      <div class="calc-dp">
+        <div class="calc-dp__row"><span>Down-Payment</span><strong id="calc-dp-label">15%</strong></div>
+        <input type="range" id="calc-dp-slider" min="15" max="100" step="1" value="15">
+        <div class="calc-dp__row"><span>15% (min)</span><span>A bigger down-payment earns a discount</span></div>
+      </div>
       <div class="calc-result" id="calc-result">
         <dl>
           <dt>Total Area</dt><dd id="calc-area"></dd>
           <dt>Price per m²</dt><dd id="calc-ppm"></dd>
-          <dt>Total Price</dt><dd id="calc-total" class="is-big"></dd>
-          <dt>Down-Payment (15%)</dt><dd id="calc-down" class="is-big"></dd>
+          <dt>Gross Price</dt><dd id="calc-gross"></dd>
+          <dt>Discount</dt><dd id="calc-discount" class="is-discount"></dd>
+          <dt>Net Price</dt><dd id="calc-total" class="is-big"></dd>
+          <dt>Down-Payment</dt><dd id="calc-down" class="is-big"></dd>
+          <dt>Remaining Balance</dt><dd id="calc-remaining"></dd>
         </dl>
+        <span class="calc-stock" id="calc-stock" hidden></span>
       </div>
       <p class="calc-note">Prices are in ETB and current as of our latest published price list. An installment plan is available — <a href="contact.html">contact our sales team</a> for current financing terms. Village and Recreation Center pricing isn't published yet.</p>
+    </div>
+
+    <div class="calc-deposit">
+      <h3>Reserve your unit</h3>
+      <p>Hold current prices with a <strong>refundable reservation deposit</strong> at any of our official banking partners. All accounts are under <strong>Hill Bottom Recreation Center PLC</strong>.</p>
+      <div class="form__grid">
+        <p class="field" style="margin:0"><label for="calc-bank">Banking Partner</label>
+          <select id="calc-bank">
+            <option value="0">Zemen Bank — 1342211051539010</option><option value="1">Hibret Bank — 1631811593925010</option><option value="2">Enat Bank — 0401117135340002</option><option value="3">Dashen Bank — 0037659900031</option><option value="4">Commercial Bank of Ethiopia (CBE) — 1000446511827</option><option value="5">Oromia Hibret sira Bank — 1025800074335</option><option value="6">Bunna Bank — 1709601000483</option><option value="7">Amhara Bank — 9900001446863</option><option value="8">Bank of Abyssinia — 226345132</option><option value="9">Awash Bank — 01304148307900</option>
+          </select>
+        </p>
+        <button type="button" class="btn btn--gold" id="calc-copy-bank">Copy Account Number</button>
+      </div>
     </div>
   </div>
 </section>
@@ -302,11 +338,20 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   </div>
 </div>
 <script>(function(){
-  var DATA = [{"id":"UK 1","type":"Two Bedroom","area":144.4,"bands":[{"floors":"4 – 15 Floor","pricePerM2":186000,"total":26858400,"down":4028760}]},{"id":"UK 2","type":"Two Bedroom","area":144.4,"bands":[{"floors":"4 – 15 Floor","pricePerM2":186000,"total":26858400,"down":4028760}]},{"id":"UK 3","type":"Two Bedroom","area":138,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":20010000,"down":3001500},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":20136270,"down":3020441},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":21524964,"down":3228745}]},{"id":"UK 4","type":"Two Bedroom","area":138,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":20010000,"down":3001500},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":20136270,"down":3020441},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":21524964,"down":3228745}]},{"id":"UK 5","type":"One Bedroom","area":103,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":15450000,"down":2317500},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":15029245,"down":2254387},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":16065734,"down":2409860}]},{"id":"UK 6","type":"One Bedroom","area":102,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":14790000,"down":2218500},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":14883330,"down":2232500},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":15909756,"down":2386463}]},{"id":"UK 7","type":"Two Bedroom","area":158.6,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":22997000,"down":3449550},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":23142119,"down":3471318},{"floors":"11 – 15 Floor","pricePerM2":159969,"total":25371083,"down":3805663}]}];
+  var DATA = [{"id":"UK 1","type":"Two Bedroom","area":144.4,"bands":[{"floors":"4 – 15 Floor","pricePerM2":186000,"total":26858400,"unitsLeft":null}]},{"id":"UK 2","type":"Two Bedroom","area":144.4,"bands":[{"floors":"4 – 15 Floor","pricePerM2":186000,"total":26858400,"unitsLeft":null}]},{"id":"UK 3","type":"Two Bedroom","area":138,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":20010000,"unitsLeft":null},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":20136270,"unitsLeft":null},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":21524964,"unitsLeft":null}]},{"id":"UK 4","type":"Two Bedroom","area":138,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":20010000,"unitsLeft":null},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":20136270,"unitsLeft":null},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":21524964,"unitsLeft":null}]},{"id":"UK 5","type":"One Bedroom","area":103,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":15450000,"unitsLeft":null},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":15029245,"unitsLeft":null},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":16065734,"unitsLeft":null}]},{"id":"UK 6","type":"One Bedroom","area":102,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":14790000,"unitsLeft":null},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":14883330,"unitsLeft":null},{"floors":"11 – 15 Floor","pricePerM2":155978,"total":15909756,"unitsLeft":null}]},{"id":"UK 7","type":"Two Bedroom","area":158.6,"bands":[{"floors":"4 – 6 Floor","pricePerM2":145000,"total":22997000,"unitsLeft":null},{"floors":"7 – 10 Floor","pricePerM2":145915,"total":23142119,"unitsLeft":null},{"floors":"11 – 15 Floor","pricePerM2":159969,"total":25371083,"unitsLeft":null}]}];
+  var TIERS = [{"minDp":100,"rate":12},{"minDp":50,"rate":7},{"minDp":25,"rate":5},{"minDp":0,"rate":0}];
+  var BANKS = [{"bank":"Zemen Bank","account":"1342211051539010"},{"bank":"Hibret Bank","account":"1631811593925010"},{"bank":"Enat Bank","account":"0401117135340002"},{"bank":"Dashen Bank","account":"0037659900031"},{"bank":"Commercial Bank of Ethiopia (CBE)","account":"1000446511827"},{"bank":"Oromia Hibret sira Bank","account":"1025800074335"},{"bank":"Bunna Bank","account":"1709601000483"},{"bank":"Amhara Bank","account":"9900001446863"},{"bank":"Bank of Abyssinia","account":"226345132"},{"bank":"Awash Bank","account":"01304148307900"}];
   var unitSel = document.getElementById("calc-unit");
   var floorSel = document.getElementById("calc-floor");
+  var dpSlider = document.getElementById("calc-dp-slider");
+  var dpLabel = document.getElementById("calc-dp-label");
   var result = document.getElementById("calc-result");
-  var fmt = function (n) { return n.toLocaleString("en-US") + " ETB"; };
+  var stockEl = document.getElementById("calc-stock");
+  var fmt = function (n) { return Math.round(n).toLocaleString("en-US") + " ETB"; };
+  function discountRateFor(dp) {
+    for (var i = 0; i < TIERS.length; i++) if (dp >= TIERS[i].minDp) return TIERS[i].rate;
+    return 0;
+  }
   function fillFloors() {
     var unit = DATA[unitSel.value];
     floorSel.innerHTML = unit.bands.map(function (b, i) { return "<option value=\"" + i + "\">" + b.floors + "</option>"; }).join("");
@@ -316,15 +361,54 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     var unit = DATA[unitSel.value];
     var band = unit.bands[floorSel.value];
     if (!band) return;
+    var dp = Number(dpSlider.value);
+    dpLabel.textContent = dp + "%";
+    var discountRate = discountRateFor(dp);
+    var discountETB = band.total * (discountRate / 100);
+    var netPrice = band.total - discountETB;
+    var downETB = netPrice * (dp / 100);
+    var remainingETB = netPrice - downETB;
+
     document.getElementById("calc-area").textContent = unit.area + " m\u00B2";
     document.getElementById("calc-ppm").textContent = fmt(band.pricePerM2);
-    document.getElementById("calc-total").textContent = fmt(band.total);
-    document.getElementById("calc-down").textContent = fmt(band.down);
+    document.getElementById("calc-gross").textContent = fmt(band.total);
+    document.getElementById("calc-discount").textContent = discountRate ? ("- " + fmt(discountETB) + " (" + discountRate + "%)") : "None at this down-payment";
+    document.getElementById("calc-total").textContent = fmt(netPrice);
+    document.getElementById("calc-down").textContent = fmt(downETB);
+    document.getElementById("calc-remaining").textContent = dp >= 100 ? "Paid in full" : fmt(remainingETB);
+    if (band.unitsLeft != null) {
+      stockEl.hidden = false;
+      stockEl.textContent = band.unitsLeft + " unit" + (band.unitsLeft === 1 ? "" : "s") + " left";
+    } else {
+      stockEl.hidden = true;
+    }
     result.classList.add("is-on");
   }
   unitSel.addEventListener("change", fillFloors);
   floorSel.addEventListener("change", render);
+  dpSlider.addEventListener("input", render);
   fillFloors();
+
+  var copyBtn = document.getElementById("calc-copy-bank");
+  var bankSel = document.getElementById("calc-bank");
+  if (copyBtn && bankSel) {
+    copyBtn.addEventListener("click", function () {
+      var acct = BANKS[bankSel.value].account;
+      var done = function () {
+        copyBtn.dataset.label = copyBtn.dataset.label || copyBtn.textContent;
+        copyBtn.textContent = "Copied!";
+        setTimeout(function () { copyBtn.textContent = copyBtn.dataset.label; }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(acct).then(done).catch(function () {});
+      } else {
+        var tmp = document.createElement("input");
+        tmp.value = acct; document.body.appendChild(tmp); tmp.select();
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        document.body.removeChild(tmp);
+      }
+    });
+  }
 })();</script>
 <script src="assets/js/hb.js" defer></script>
 </body>

@@ -11,6 +11,7 @@ const pricingInput = z.object({
   projectId: z.number().int(),
   unitType: z.string().min(1),
   price: z.string().or(z.number()).transform(String),
+  unitsLeft: z.number().int().nullable().optional(),
   currency: z.string().default("ETB"),
   installmentPlan: z.array(z.record(z.string(), z.any())).default([]),
   discountRules: z.array(z.record(z.string(), z.any())).default([]),

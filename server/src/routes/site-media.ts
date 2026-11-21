@@ -17,6 +17,8 @@ const siteMediaInput = z.object({
   promoGiftTitle: z.string().optional(),
   promoGiftBody: z.string().optional(),
   promoPartnerUrl: z.string().optional(),
+  priceCalcPromoActive: z.boolean().optional(),
+  priceCalcPromoText: z.string().optional(),
 });
 
 // Singleton config (hero video, featured project video, virtual tour

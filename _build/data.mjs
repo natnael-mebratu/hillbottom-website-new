@@ -4,9 +4,9 @@
    Items flagged `hold:true` are placeholders the client must replace. */
 
 import fs from "fs";
-import { PROJECTS_LIVE, MARKETING_POSTS, TEAM_MEMBERS, TESTIMONIALS_LIVE, JOBS } from "./generated-content.mjs";
+import { PROJECTS_LIVE, MARKETING_POSTS, TEAM_MEMBERS, TESTIMONIALS_LIVE, JOBS, PRICING_LIVE, PRICE_CALC_PROMO } from "./generated-content.mjs";
 
-export { MARKETING_POSTS, TEAM_MEMBERS, JOBS };
+export { MARKETING_POSTS, TEAM_MEMBERS, JOBS, PRICE_CALC_PROMO };
 
 export const POSTS = JSON.parse(fs.readFileSync(new URL("./blog.json", import.meta.url), "utf8"));
 
@@ -224,40 +224,83 @@ export const KAZA_NOTE = [
 ];
 
 /* Urban Kaza price list (client-supplied sheet, Nov 2026). Down-payment is
-   always 15% of total. No installment schedule yet — the client hasn't
-   finalized financing terms (months/frequency/interest), so
-   price-calculator.html shows total + down-payment only and says the
-   installment plan is "available on request" rather than inventing one.
-   Urban Kaza only for now; other projects don't have a published price
-   list yet, so the calculator doesn't offer them. */
+   dynamic now (client confirmed discount tiers reward a bigger down-payment
+   — see DISCOUNT_TIERS), computed live in price-calculator.html's own JS
+   rather than stored per band. No installment schedule yet — the client
+   hasn't finalized financing terms (months/frequency/interest), so the
+   page points to Contact for that rather than inventing one. Urban Kaza
+   only for now; other projects don't have a published price list yet, so
+   the calculator doesn't offer them.
+
+   price/unitsLeft can be overridden per band from the admin panel (Pricing
+   & Plans) — see mergeLivePricing() below. A band with no matching admin
+   row just keeps the static sheet price and shows no "units left" badge. */
+const liveByUnitType = Object.fromEntries(PRICING_LIVE.map((p) => [p.unitType, p]));
+const mergeLivePricing = (id, floors) => liveByUnitType[`${id} ${floors}`] ?? null;
+const ukBand = (id, area, floors, pricePerM2, total) => {
+  const live = mergeLivePricing(id, floors);
+  return {
+    floors,
+    pricePerM2,
+    total: live ? Number(live.price) : total,
+    unitsLeft: live?.unitsLeft ?? null,
+  };
+};
 export const UK_PRICE_LIST = [
-  { id: "UK 1", type: "Two Bedroom", area: 144.4, bands: [{ floors: "4 – 15 Floor", pricePerM2: 186000, total: 26858400, down: 4028760 }] },
-  { id: "UK 2", type: "Two Bedroom", area: 144.4, bands: [{ floors: "4 – 15 Floor", pricePerM2: 186000, total: 26858400, down: 4028760 }] },
+  { id: "UK 1", type: "Two Bedroom", area: 144.4, bands: [ukBand("UK 1", 144.4, "4 – 15 Floor", 186000, 26858400)] },
+  { id: "UK 2", type: "Two Bedroom", area: 144.4, bands: [ukBand("UK 2", 144.4, "4 – 15 Floor", 186000, 26858400)] },
   { id: "UK 3", type: "Two Bedroom", area: 138.0, bands: [
-    { floors: "4 – 6 Floor", pricePerM2: 145000, total: 20010000, down: 3001500 },
-    { floors: "7 – 10 Floor", pricePerM2: 145915, total: 20136270, down: 3020441 },
-    { floors: "11 – 15 Floor", pricePerM2: 155978, total: 21524964, down: 3228745 },
+    ukBand("UK 3", 138.0, "4 – 6 Floor", 145000, 20010000),
+    ukBand("UK 3", 138.0, "7 – 10 Floor", 145915, 20136270),
+    ukBand("UK 3", 138.0, "11 – 15 Floor", 155978, 21524964),
   ] },
   { id: "UK 4", type: "Two Bedroom", area: 138.0, bands: [
-    { floors: "4 – 6 Floor", pricePerM2: 145000, total: 20010000, down: 3001500 },
-    { floors: "7 – 10 Floor", pricePerM2: 145915, total: 20136270, down: 3020441 },
-    { floors: "11 – 15 Floor", pricePerM2: 155978, total: 21524964, down: 3228745 },
+    ukBand("UK 4", 138.0, "4 – 6 Floor", 145000, 20010000),
+    ukBand("UK 4", 138.0, "7 – 10 Floor", 145915, 20136270),
+    ukBand("UK 4", 138.0, "11 – 15 Floor", 155978, 21524964),
   ] },
   { id: "UK 5", type: "One Bedroom", area: 103.0, bands: [
-    { floors: "4 – 6 Floor", pricePerM2: 145000, total: 15450000, down: 2317500 },
-    { floors: "7 – 10 Floor", pricePerM2: 145915, total: 15029245, down: 2254387 },
-    { floors: "11 – 15 Floor", pricePerM2: 155978, total: 16065734, down: 2409860 },
+    ukBand("UK 5", 103.0, "4 – 6 Floor", 145000, 15450000),
+    ukBand("UK 5", 103.0, "7 – 10 Floor", 145915, 15029245),
+    ukBand("UK 5", 103.0, "11 – 15 Floor", 155978, 16065734),
   ] },
   { id: "UK 6", type: "One Bedroom", area: 102.0, bands: [
-    { floors: "4 – 6 Floor", pricePerM2: 145000, total: 14790000, down: 2218500 },
-    { floors: "7 – 10 Floor", pricePerM2: 145915, total: 14883330, down: 2232500 },
-    { floors: "11 – 15 Floor", pricePerM2: 155978, total: 15909756, down: 2386463 },
+    ukBand("UK 6", 102.0, "4 – 6 Floor", 145000, 14790000),
+    ukBand("UK 6", 102.0, "7 – 10 Floor", 145915, 14883330),
+    ukBand("UK 6", 102.0, "11 – 15 Floor", 155978, 15909756),
   ] },
   { id: "UK 7", type: "Two Bedroom", area: 158.6, bands: [
-    { floors: "4 – 6 Floor", pricePerM2: 145000, total: 22997000, down: 3449550 },
-    { floors: "7 – 10 Floor", pricePerM2: 145915, total: 23142119, down: 3471318 },
-    { floors: "11 – 15 Floor", pricePerM2: 159969, total: 25371083, down: 3805663 },
+    ukBand("UK 7", 158.6, "4 – 6 Floor", 145000, 22997000),
+    ukBand("UK 7", 158.6, "7 – 10 Floor", 145915, 23142119),
+    ukBand("UK 7", 158.6, "11 – 15 Floor", 159969, 25371083),
   ] },
+];
+
+/* Down-payment discount tiers (client-confirmed, Nov 2026): a bigger
+   down-payment than the 15% minimum earns a discount off the gross total.
+   Sorted descending by minDp — price-calculator.html picks the first tier
+   the chosen down-payment % meets or exceeds. */
+export const DISCOUNT_TIERS = [
+  { minDp: 100, rate: 12 },
+  { minDp: 50, rate: 7 },
+  { minDp: 25, rate: 5 },
+  { minDp: 0, rate: 0 },
+];
+
+/* Reservation deposit bank accounts (client-confirmed, Nov 2026) — all
+   under the same account name. Deposit is refundable. */
+export const RESERVATION_ACCOUNT_NAME = "Hill Bottom Recreation Center PLC";
+export const RESERVATION_BANKS = [
+  { bank: "Zemen Bank", account: "1342211051539010" },
+  { bank: "Hibret Bank", account: "1631811593925010" },
+  { bank: "Enat Bank", account: "0401117135340002" },
+  { bank: "Dashen Bank", account: "0037659900031" },
+  { bank: "Commercial Bank of Ethiopia (CBE)", account: "1000446511827" },
+  { bank: "Oromia Hibret sira Bank", account: "1025800074335" },
+  { bank: "Bunna Bank", account: "1709601000483" },
+  { bank: "Amhara Bank", account: "9900001446863" },
+  { bank: "Bank of Abyssinia", account: "226345132" },
+  { bank: "Awash Bank", account: "01304148307900" },
 ];
 
 export const KAZA_CONTEXT = [

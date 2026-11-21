@@ -1,4 +1,4 @@
-import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, MARKETING_POSTS, SISTER_COMPANIES, JOBS, UK_PRICE_LIST } from "../data.mjs";
+import { CO, CTA, REMOTE_JOURNEY, REMOTE_SUPPORT, REMOTE_FAQ, CONSTRUCTION, MARKETING_POSTS, SISTER_COMPANIES, JOBS, UK_PRICE_LIST, DISCOUNT_TIERS, RESERVATION_BANKS, RESERVATION_ACCOUNT_NAME, PRICE_CALC_PROMO } from "../data.mjs";
 import { page, facts, alt, plate, img, btn, link, esc, jsonScript, ICON } from "../ui.mjs";
 import { pageHero, ctaBand, inquiryForm, jobApplyForm } from "./parts.mjs";
 
@@ -546,13 +546,14 @@ ${ctaBand(0, {
 
 /* ===================== PRICE CALCULATOR ===================================
    Urban Kaza only — it's the only project with a published price list
-   (client-supplied sheet, see UK_PRICE_LIST in data.mjs). No installment
-   schedule yet: the client hasn't finalized financing terms, so this
-   shows total price + the 15% down-payment and points to Contact for a
-   payment plan rather than inventing one. Village/Recreation Center have
-   no price list yet, so they're simply not offered here (not even a
-   "coming soon" placeholder per unit — the client asked to stay quiet on
-   those for now). */
+   (client-supplied sheet, see UK_PRICE_LIST in data.mjs). Down-payment is
+   selectable 15–100%, rewarded with a discount per DISCOUNT_TIERS (client-
+   confirmed, Nov 2026). No installment schedule yet: the client hasn't
+   finalized financing terms, so this points to Contact for that rather
+   than inventing one. Village/Recreation Center have no price list yet,
+   so they're simply not offered here. The reservation-deposit section and
+   promo banner are both client-confirmed, real features (not the invented
+   placeholder numbers the old unused draft had). */
 out["price-calculator.html"] = page({
   current: "",
   path: "price-calculator.html",
@@ -561,16 +562,29 @@ out["price-calculator.html"] = page({
   desc: "Estimate the total price and down-payment for an Urban Kaza residence by unit type and floor.",
   bodyClass: "price-calculator-page",
   head: `<style>
+    .calc-promo{max-width:620px;margin:0 auto 20px;padding:14px 20px;border-radius:4px;background:var(--accent);color:#09111F;font-family:var(--sans);font-size:.85rem;font-weight:600;text-align:center}
     .calc-box{max-width:620px;margin:0 auto;padding:clamp(28px,4vw,44px);border:1px solid var(--line);border-radius:4px}
     .calc-box .form__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .calc-dp{margin-top:18px}
+    .calc-dp__row{display:flex;align-items:center;justify-content:space-between;font-family:var(--sans);font-size:.78rem;letter-spacing:.04em;color:var(--fg-2)}
+    .calc-dp__row strong{color:var(--fg);font-size:.95rem}
     .calc-result{margin-top:28px;padding-top:24px;border-top:1px solid var(--line);display:none}
     .calc-result.is-on{display:block}
     .calc-result dl{display:grid;grid-template-columns:1fr auto;gap:10px 16px;margin:0}
     .calc-result dt{font-family:var(--sans);font-size:.78rem;letter-spacing:.04em;color:var(--fg-2)}
     .calc-result dd{margin:0;font-family:var(--sans);font-weight:600;font-size:1rem;color:var(--fg);text-align:right}
     .calc-result dd.is-big{font-size:1.3rem;color:var(--accent)}
+    .calc-result dd.is-discount{color:#2E8B57}
+    .calc-stock{display:inline-block;margin-top:4px;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--accent) 16%,transparent);font-family:var(--sans);font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
     .calc-note{margin-top:18px;font-family:var(--sans);font-size:.8rem;line-height:1.6;color:var(--fg-2)}
-    @media(max-width:600px){.calc-box .form__grid{grid-template-columns:1fr}}
+    .calc-deposit{max-width:620px;margin:40px auto 0;padding:clamp(24px,3.5vw,36px);border-radius:4px;background:var(--ink);color:#F6F8FB}
+    .calc-deposit h3{margin:0 0 8px;font-family:var(--display);font-weight:300;font-size:1.2rem}
+    .calc-deposit p{margin:0 0 20px;font-family:var(--sans);font-size:.85rem;line-height:1.6;color:rgba(246,248,251,.7)}
+    .calc-deposit .form__grid{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end}
+    .calc-deposit label{color:rgba(246,248,251,.7)}
+    .calc-deposit select{width:100%;background:rgba(246,248,251,.06);color:#F6F8FB;border-color:rgba(246,248,251,.25)}
+    .calc-deposit select option{background:var(--ink);color:#F6F8FB}
+    @media(max-width:600px){.calc-box .form__grid{grid-template-columns:1fr}.calc-deposit .form__grid{grid-template-columns:1fr}}
   </style>`,
   body: `
 ${pageHero(0, {
@@ -582,6 +596,7 @@ ${pageHero(0, {
 
 <section class="ch ch--paper pad">
   <div class="wrap">
+    ${PRICE_CALC_PROMO.active && PRICE_CALC_PROMO.text ? `<div class="calc-promo">${esc(PRICE_CALC_PROMO.text)}</div>` : ""}
     <div class="calc-box">
       <p class="mark mark--accent">Urban Kaza</p>
       <h2 class="d2" style="margin-top:6px">Select a unit and floor.</h2>
@@ -595,15 +610,37 @@ ${pageHero(0, {
           <select id="calc-floor"></select>
         </p>
       </div>
+      <div class="calc-dp">
+        <div class="calc-dp__row"><span>Down-Payment</span><strong id="calc-dp-label">15%</strong></div>
+        <input type="range" id="calc-dp-slider" min="15" max="100" step="1" value="15">
+        <div class="calc-dp__row"><span>15% (min)</span><span>A bigger down-payment earns a discount</span></div>
+      </div>
       <div class="calc-result" id="calc-result">
         <dl>
           <dt>Total Area</dt><dd id="calc-area"></dd>
           <dt>Price per m²</dt><dd id="calc-ppm"></dd>
-          <dt>Total Price</dt><dd id="calc-total" class="is-big"></dd>
-          <dt>Down-Payment (15%)</dt><dd id="calc-down" class="is-big"></dd>
+          <dt>Gross Price</dt><dd id="calc-gross"></dd>
+          <dt>Discount</dt><dd id="calc-discount" class="is-discount"></dd>
+          <dt>Net Price</dt><dd id="calc-total" class="is-big"></dd>
+          <dt>Down-Payment</dt><dd id="calc-down" class="is-big"></dd>
+          <dt>Remaining Balance</dt><dd id="calc-remaining"></dd>
         </dl>
+        <span class="calc-stock" id="calc-stock" hidden></span>
       </div>
       <p class="calc-note">Prices are in ETB and current as of our latest published price list. An installment plan is available — <a href="contact.html">contact our sales team</a> for current financing terms. Village and Recreation Center pricing isn't published yet.</p>
+    </div>
+
+    <div class="calc-deposit">
+      <h3>Reserve your unit</h3>
+      <p>Hold current prices with a <strong>refundable reservation deposit</strong> at any of our official banking partners. All accounts are under <strong>${esc(RESERVATION_ACCOUNT_NAME)}</strong>.</p>
+      <div class="form__grid">
+        <p class="field" style="margin:0"><label for="calc-bank">Banking Partner</label>
+          <select id="calc-bank">
+            ${RESERVATION_BANKS.map((b, i) => `<option value="${i}">${esc(b.bank)} — ${esc(b.account)}</option>`).join("")}
+          </select>
+        </p>
+        <button type="button" class="btn btn--gold" id="calc-copy-bank">Copy Account Number</button>
+      </div>
     </div>
   </div>
 </section>
@@ -617,10 +654,19 @@ ${ctaBand(0, {
 `,
   scripts: `<script>(function(){
   var DATA = ${jsonScript(UK_PRICE_LIST)};
+  var TIERS = ${jsonScript(DISCOUNT_TIERS)};
+  var BANKS = ${jsonScript(RESERVATION_BANKS)};
   var unitSel = document.getElementById("calc-unit");
   var floorSel = document.getElementById("calc-floor");
+  var dpSlider = document.getElementById("calc-dp-slider");
+  var dpLabel = document.getElementById("calc-dp-label");
   var result = document.getElementById("calc-result");
-  var fmt = function (n) { return n.toLocaleString("en-US") + " ETB"; };
+  var stockEl = document.getElementById("calc-stock");
+  var fmt = function (n) { return Math.round(n).toLocaleString("en-US") + " ETB"; };
+  function discountRateFor(dp) {
+    for (var i = 0; i < TIERS.length; i++) if (dp >= TIERS[i].minDp) return TIERS[i].rate;
+    return 0;
+  }
   function fillFloors() {
     var unit = DATA[unitSel.value];
     floorSel.innerHTML = unit.bands.map(function (b, i) { return "<option value=\\"" + i + "\\">" + b.floors + "</option>"; }).join("");
@@ -630,15 +676,54 @@ ${ctaBand(0, {
     var unit = DATA[unitSel.value];
     var band = unit.bands[floorSel.value];
     if (!band) return;
+    var dp = Number(dpSlider.value);
+    dpLabel.textContent = dp + "%";
+    var discountRate = discountRateFor(dp);
+    var discountETB = band.total * (discountRate / 100);
+    var netPrice = band.total - discountETB;
+    var downETB = netPrice * (dp / 100);
+    var remainingETB = netPrice - downETB;
+
     document.getElementById("calc-area").textContent = unit.area + " m\\u00B2";
     document.getElementById("calc-ppm").textContent = fmt(band.pricePerM2);
-    document.getElementById("calc-total").textContent = fmt(band.total);
-    document.getElementById("calc-down").textContent = fmt(band.down);
+    document.getElementById("calc-gross").textContent = fmt(band.total);
+    document.getElementById("calc-discount").textContent = discountRate ? ("- " + fmt(discountETB) + " (" + discountRate + "%)") : "None at this down-payment";
+    document.getElementById("calc-total").textContent = fmt(netPrice);
+    document.getElementById("calc-down").textContent = fmt(downETB);
+    document.getElementById("calc-remaining").textContent = dp >= 100 ? "Paid in full" : fmt(remainingETB);
+    if (band.unitsLeft != null) {
+      stockEl.hidden = false;
+      stockEl.textContent = band.unitsLeft + " unit" + (band.unitsLeft === 1 ? "" : "s") + " left";
+    } else {
+      stockEl.hidden = true;
+    }
     result.classList.add("is-on");
   }
   unitSel.addEventListener("change", fillFloors);
   floorSel.addEventListener("change", render);
+  dpSlider.addEventListener("input", render);
   fillFloors();
+
+  var copyBtn = document.getElementById("calc-copy-bank");
+  var bankSel = document.getElementById("calc-bank");
+  if (copyBtn && bankSel) {
+    copyBtn.addEventListener("click", function () {
+      var acct = BANKS[bankSel.value].account;
+      var done = function () {
+        copyBtn.dataset.label = copyBtn.dataset.label || copyBtn.textContent;
+        copyBtn.textContent = "Copied!";
+        setTimeout(function () { copyBtn.textContent = copyBtn.dataset.label; }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(acct).then(done).catch(function () {});
+      } else {
+        var tmp = document.createElement("input");
+        tmp.value = acct; document.body.appendChild(tmp); tmp.select();
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        document.body.removeChild(tmp);
+      }
+    });
+  }
 })();</script>`,
 });
 
