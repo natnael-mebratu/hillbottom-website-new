@@ -11,10 +11,13 @@ const execFileAsync = promisify(execFile);
 // Repo root is this file's directory walked up two levels (server/src/routes -> repo root).
 const REPO_ROOT = path.resolve(new URL(".", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"), "../../..");
 
-// Regenerates the static site from the DB (fetchData -> build), commits, and
-// pushes — Vercel's deploy hook on the pushed branch picks it up from there.
-// This is the one write path that touches the git repo directly; everything
-// else only ever writes to Postgres.
+// Regenerates the static site from the DB (fetchData -> build) right here
+// in place. This server's own checkout (/var/www/hillbottom) is what nginx
+// serves directly, so a rebuild IS the deploy — no git push/webhook needed
+// (that round-trip only made sense under the old Vercel-hosted setup).
+// Deliberately doesn't touch git at all: committing the regenerated static
+// files from a live production checkout would conflict with the normal
+// git pull workflow used to ship code changes to this same checkout.
 publishRouter.post("/", requireAdmin, async (_req, res) => {
   const log: string[] = [];
   const run = async (cmd: string, args: string[]) => {
@@ -23,30 +26,8 @@ publishRouter.post("/", requireAdmin, async (_req, res) => {
   };
 
   try {
-    // Push to whatever branch this checkout is actually on, not a hardcoded
-    // one — this deploys from a branch (currently seo-fixes), not main, and
-    // PUBLISH_BRANCH stays available as an explicit override once a
-    // production branch is decided.
-    const { stdout: currentBranch } = await execFileAsync("git", ["rev-parse", "--abbrev-ref", "HEAD"], { cwd: REPO_ROOT });
-    const branch = process.env.PUBLISH_BRANCH || currentBranch.trim();
-
     await run("npm", ["run", "fetch-data"]);
     await run("npm", ["run", "build"]);
-
-    const { stdout: status } = await execFileAsync("git", ["status", "--porcelain"], { cwd: REPO_ROOT });
-    if (!status.trim()) {
-      res.json({ published: false, reason: "no changes after regeneration", log });
-      return;
-    }
-
-    // -u (not -A): only stages changes to files git already tracks — the
-    // regenerated static site — so stray untracked files sitting in the
-    // working tree (scratch scripts, in-progress source edits) never get
-    // swept into a publish commit.
-    await run("git", ["add", "-u"]);
-    await run("git", ["commit", "-m", "Publish: content update from admin"]);
-    await run("git", ["push", "origin", `HEAD:${branch}`]);
-
     res.json({ published: true, log });
   } catch (err) {
     res.status(500).json({ error: (err as Error).message, log });
