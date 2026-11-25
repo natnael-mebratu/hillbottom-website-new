@@ -16,4 +16,40 @@
     outline: none;
     border-color: rgba(192, 154, 96, 0.6);
   }
+  .prose-edit h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 1em 0 0.4em;
+    color: #fff;
+  }
+  .prose-edit h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0.9em 0 0.3em;
+    color: #fff;
+  }
+  .prose-edit p {
+    margin: 0.6em 0;
+  }
+  .prose-edit ul,
+  .prose-edit ol {
+    margin: 0.6em 0;
+    padding-left: 1.4em;
+  }
+  .prose-edit ul {
+    list-style: disc;
+  }
+  .prose-edit ol {
+    list-style: decimal;
+  }
+  .prose-edit blockquote {
+    border-left: 2px solid rgba(192, 154, 96, 0.6);
+    padding-left: 0.9em;
+    margin: 0.6em 0;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .prose-edit a {
+    color: #c09a60;
+    text-decoration: underline;
+  }
 }

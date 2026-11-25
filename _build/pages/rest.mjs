@@ -872,7 +872,13 @@ ${ctaBand(0, {
 `,
 });
 
-/* ---- article pages ---- */
+/* ---- article pages ----
+   content is real HTML (h2/h3/p/ul/strong/a) for any post written with
+   the admin's rich-text editor — rendered as-is. The handful of posts
+   migrated from the old static blog.json are still plain text with blank
+   lines between paragraphs, so mdish() keeps guessing their headings; a
+   post's content starts with "<" the moment it's ever saved through the
+   new editor, which is how the two are told apart. */
 const mdish = (content) => content.split(/\n{2,}/).map((para) => {
   const t = para.trim();
   if (!t) return "";
@@ -924,7 +930,7 @@ ${pageHero(1, {
         <div><dt>Applicable law</dt><dd>Proclamation No. 1357 / Ministry of Justice</dd></div>
       </dl>
     </aside>` : ""}
-    ${mdish(p.content)}
+    ${/^\s*</.test(p.content) ? p.content : mdish(p.content)}
     <div class="article-prose__end">
       <span>Continue exploring</span>
       ${link("All Insights", "news.html", { d: 1 })}

@@ -19,6 +19,7 @@ import {
 } from "@/lib/apiClient";
 import { VideoEmbed, isVideoUrl } from "@/components/VideoEmbed";
 import { ImageUrlField } from "@/components/ImageUrlField";
+import { RichTextEditor } from "@/components/RichTextEditor";
 
 const sections = [
   { id: "dashboard", label: "Dashboard" },
@@ -1568,7 +1569,7 @@ function BlogSection() {
 
   function submit(event: React.FormEvent) {
     event.preventDefault();
-    if (!draft.slug.trim() || !draft.title.trim() || !draft.content.trim()) return;
+    if (!draft.slug.trim() || !draft.title.trim() || !draft.content.replace(/<[^>]*>/g, "").trim()) return;
     if (editingId) updatePost.mutate(editingId);
     else createPost.mutate();
   }
@@ -1643,14 +1644,13 @@ function BlogSection() {
               rows={2}
               className="admin-input resize-none"
             />
-            <textarea
-              required
-              value={draft.content}
-              onChange={(e) => setDraft((d) => ({ ...d, content: e.target.value }))}
-              placeholder="Full content"
-              rows={6}
-              className="admin-input resize-none"
-            />
+            <div>
+              <p className="mb-1.5 text-[10px] uppercase tracking-widest text-white/35">Full content</p>
+              <RichTextEditor
+                value={draft.content}
+                onChange={(html) => setDraft((d) => ({ ...d, content: html }))}
+              />
+            </div>
             <ImageUrlField
               value={draft.coverImageUrl}
               onChange={(url) => setDraft((d) => ({ ...d, coverImageUrl: url }))}
