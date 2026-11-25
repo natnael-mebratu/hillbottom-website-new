@@ -52,6 +52,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const login = useMutation({
     mutationFn: () => api.login(email, password),
@@ -87,15 +88,24 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
             className="admin-input"
             autoComplete="username"
           />
-          <input
-            required
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="admin-input"
-            autoComplete="current-password"
-          />
+          <div className="relative">
+            <input
+              required
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              className="admin-input pr-16"
+              autoComplete="current-password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((s) => !s)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/40 hover:text-white"
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
           <button
             disabled={login.isPending}
             className="w-full bg-[#c09a60] px-4 py-3 text-sm font-semibold text-[#07111f] hover:bg-[#d2b277] disabled:opacity-60"
@@ -241,7 +251,7 @@ function ProgressSection() {
               <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-white/35">
                 <span>{new Date(update.postedAt).toLocaleDateString()}</span>
                 <button
-                  onClick={() => deleteUpdate.mutate(update.id)}
+                  onClick={() => { if (window.confirm("Delete this progress update? This can't be undone.")) deleteUpdate.mutate(update.id); }}
                   className="text-red-300/70 hover:text-red-300"
                 >
                   Delete
@@ -613,7 +623,7 @@ function ProjectsSection() {
                   Edit
                 </button>
                 <button
-                  onClick={() => deleteProject.mutate(project.id)}
+                  onClick={() => { if (window.confirm(`Delete "${project.name}"? This can't be undone.`)) deleteProject.mutate(project.id); }}
                   className="text-red-300/70 hover:text-red-300"
                 >
                   Delete
@@ -880,7 +890,7 @@ function PricingSection() {
                   Edit
                 </button>
                 <button
-                  onClick={() => deletePlan.mutate(plan.id)}
+                  onClick={() => { if (window.confirm(`Delete pricing for "${plan.unitType}"? This can't be undone.`)) deletePlan.mutate(plan.id); }}
                   className="text-red-300/70 hover:text-red-300"
                 >
                   Delete
@@ -1058,7 +1068,7 @@ function TeamSection() {
                   Edit
                 </button>
                 <button
-                  onClick={() => deleteMember.mutate(member.id)}
+                  onClick={() => { if (window.confirm(`Delete "${member.name}" from the team?`)) deleteMember.mutate(member.id); }}
                   className="text-red-300/70 hover:text-red-300"
                 >
                   Delete
@@ -1258,7 +1268,7 @@ function JobsSection() {
                   View applications
                 </button>
                 <button
-                  onClick={() => deleteJob.mutate(job.id)}
+                  onClick={() => { if (window.confirm(`Delete the "${job.title}" job posting? This can't be undone.`)) deleteJob.mutate(job.id); }}
                   className="text-red-300/70 hover:text-red-300"
                 >
                   Delete
@@ -1466,7 +1476,7 @@ function TestimonialsSection() {
                   Edit
                 </button>
                 <button
-                  onClick={() => deleteTestimonial.mutate(testimonial.id)}
+                  onClick={() => { if (window.confirm(`Delete the testimonial from "${testimonial.authorName}"?`)) deleteTestimonial.mutate(testimonial.id); }}
                   className="text-red-300/70 hover:text-red-300"
                 >
                   Delete
@@ -1637,7 +1647,7 @@ function BlogSection() {
                   Edit
                 </button>
                 <button
-                  onClick={() => deletePost.mutate(post.id)}
+                  onClick={() => { if (window.confirm(`Delete the blog post "${post.title}"? This can't be undone.`)) deletePost.mutate(post.id); }}
                   className="text-red-300/70 hover:text-red-300"
                 >
                   Delete
@@ -1789,7 +1799,7 @@ function MarketingSection() {
                 </div>
               )}
               <button
-                onClick={() => deletePost.mutate(post.id)}
+                onClick={() => { if (window.confirm(`Delete the post "${post.title}"? This can't be undone.`)) deletePost.mutate(post.id); }}
                 className="mt-4 text-xs text-red-300/70 hover:text-red-300"
               >
                 Delete
@@ -1936,7 +1946,7 @@ function SisterCompaniesSection() {
                   Edit
                 </button>
                 <button
-                  onClick={() => deleteCompany.mutate(company.id)}
+                  onClick={() => { if (window.confirm(`Delete "${company.name}"? This can't be undone.`)) deleteCompany.mutate(company.id); }}
                   className="text-red-300/70 hover:text-red-300"
                 >
                   Delete
