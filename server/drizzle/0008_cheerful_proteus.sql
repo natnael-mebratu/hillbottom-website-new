@@ -1,0 +1,1 @@
+ALTER TABLE "blog_posts" ADD COLUMN "tags" varchar(500) DEFAULT '' NOT NULL;

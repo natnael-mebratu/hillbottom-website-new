@@ -30,7 +30,6 @@ const sections = [
   { id: "testimonials", label: "Testimonials" },
   { id: "blog", label: "Blog" },
   { id: "marketing", label: "Marketing Feed" },
-  { id: "sister-companies", label: "Sister Companies" },
   { id: "media", label: "Site Media & Promo" },
   { id: "leads", label: "Leads" },
   { id: "publish", label: "Publish" },
@@ -365,55 +364,15 @@ function MediaSection() {
     >
       <div className="border border-white/10 bg-[#0d1b2d] p-6">
         <p className="text-xs uppercase tracking-[0.25em] text-[#c09a60]">Public media</p>
-        <h2 className="mt-2 text-xl font-semibold">Manage video areas</h2>
-        <p className="mt-2 text-xs leading-relaxed text-white/40">
-          Only the Home hero video is live right now — paste a direct .mp4/.webm
-          file URL (not a YouTube/Vimeo link; the hero is a looping background
-          video, not a page you'd embed a player into). Featured project video
-          and Virtual Tour below are saved but not yet connected to the site —
-          ask before relying on them.
-        </p>
-        <div className="mt-5 space-y-4">
+        <h2 className="mt-2 text-xl font-semibold">Home hero video</h2>
+        <div className="mt-5 space-y-2">
           <input
             value={current.heroVideoUrl}
             onChange={(e) => field("heroVideoUrl", e.target.value)}
-            placeholder="Home hero video URL (.mp4/.webm direct file link)"
+            placeholder="Direct .mp4 or .webm file URL"
             className="admin-input"
           />
-          <p className="text-[10px] uppercase tracking-widest text-amber-400/70">Not yet connected to the site:</p>
-          <input
-            value={current.featuredProjectVideoUrl}
-            onChange={(e) => field("featuredProjectVideoUrl", e.target.value)}
-            placeholder="Featured project video URL"
-            className="admin-input"
-          />
-          {current.featuredProjectVideoUrl && (
-            <div className="border border-white/10 p-1 max-w-xs">
-              <VideoEmbed url={current.featuredProjectVideoUrl} title="Featured video preview" />
-            </div>
-          )}
-          <select
-            value={current.virtualTourProvider}
-            onChange={(e) => field("virtualTourProvider", e.target.value as SiteMedia["virtualTourProvider"])}
-            className="admin-input"
-          >
-            <option value="iframe">Embedded page</option>
-            <option value="youtube">YouTube</option>
-            <option value="vimeo">Vimeo</option>
-            <option value="external">External tour</option>
-          </select>
-          <input
-            value={current.virtualTourUrl}
-            onChange={(e) => field("virtualTourUrl", e.target.value)}
-            placeholder="Virtual tour URL"
-            className="admin-input"
-          />
-          <input
-            value={current.virtualTourTitle}
-            onChange={(e) => field("virtualTourTitle", e.target.value)}
-            placeholder="Virtual tour title"
-            className="admin-input"
-          />
+          <p className="text-xs text-white/40">Background video on the homepage. Must be a direct video file link, not a YouTube/Vimeo page.</p>
         </div>
       </div>
 
@@ -1556,6 +1515,7 @@ const emptyBlogDraft = {
   content: "",
   coverImageUrl: "",
   author: "",
+  tags: "",
   published: false,
 };
 
@@ -1601,6 +1561,7 @@ function BlogSection() {
       content: post.content,
       coverImageUrl: post.coverImageUrl ?? "",
       author: post.author ?? "",
+      tags: post.tags ?? "",
       published: post.published,
     });
   }
@@ -1701,13 +1662,19 @@ function BlogSection() {
               placeholder="Author"
               className="admin-input"
             />
+            <input
+              value={draft.tags}
+              onChange={(e) => setDraft((d) => ({ ...d, tags: e.target.value }))}
+              placeholder="Tags, comma-separated (e.g. Ayat, Investment)"
+              className="admin-input"
+            />
             <label className="flex items-center gap-2 text-sm text-white/60">
               <input
                 type="checkbox"
                 checked={draft.published}
                 onChange={(e) => setDraft((d) => ({ ...d, published: e.target.checked }))}
               />
-              Published
+              Published (unchecked = draft, not shown on the site)
             </label>
             <button
               type="submit"
@@ -2215,7 +2182,6 @@ export default function Admin() {
           {section === "testimonials" && <TestimonialsSection />}
           {section === "blog" && <BlogSection />}
           {section === "marketing" && <MarketingSection />}
-          {section === "sister-companies" && <SisterCompaniesSection />}
           {section === "media" && <MediaSection />}
           {section === "leads" && <LeadsSection />}
           {section === "publish" && <PublishSection />}

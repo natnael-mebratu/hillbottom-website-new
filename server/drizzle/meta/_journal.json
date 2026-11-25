@@ -57,6 +57,13 @@
       "when": 1795248142050,
       "tag": "0007_yielding_marten_broadcloak",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1795646833370,
+      "tag": "0008_cheerful_proteus",
+      "breakpoints": true
     }
   ]
 }

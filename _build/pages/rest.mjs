@@ -7,7 +7,7 @@ import {
   VILLAGE_P1, VILLAGE_P2, REC_FACILITIES, REC_GALLERY, TEAM_MEMBERS, SALES_OFFICE,
 } from "../data.mjs";
 import { page, facts, alt, ridge, plate, img, btn, link, lightbox, unitSelector, esc, ICON } from "../ui.mjs";
-import { inquiryForm, pageHero, ctaBand, storyCard, fmtDate, coverFor } from "./parts.mjs";
+import { inquiryForm, pageHero, ctaBand, storyCard, fmtDate, coverImg, DEFAULT_COVER_ASSET } from "./parts.mjs";
 
 
 /* Cinematic auto-fade gallery (client: the plain grid "feels dead" — wants
@@ -214,6 +214,7 @@ ${STAGES.map((stage) => {
 </section>`;
 }).join("")}
 
+${POSTS.length ? `
 <section class="ch ch--paper-2 pad">
   <div class="wrap">
     <div class="head head--split rv" style="margin-bottom:clamp(30px,3.5vw,46px)">
@@ -223,13 +224,13 @@ ${STAGES.map((stage) => {
     <div class="grid grid--3">
       ${POSTS.slice(0, 3).map((p) => `
       <a class="story zoom rv" href="news/${p.slug}.html">
-        ${plate(coverFor(p.slug), p.title, { ar: "ar", sizes: "(min-width:900px) 30vw, 100vw" })}
+        ${coverImg(p, { ar: "ar", sizes: "(min-width:900px) 30vw, 100vw" })}
         <p class="mark">${fmtDate(p.date)} · ${esc(p.readTime)}</p>
         <h3 class="story__t">${esc(p.title)}</h3>
       </a>`).join("")}
     </div>
   </div>
-</section>
+</section>` : ""}
 
 ${ctaBand(0, {
   title: "Buying from abroad?",
@@ -850,9 +851,9 @@ ${pageHero(0, {
       <div class="head__side"><p>Guides, analysis, and project milestones from the Hill Bottom team.</p></div>
     </div>
     <div class="grid grid--3">
-      ${POSTS.slice().sort((a, b) => b.date.localeCompare(a.date)).map((p) => `
+      ${POSTS.length === 0 ? `<p class="body">No posts yet — check back soon.</p>` : POSTS.slice().sort((a, b) => b.date.localeCompare(a.date)).map((p) => `
       <a class="story zoom rv" href="news/${p.slug}.html">
-        ${plate(coverFor(p.slug), p.title, { ar: "ar", sizes: "(min-width:900px) 30vw, 100vw" })}
+        ${coverImg(p, { ar: "ar", sizes: "(min-width:900px) 30vw, 100vw" })}
         <p class="mark">${fmtDate(p.date)} · ${esc(p.readTime)}</p>
         <h3 class="story__t">${esc(p.title)}</h3>
         <p class="story__d">${esc(p.excerpt)}</p>
@@ -889,13 +890,13 @@ for (const p of POSTS) {
   out[`news/${p.slug}.html`] = page({
     d: 1, current: "news.html",
     path: `news/${p.slug}.html`,
-    image: `${coverFor(p.slug)}-1400`,
+    image: `${DEFAULT_COVER_ASSET}-1400`,
     title: `${p.title} — Hill Bottom Properties`,
     desc: p.excerpt,
     bodyClass: "article-page",
     body: `
 ${pageHero(1, {
-  title: p.title, sub: esc(p.excerpt), imgName: coverFor(p.slug), alt: p.title,
+  title: p.title, sub: esc(p.excerpt), imgName: DEFAULT_COVER_ASSET, imgUrl: p.cover, alt: p.title,
   stations: [],
 })}
 <section class="ch ch--paper pad article-reading">
@@ -938,7 +939,7 @@ ${pageHero(1, {
     <div class="grid grid--3">
       ${others.map((o) => `
       <a class="story zoom rv" href="${o.slug}.html">
-        ${plate(coverFor(o.slug), o.title, { d: 1, ar: "ar", sizes: "(min-width:900px) 30vw, 100vw" })}
+        ${coverImg(o, { d: 1, ar: "ar", sizes: "(min-width:900px) 30vw, 100vw" })}
         <p class="mark">${fmtDate(o.date)} · ${esc(o.readTime)}</p>
         <h3 class="story__t">${esc(o.title)}</h3>
       </a>`).join("")}

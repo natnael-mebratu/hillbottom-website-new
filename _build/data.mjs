@@ -3,12 +3,15 @@
    Nothing in this file is newly written marketing copy.
    Items flagged `hold:true` are placeholders the client must replace. */
 
-import fs from "fs";
-import { PROJECTS_LIVE, MARKETING_POSTS, TEAM_MEMBERS, TESTIMONIALS_LIVE, JOBS, PRICING_LIVE, PRICE_CALC_PROMO, HERO_VIDEO_URL } from "./generated-content.mjs";
+import { PROJECTS_LIVE, MARKETING_POSTS, TEAM_MEMBERS, TESTIMONIALS_LIVE, JOBS, PRICING_LIVE, PRICE_CALC_PROMO, HERO_VIDEO_URL, BLOG_POSTS_LIVE } from "./generated-content.mjs";
 
 export { MARKETING_POSTS, TEAM_MEMBERS, JOBS, PRICE_CALC_PROMO, HERO_VIDEO_URL };
 
-export const POSTS = JSON.parse(fs.readFileSync(new URL("./blog.json", import.meta.url), "utf8"));
+// news.html's posts, admin-managed (Blog section) — see BLOG_POSTS_LIVE's
+// own note in fetchData.mjs. blog.json is the pre-admin-panel snapshot;
+// its posts were migrated into the database as real rows, not merged
+// here, so they stay editable/deletable through admin like anything else.
+export const POSTS = BLOG_POSTS_LIVE;
 
 // Operational fields (progress %, current stage, next milestone) come from
 // the admin-managed database; editorial copy (taglines, CTAs, hero images)

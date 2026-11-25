@@ -14,6 +14,7 @@ const blogInput = z.object({
   content: z.string().min(1),
   coverImageUrl: z.string().optional(),
   author: z.string().optional(),
+  tags: z.string().optional(),
   published: z.boolean().default(false),
   publishedAt: z.string().datetime().optional(),
 });
@@ -51,9 +52,14 @@ blogRouter.post("/", requireAdmin, async (req, res) => {
     return;
   }
   const { publishedAt, ...rest } = parsed.data;
+  // The admin form has no date picker — publishing a post with "Published"
+  // checked and no explicit publishedAt would otherwise leave it null,
+  // which both breaks the public ORDER BY and would silently exclude the
+  // post everywhere sorted by publish date.
+  const resolvedPublishedAt = publishedAt ? new Date(publishedAt) : rest.published ? new Date() : undefined;
   const [row] = await db
     .insert(blogPosts)
-    .values({ ...rest, publishedAt: publishedAt ? new Date(publishedAt) : undefined })
+    .values({ ...rest, publishedAt: resolvedPublishedAt })
     .returning();
   res.status(201).json(row);
 });
@@ -65,11 +71,18 @@ blogRouter.put("/:id", requireAdmin, async (req, res) => {
     return;
   }
   const { publishedAt, ...rest } = parsed.data;
+  let resolvedPublishedAt = publishedAt ? new Date(publishedAt) : undefined;
+  // Same first-publish gap as POST: flipping a draft to published with no
+  // explicit date shouldn't silently leave publishedAt null.
+  if (!resolvedPublishedAt && rest.published) {
+    const [existing] = await db.select().from(blogPosts).where(eq(blogPosts.id, Number(req.params.id)));
+    if (existing && !existing.publishedAt) resolvedPublishedAt = new Date();
+  }
   const [row] = await db
     .update(blogPosts)
     .set({
       ...rest,
-      ...(publishedAt ? { publishedAt: new Date(publishedAt) } : {}),
+      ...(resolvedPublishedAt ? { publishedAt: resolvedPublishedAt } : {}),
       updatedAt: new Date(),
     })
     .where(eq(blogPosts.id, Number(req.params.id)))

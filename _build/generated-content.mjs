@@ -204,3 +204,8 @@ export const JOBS = [];
 // merge needed here — the actual overlay onto UK_PRICE_LIST happens in
 // data.mjs.
 export const PRICING_LIVE = [];
+
+// news.html + news/<slug>.html, by publishedAt desc. No merge needed —
+// rendered as-is; news.html falls back to a "no posts yet" message when
+// this is empty.
+export const BLOG_POSTS_LIVE = [];

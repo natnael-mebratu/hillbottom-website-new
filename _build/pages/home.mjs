@@ -247,6 +247,7 @@ ${welcome(0, WELCOME)}
 
 ${testimonialsSection()}
 
+${POSTS.length ? `
 <section class="ch ch--paper-2 pad home-stories">
   <div class="wrap">
     <div class="stories-head rv">
@@ -255,7 +256,7 @@ ${testimonialsSection()}
     </div>
     <div class="grid grid--3">${POSTS.slice(0, 3).map((p) => storyCard(p, 0, "news/").replace('<p class="mark">', STORY_ICON + '<p class="mark">')).join("")}</div>
   </div>
-</section>
+</section>` : ""}
 
 <section class="ch ch--abyss pad home-inquiry" id="inquiry">
   <div class="wrap">

@@ -112,6 +112,10 @@ export const blogPosts = pgTable("blog_posts", {
   content: text("content").notNull(),
   coverImageUrl: text("cover_image_url"),
   author: varchar("author", { length: 255 }),
+  // Comma-separated, same convention leads.ts already uses for its own
+  // tags field — simpler than a real array column for what's just a few
+  // short labels shown on the article page, never queried/filtered on.
+  tags: varchar("tags", { length: 500 }).notNull().default(""),
   published: boolean("published").notNull().default(false),
   publishedAt: timestamp("published_at"),
   createdAt: timestamp("created_at").notNull().defaultNow(),

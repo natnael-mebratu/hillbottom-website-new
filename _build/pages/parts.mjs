@@ -3,15 +3,24 @@ import { esc, ICON, btn, facts, ridge, plate } from "../ui.mjs";
 
 export const fmtDate = (d) => new Date(d + "T00:00:00Z").toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" });
 
-export const coverFor = (slug) =>
-  slug === "why-buy-property-in-ayat" ? "hillbottom-interior"
-  : slug === "roi-of-buying-in-addis" ? "urban-kaza-ext-v2"
-  : slug === "how-to-buy-real-estate-in-ethiopia" ? "recreation-hub"
-  : slug === "how-reliable-are-real-estates-in-ethiopia" ? "kaza-building" : "kaza-rooftop";
+// Fallback local asset when a post has no cover image set — still used
+// as the OG-image/page() asset reference (page() only knows how to build
+// a URL from a local asset name), since og:image falling back to a
+// generic exterior shot is harmless where a missing cover entirely would
+// look broken.
+export const DEFAULT_COVER_ASSET = "kaza-rooftop";
+
+// A post's own cover (admin-uploaded or pasted URL) is an arbitrary URL,
+// not a local asset basename — plate()/img() can't render it (they build
+// a srcset from known local files). Render it as a plain <img> instead,
+// falling back to the default local asset when no cover is set.
+export const coverImg = (p, { d = 0, ar = "ar", sizes = "100vw" } = {}) => p.cover
+  ? `<div class="plate plate--${ar}"><img src="${esc(p.cover)}" alt="${esc(p.title)}" loading="lazy" decoding="async"></div>`
+  : plate(DEFAULT_COVER_ASSET, p.title, { d, ar, sizes });
 
 export const storyCard = (p, d = 0, prefix = "") => `
 <a class="story zoom rv" href="${prefix}${p.slug}.html">
-  ${plate(coverFor(p.slug), p.title, { d, ar: "ar", sizes: "(min-width:900px) 31vw, 100vw" })}
+  ${coverImg(p, { d, ar: "ar", sizes: "(min-width:900px) 31vw, 100vw" })}
   <p class="mark">${fmtDate(p.date)} · ${esc(p.readTime)}</p>
   <h3 class="story__t">${esc(p.title)}</h3>
   <p class="story__d">${esc(p.excerpt)}</p>
@@ -81,10 +90,12 @@ export const jobApplyForm = (job) => `
 </details>`;
 
 /* Every page opens on imagery, cut into the chapter below by the ridge. */
-export const pageHero = (d, { title, sub, imgName, alt: altText, stations = [], tall = false, cut = "var(--paper)", heroClass = "", brand = "" }) => `
+export const pageHero = (d, { title, sub, imgName, imgUrl = "", alt: altText, stations = [], tall = false, cut = "var(--paper)", heroClass = "", brand = "" }) => `
 <section class="hero ${tall ? "" : "hero--short"} ${heroClass}">
   <div class="hero__media">
-    <img src="${"../".repeat(d)}assets/img/${imgName}-1400.webp" srcset="${"../".repeat(d)}assets/img/${imgName}-800.webp 800w, ${"../".repeat(d)}assets/img/${imgName}-1400.webp 1400w" sizes="100vw" alt="${esc(altText)}" fetchpriority="high">
+    ${imgUrl
+      ? `<img src="${esc(imgUrl)}" alt="${esc(altText)}" fetchpriority="high">`
+      : `<img src="${"../".repeat(d)}assets/img/${imgName}-1400.webp" srcset="${"../".repeat(d)}assets/img/${imgName}-800.webp 800w, ${"../".repeat(d)}assets/img/${imgName}-1400.webp 1400w" sizes="100vw" alt="${esc(altText)}" fetchpriority="high">`}
   </div>
   <span class="hero__veil"></span>
   <div class="wrap hero__in">

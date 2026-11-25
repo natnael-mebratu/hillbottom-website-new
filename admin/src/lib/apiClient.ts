@@ -125,6 +125,7 @@ export type BlogPost = {
   content: string;
   coverImageUrl: string | null;
   author: string | null;
+  tags: string;
   published: boolean;
   publishedAt: string | null;
   createdAt: string;
