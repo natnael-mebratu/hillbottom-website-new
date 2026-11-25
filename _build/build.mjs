@@ -83,11 +83,15 @@ const idx = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
 if (!idx.includes("IMPECCABLE DIRECTION CONTRACT")) throw new Error("direction contract missing from build output");
 console.log("contract: present in built output");
 
-/* every referenced local asset must exist in the emitted tree */
+/* every referenced local asset must exist in the emitted tree — except
+   /uploads/*, which is admin-uploaded content served dynamically by the
+   API (see server/src/routes/uploads.ts), never present in this static
+   checkout at all. */
 const missing = new Set();
 for (const [rel, html] of Object.entries({ ...pages, ...unlisted })) {
   const dir = path.dirname(path.join(ROOT, rel));
   for (const m of html.matchAll(/(?:src|href)="((?!https?:|mailto:|tel:|#|data:)[^"]+)"/g)) {
+    if (/^\.*\/?uploads\//.test(m[1])) continue;
     const target = path.resolve(dir, m[1].split("#")[0].split("?")[0]);
     if (!fs.existsSync(target)) missing.add(rel + "  ->  " + m[1]);
   }
