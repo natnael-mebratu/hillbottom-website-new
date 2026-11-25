@@ -1,4 +1,4 @@
-import { CO, CTA, PROJECTS, PORTFOLIO_LINE, PILLARS, POSTS, TESTIMONIALS, VR_TOURS, WELCOME, CONSTRUCTION, SALES_OFFICE } from "../data.mjs";
+import { CO, CTA, PROJECTS, PORTFOLIO_LINE, PILLARS, POSTS, TESTIMONIALS, VR_TOURS, WELCOME, CONSTRUCTION, SALES_OFFICE, HERO_VIDEO_URL } from "../data.mjs";
 import { page, facts, alt, ridge, plate, img, btn, link, welcome, esc, ICON, HAS_HERO_VIDEO } from "../ui.mjs";
 import { inquiryForm, storyCard } from "./parts.mjs";
 
@@ -112,7 +112,7 @@ ${welcome(0, WELCOME)}
 <section class="hero">
   <div class="hero__media">
     <img src="assets/img/urban-kaza-dusk-v2.webp" alt="Urban Kaza at dusk in Kazanchis" fetchpriority="high">
-    <video data-hero-video muted loop playsinline preload="metadata" poster="assets/img/urban-kaza-dusk-v2.webp" aria-hidden="true"><source src="assets/video/urban-kaza-showcase-v2.mp4" type="video/mp4"></video>
+    <video data-hero-video muted loop playsinline preload="metadata" poster="assets/img/urban-kaza-dusk-v2.webp" aria-hidden="true"><source src="${/\.(mp4|webm)(\?|$)/i.test(HERO_VIDEO_URL) ? esc(HERO_VIDEO_URL) : "assets/video/urban-kaza-showcase-v2.mp4"}" type="video/mp4"></video>
   </div>
   <span class="hero__veil"></span>
   <div class="wrap hero__in">

@@ -16,6 +16,10 @@ export const PRICE_CALC_PROMO = {
   text: "",
 };
 
+// Home page hero background video override — empty keeps the static
+// default video.
+export const HERO_VIDEO_URL = "";
+
 // Keyed by project slug, overlaid onto data.mjs's PROJECTS/CONSTRUCTION —
 // see mergeLiveProject() in data.mjs. finalRenderUrl/progressPhotos come
 // from progress_updates ("dream" = final render, "actual" = dated

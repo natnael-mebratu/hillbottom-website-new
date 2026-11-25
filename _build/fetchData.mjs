@@ -21,7 +21,7 @@ async function main() {
   try {
     const { rows } = await client.query(
       `select promo_video_url, promo_gift_title, promo_gift_body, promo_partner_url,
-              price_calc_promo_active, price_calc_promo_text
+              price_calc_promo_active, price_calc_promo_text, hero_video_url
        from site_media where id = 1`,
     );
     const row = rows[0] ?? {};
@@ -172,6 +172,12 @@ export const PRICE_CALC_PROMO = {
   active: ${JSON.stringify(!!row.price_calc_promo_active)},
   text: ${esc(row.price_calc_promo_text)},
 };
+
+// Home page hero background video — only overridden when it's a direct
+// video file (.mp4/.webm); a YouTube/Vimeo link here is a no-op for now
+// since the hero is a looping <video> background, not an embeddable
+// iframe (see the admin's own helper text once this is updated).
+export const HERO_VIDEO_URL = ${esc(row.hero_video_url)};
 
 // Keyed by project slug, overlaid onto data.mjs's PROJECTS/CONSTRUCTION —
 // see mergeLiveProject() in data.mjs. finalRenderUrl/progressPhotos come

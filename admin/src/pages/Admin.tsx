@@ -20,8 +20,6 @@ import {
 import { VideoEmbed, isVideoUrl } from "@/components/VideoEmbed";
 import { ImageUrlField } from "@/components/ImageUrlField";
 
-const SITE_URL = import.meta.env.VITE_SITE_URL ?? "https://hillbottomproperties.com";
-
 const sections = [
   { id: "dashboard", label: "Dashboard" },
   { id: "projects", label: "Projects" },
@@ -114,7 +112,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
           </button>
           {error && <p className="text-sm text-red-300">{error}</p>}
         </div>
-        <a href={SITE_URL} className="mt-6 block text-center text-sm text-white/45 hover:text-white">
+        <a href="/" className="mt-6 block text-center text-sm text-white/45 hover:text-white">
           Back to website
         </a>
       </form>
@@ -369,21 +367,20 @@ function MediaSection() {
         <p className="text-xs uppercase tracking-[0.25em] text-[#c09a60]">Public media</p>
         <h2 className="mt-2 text-xl font-semibold">Manage video areas</h2>
         <p className="mt-2 text-xs leading-relaxed text-white/40">
-          Paste a YouTube, Vimeo, or direct video URL — it renders as an embedded
-          player on the site, not a link.
+          Only the Home hero video is live right now — paste a direct .mp4/.webm
+          file URL (not a YouTube/Vimeo link; the hero is a looping background
+          video, not a page you'd embed a player into). Featured project video
+          and Virtual Tour below are saved but not yet connected to the site —
+          ask before relying on them.
         </p>
         <div className="mt-5 space-y-4">
           <input
             value={current.heroVideoUrl}
             onChange={(e) => field("heroVideoUrl", e.target.value)}
-            placeholder="Home hero video URL"
+            placeholder="Home hero video URL (.mp4/.webm direct file link)"
             className="admin-input"
           />
-          {current.heroVideoUrl && (
-            <div className="border border-white/10 p-1 max-w-xs">
-              <VideoEmbed url={current.heroVideoUrl} title="Hero video preview" />
-            </div>
-          )}
+          <p className="text-[10px] uppercase tracking-widest text-amber-400/70">Not yet connected to the site:</p>
           <input
             value={current.featuredProjectVideoUrl}
             onChange={(e) => field("featuredProjectVideoUrl", e.target.value)}
@@ -1285,7 +1282,7 @@ function JobsSection() {
                       <p>{app.email}{app.phone ? ` · ${app.phone}` : ""}</p>
                       {app.coverNote && <p className="mt-1 text-white/45">{app.coverNote}</p>}
                       <a
-                        href={`${SITE_URL}${app.cvUrl}`}
+                        href={app.cvUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="mt-1 inline-block text-[#c09a60] hover:underline"
@@ -2185,7 +2182,7 @@ export default function Admin() {
             <button onClick={signOut} className="text-white/45 hover:text-white">
               Sign out
             </button>
-            <a href={SITE_URL} className="text-white/60 hover:text-white">
+            <a href="/" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white">
               View website →
             </a>
           </div>

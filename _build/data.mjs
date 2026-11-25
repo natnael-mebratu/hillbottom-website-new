@@ -4,9 +4,9 @@
    Items flagged `hold:true` are placeholders the client must replace. */
 
 import fs from "fs";
-import { PROJECTS_LIVE, MARKETING_POSTS, TEAM_MEMBERS, TESTIMONIALS_LIVE, JOBS, PRICING_LIVE, PRICE_CALC_PROMO } from "./generated-content.mjs";
+import { PROJECTS_LIVE, MARKETING_POSTS, TEAM_MEMBERS, TESTIMONIALS_LIVE, JOBS, PRICING_LIVE, PRICE_CALC_PROMO, HERO_VIDEO_URL } from "./generated-content.mjs";
 
-export { MARKETING_POSTS, TEAM_MEMBERS, JOBS, PRICE_CALC_PROMO };
+export { MARKETING_POSTS, TEAM_MEMBERS, JOBS, PRICE_CALC_PROMO, HERO_VIDEO_URL };
 
 export const POSTS = JSON.parse(fs.readFileSync(new URL("./blog.json", import.meta.url), "utf8"));
 
