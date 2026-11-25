@@ -424,6 +424,7 @@ ${footer(d)}
 ${rail(d)}
 ${chatWidget(d)}
 ${scripts}
+<script>window.HB_FORM_ENDPOINT="/api/leads";window.HB_JOBS_ENDPOINT="/api/jobs/apply";</script>
 <script src="${up(d)}assets/js/hb.js" defer></script>
 </body>
 </html>`;
