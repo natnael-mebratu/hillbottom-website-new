@@ -780,6 +780,7 @@ const teamMemberSection = () => {
 out["team.html"] = page({
   current: "team.html",
   path: "team.html",
+  bodyClass: "team-page",
   image: "team-group-award",
   title: "Our Team — Hill Bottom Properties",
   desc: "The people behind Hill Bottom Properties: leadership, design and construction, and client relations for local and diaspora buyers.",

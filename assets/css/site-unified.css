@@ -488,6 +488,10 @@ body:not(.home-editorial) .facts{--card-gap:clamp(22px,3vw,46px)}
 
 /* Construction: compact status narrative plus three visual facts. */
 .construction-page .hero__media img{object-position:center 54%}
+/* Team: the group photo's faces sit near the top — the shortened hero
+   crop was centering on their chests/certificates instead. Bias the
+   visible window upward so faces show. */
+.team-page .hero__media img{object-position:center 20%}
 .construction-card .proj__body{align-content:center}
 /* Each project is its own panel so the boundary between them reads clearly
    (they used to share one continuous background) — the middle project gets
