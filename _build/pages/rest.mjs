@@ -663,24 +663,18 @@ ${VIRTUAL_TOUR.url ? `
 
 <section class="ch ch--paper pad">
   <div class="wrap">
-    ${VR_TOURS.map((t, i) => `
-    <article class="proj ${i % 2 ? "proj--flip" : ""} rv" ${i ? 'style="margin-top:clamp(64px,8vw,120px)"' : ""}>
-      <div class="proj__media">
+    <div class="grid grid--2">
+      ${VR_TOURS.map((t) => `
+      <a class="story zoom rv" href="contact.html">
         <div class="plate plate--ar">
-          ${img(t.img, `${t.name} virtual tour preview`, { sizes: "(min-width:1000px) 55vw, 100vw" })}
+          ${img(t.img, `${t.name} virtual tour preview`, { sizes: "(min-width:900px) 46vw, 100vw" })}
           <span class="reg"></span>
         </div>
-      </div>
-      <div class="proj__body">
-        <h2 class="proj__name">${esc(t.name)}</h2>
         <p class="mark">${esc(t.where)} · ${esc(t.status)}</p>
-        <p class="lede" style="max-width:44ch">${esc(t.d)}</p>
-        <div class="btn-row">
-          ${btn("Book a Live Walkthrough", "contact.html", { kind: "btn--solid" })}
-          <a class="btn" href="${CO.waHref}" target="_blank" rel="noreferrer">${ICON.wa}Ask a Question</a>
-        </div>
-      </div>
-    </article>`).join("")}
+        <h3 class="story__t">${esc(t.name)}</h3>
+        <span class="btn btn--solid" style="margin-top:12px">Book a Live Walkthrough</span>
+      </a>`).join("")}
+    </div>
   </div>
 </section>
 
