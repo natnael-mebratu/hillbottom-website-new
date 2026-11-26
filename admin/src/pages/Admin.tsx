@@ -378,6 +378,26 @@ function MediaSection() {
       </div>
 
       <div className="border border-white/10 bg-[#0d1b2d] p-6">
+        <p className="text-xs uppercase tracking-[0.25em] text-[#c09a60]">Public media</p>
+        <h2 className="mt-2 text-xl font-semibold">Virtual tour</h2>
+        <div className="mt-5 space-y-2">
+          <input
+            value={current.virtualTourUrl}
+            onChange={(e) => field("virtualTourUrl", e.target.value)}
+            placeholder="Virtual tour link (e.g. Panoee tour URL)"
+            className="admin-input"
+          />
+          <input
+            value={current.virtualTourTitle}
+            onChange={(e) => field("virtualTourTitle", e.target.value)}
+            placeholder="Small title shown above the tour (e.g. Urban Kaza Virtual Tour)"
+            className="admin-input"
+          />
+          <p className="text-xs text-white/40">Shows on the Virtual Tours page. Leave the link blank to hide it.</p>
+        </div>
+      </div>
+
+      <div className="border border-white/10 bg-[#0d1b2d] p-6">
         <p className="text-xs uppercase tracking-[0.25em] text-[#c09a60]">Billboard QR landing page</p>
         <h2 className="mt-2 text-xl font-semibold">Promo page video &amp; giveaway</h2>
         <p className="mt-2 text-xs leading-relaxed text-white/40">

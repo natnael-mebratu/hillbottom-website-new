@@ -4,11 +4,26 @@ import { ukIntro } from "../intros.mjs";
 import {
   CO, CTA, KAZA_UNIT_SET, KAZA_BANDS, PROJECTS, PILLARS, POSTS, TESTIMONIALS, VR_TOURS, PROCESS, VALUES, TEAMS,
   KAZA_FLOORS, KAZA_UNITS, KAZA_UNIT_COLS, KAZA_NOTE, KAZA_CONTEXT, KAZA_GALLERY,
-  VILLAGE_P1, VILLAGE_P2, REC_FACILITIES, REC_GALLERY, TEAM_MEMBERS, SALES_OFFICE,
+  VILLAGE_P1, VILLAGE_P2, REC_FACILITIES, REC_GALLERY, TEAM_MEMBERS, SALES_OFFICE, VIRTUAL_TOUR,
 } from "../data.mjs";
 import { page, facts, alt, ridge, plate, img, btn, link, lightbox, unitSelector, esc, ICON } from "../ui.mjs";
 import { inquiryForm, pageHero, ctaBand, storyCard, fmtDate, coverImg, DEFAULT_COVER_ASSET } from "./parts.mjs";
 
+/* VIRTUAL_TOUR's url as typically pasted (a watch/share page) needs
+   converting to its embeddable player form for YouTube/Vimeo; Panoee-style
+   tour hosts (and anything else under "Embedded page") are already
+   iframe-embeddable as given. */
+const tourEmbedSrc = (tour) => {
+  if (tour.provider === "youtube") {
+    const id = tour.url.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/)?.[1];
+    return id ? `https://www.youtube.com/embed/${id}` : tour.url;
+  }
+  if (tour.provider === "vimeo") {
+    const id = tour.url.match(/vimeo\.com\/(?:video\/)?(\d+)/)?.[1];
+    return id ? `https://player.vimeo.com/video/${id}` : tour.url;
+  }
+  return tour.url;
+};
 
 /* Cinematic auto-fade gallery (client: the plain grid "feels dead" — wants
    one big photo that cross-fades into the next on its own, with small dot
@@ -631,6 +646,20 @@ ${pageHero(0, {
     { k: "Live walkthrough", v: "On request", n: "Video call with a sales agent", href: "contact.html" },
   ],
 })}
+
+${VIRTUAL_TOUR.url ? `
+<section class="ch ch--abyss pad">
+  <div class="wrap">
+    <div class="head rv" style="margin-bottom:clamp(26px,3vw,40px)">
+      <h2 class="d2">${esc(VIRTUAL_TOUR.title || "Live Virtual Tour")}</h2>
+    </div>
+    <div class="vr-embed rv">
+      ${VIRTUAL_TOUR.provider === "external"
+        ? `<a class="btn btn--gold" href="${esc(VIRTUAL_TOUR.url)}" target="_blank" rel="noreferrer">Open Virtual Tour ${ICON.arrow}</a>`
+        : `<iframe src="${esc(tourEmbedSrc(VIRTUAL_TOUR))}" title="${esc(VIRTUAL_TOUR.title || "Virtual Tour")}" loading="lazy" allow="fullscreen; vr; xr-spatial-tracking" allowfullscreen></iframe>`}
+    </div>
+  </div>
+</section>` : ""}
 
 <section class="ch ch--paper pad">
   <div class="wrap">

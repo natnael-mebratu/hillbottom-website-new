@@ -21,7 +21,8 @@ async function main() {
   try {
     const { rows } = await client.query(
       `select promo_video_url, promo_gift_title, promo_gift_body, promo_partner_url,
-              price_calc_promo_active, price_calc_promo_text, hero_video_url
+              price_calc_promo_active, price_calc_promo_text, hero_video_url,
+              virtual_tour_provider, virtual_tour_url, virtual_tour_title
        from site_media where id = 1`,
     );
     const row = rows[0] ?? {};
@@ -201,6 +202,16 @@ export const PRICE_CALC_PROMO = {
 // since the hero is a looping <video> background, not an embeddable
 // iframe (see the admin's own helper text once this is updated).
 export const HERO_VIDEO_URL = ${esc(row.hero_video_url)};
+
+// vr-tours.html's single embedded tour — one for the whole page, not
+// per-project (that'd need a separate table; see the admin panel's own
+// note if that's ever needed). Hidden entirely on the page when url is
+// empty.
+export const VIRTUAL_TOUR = {
+  provider: ${esc(row.virtual_tour_provider || "iframe")},
+  url: ${esc(row.virtual_tour_url)},
+  title: ${esc(row.virtual_tour_title)},
+};
 
 // Keyed by project slug, overlaid onto data.mjs's PROJECTS/CONSTRUCTION —
 // see mergeLiveProject() in data.mjs. finalRenderUrl/progressPhotos come

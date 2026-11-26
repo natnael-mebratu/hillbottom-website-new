@@ -389,3 +389,11 @@
 .gal-fade__dots button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);transform:scale(1.25)}
 @media(max-width:600px){.gal-fade__dots{gap:7px}}
 @media(prefers-reduced-motion:reduce){.gal-fade__slide{transition:none}}
+
+/* ---------- 8. Embedded virtual tour (vr-tours.html) -----------------------
+   Admin-managed single tour embed — responsive 16:9 unless the provider is
+   "external" (a plain link out instead, for tours that refuse to be
+   iframed). */
+.vr-embed{position:relative;width:100%;aspect-ratio:16/9;background:#0b1420;border-radius:2px;overflow:hidden}
+.vr-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vr-embed:has(.btn){aspect-ratio:auto;background:none;display:flex;justify-content:center}

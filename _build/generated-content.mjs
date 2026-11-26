@@ -20,6 +20,13 @@ export const PRICE_CALC_PROMO = {
 // default video.
 export const HERO_VIDEO_URL = "";
 
+// vr-tours.html's single embedded tour — hidden on the page when url is empty.
+export const VIRTUAL_TOUR = {
+  provider: "iframe",
+  url: "",
+  title: "",
+};
+
 // Keyed by project slug, overlaid onto data.mjs's PROJECTS/CONSTRUCTION —
 // see mergeLiveProject() in data.mjs. finalRenderUrl/progressPhotos come
 // from progress_updates ("dream" = final render, "actual" = dated
